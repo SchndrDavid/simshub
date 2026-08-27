@@ -1,0 +1,19 @@
+{
+  "name": "simshub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Server-backed toolbox for The Sims 4: wheel of names, random numbers, sim generator, random packs and a Super Sim tracker.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "better-sqlite3": "13.0.3",
+    "express": "5.2.1"
+  }
+}

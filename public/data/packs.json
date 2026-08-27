@@ -1,0 +1,569 @@
+{
+  "packs": [
+    {
+      "name": "Get to Work",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Get Together",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "City Living",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Cats & Dogs",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Seasons",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Get Famous",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Island Living",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Discover University",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Eco Lifestyle",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Snowy Escape",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Cottage Living",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "High School Years",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Growing Together",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Horse Ranch",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "For Rent",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Lovestruck",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Life and Death",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Businesses & Hobbies",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Enchanted By Nature",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Adventure Awaits",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Royalty & Legacy",
+      "category": "expansion",
+      "subtype": null
+    },
+    {
+      "name": "Outdoor Retreat",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Spa Day",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Dine Out",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Vampires",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Parenthood",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Jungle Adventure",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "StrangerVille",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Realm of Magic",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Star Wars: Journey to Batuu",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Dream Home Decorator",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "My Wedding Stories",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Werewolves",
+      "category": "gamepack",
+      "subtype": null
+    },
+    {
+      "name": "Luxury Party Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Perfect Patio Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Cool Kitchen Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Spooky Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Movie Hangout Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Romantic Garden Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Kids Room Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Backyard Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Vintage Glamour Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Bowling Night Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Fitness Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Toddler Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Laundry Day Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "My First Pet Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Moschino Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Tiny Living Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Nifty Knitting Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Paranormal Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Home Chef Hustle Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Crystal Creations Stuff",
+      "category": "stuffpack",
+      "subtype": null
+    },
+    {
+      "name": "Country Kitchen Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Courtyard Oasis Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Industrial Loft Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Blooming Rooms Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Decor to the Max Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Little Campers Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Desert Luxe Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Pastel Pop Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Everyday Clutter Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Bathroom Clutter Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Greenhouse Haven Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Basement Treasures Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Book Nook Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Modern Luxe Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Castle Estate Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Party Essentials Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Riviera Retreat Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Cozy Bistro Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Storybook Nursery Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Artist Studio Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Cozy Kitsch Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Comfy Gamer Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Refined Living Room Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Sleek Bathroom Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Restoration Workshop Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Kitchen Clutter Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Grange Mudroom Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Modern Retreat Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Garden to Table Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Spongebob's House Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Tea Time Solarium Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Yard Charm Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Wonderland Playroom Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Lady Bridgerton's Masquerade Ballroom Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Music Den Kit",
+      "category": "kit",
+      "subtype": "build"
+    },
+    {
+      "name": "Throwback Fit Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Fashion Street Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Incheon Arrivals Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Modern Menswear Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Carnaval Streetwear Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Moonlight Chic Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "First Fits Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Simtimates Collection Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Grunge Revival Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Poolside Splash Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Goth Galore Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Urban Homage Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Sweet Slumber Party Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Business Chic Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Sweet Allure Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Golden Years Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Essential Glam Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Autumn Apparel Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Prairie Dreams Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Silver Screen Style Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Lady Bridgerton's Masquerade Ball Fashion Kit",
+      "category": "kit",
+      "subtype": "cas"
+    },
+    {
+      "name": "Bust the Dust Kit",
+      "category": "kit",
+      "subtype": "other"
+    },
+    {
+      "name": "Secret Sanctuary Kit",
+      "category": "kit",
+      "subtype": "other"
+    },
+    {
+      "name": "Casanova Cave Kit",
+      "category": "kit",
+      "subtype": "other"
+    },
+    {
+      "name": "Spongebob Kid's Room Kit",
+      "category": "kit",
+      "subtype": "other"
+    }
+  ]
+}

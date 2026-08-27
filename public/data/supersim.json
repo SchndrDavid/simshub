@@ -1,0 +1,1947 @@
+{
+  "sections": [
+    {
+      "id": "aspirations",
+      "label": "Aspirace",
+      "groupBy": "category",
+      "incomplete": true,
+      "note": "Seznam aspirací zatím není kompletní – chybí části z novějších balíčků.",
+      "items": [
+        {
+          "name": "Painter Extraordinaire",
+          "category": "Kreativita",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Musical Genius",
+          "category": "Kreativita",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Bestselling Author",
+          "category": "Kreativita",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Master Maker",
+          "category": "Kreativita",
+          "pack": "Eco Lifestyle",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Bodybuilder",
+          "category": "Sport",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Extreme Sports Enthusiast",
+          "category": "Sport",
+          "pack": "Snowy Escape",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Public Enemy",
+          "category": "Zločin",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Chief of Mischief",
+          "category": "Zločin",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Successful Lineage",
+          "category": "Rodina",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Big Happy Family",
+          "category": "Rodina",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Super Parent",
+          "category": "Rodina",
+          "pack": "Parenthood",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Master Chef",
+          "category": "Jídlo",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Master Mixologist",
+          "category": "Jídlo",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Fabulously Wealthy",
+          "category": "Bohatství",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Mansion Baron",
+          "category": "Bohatství",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Renaissance Sim",
+          "category": "Znalosti",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Nerd Brain",
+          "category": "Znalosti",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Computer Whiz",
+          "category": "Znalosti",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Academic",
+          "category": "Znalosti",
+          "pack": "Discover University",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Master Vampire",
+          "category": "Znalosti",
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Good Vampire",
+          "category": "Znalosti",
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Spellcraft & Sorcery",
+          "category": "Znalosti",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Purveyor of Potions",
+          "category": "Znalosti",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Serial Romantic",
+          "category": "Láska",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Soulmate",
+          "category": "Láska",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Freelance Botanist",
+          "category": "Příroda",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "The Curator",
+          "category": "Příroda",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Angling Ace",
+          "category": "Příroda",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Outdoor Enthusiast",
+          "category": "Příroda",
+          "pack": "Outdoor Retreat",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Eco Innovator",
+          "category": "Příroda",
+          "pack": "Eco Lifestyle",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Joke Star",
+          "category": "Popularita",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Party Animal",
+          "category": "Popularita",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Friend of the World",
+          "category": "Popularita",
+          "pack": null,
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Leader of the Pack",
+          "category": "Popularita",
+          "pack": "Get Together",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "City Native",
+          "category": "Místo",
+          "pack": "City Living",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Beach Life",
+          "category": "Místo",
+          "pack": "Island Living",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Strangerville Mystery",
+          "category": "Místo",
+          "pack": "StrangerVille",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Country Caretaker",
+          "category": "Místo",
+          "pack": "Cottage Living",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Mt. Komorebi Sightseer",
+          "category": "Místo",
+          "pack": "Snowy Escape",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Jungle Explorer",
+          "category": "Místo",
+          "pack": "Jungle Adventure",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Archaeology Scholar",
+          "category": "Místo",
+          "pack": "Jungle Adventure",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Zen Guru",
+          "category": "Wellness",
+          "pack": "Spa Day",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "World-Famous Celebrity",
+          "category": "Sláva",
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Master Actor",
+          "category": "Sláva",
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Friend of the Animals",
+          "category": "Zvířata",
+          "pack": "Cats & Dogs",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Championship Rider",
+          "category": "Zvířata",
+          "pack": "Horse Ranch",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Cure Seeker",
+          "category": "Vlkodlaci",
+          "pack": "Werewolves",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Emissary of the Collective",
+          "category": "Vlkodlaci",
+          "pack": "Werewolves",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Wildfang Renegade",
+          "category": "Vlkodlaci",
+          "pack": "Werewolves",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Live Fast",
+          "category": "Teenagerské",
+          "pack": "High School Years",
+          "levels": 1,
+          "age": "teen"
+        },
+        {
+          "name": "Goal Oriented",
+          "category": "Teenagerské",
+          "pack": "High School Years",
+          "levels": 1,
+          "age": "teen"
+        },
+        {
+          "name": "Artistic Prodigy",
+          "category": "Dětské",
+          "pack": null,
+          "levels": 1,
+          "age": "child"
+        },
+        {
+          "name": "Rambunctious Scamp",
+          "category": "Dětské",
+          "pack": null,
+          "levels": 1,
+          "age": "child"
+        },
+        {
+          "name": "Social Butterfly",
+          "category": "Dětské",
+          "pack": null,
+          "levels": 1,
+          "age": "child"
+        },
+        {
+          "name": "Whiz Kid",
+          "category": "Dětské",
+          "pack": null,
+          "levels": 1,
+          "age": "child"
+        },
+        {
+          "name": "Slumber Party Animal",
+          "category": "Dětské",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "child"
+        },
+        {
+          "name": "Mind and Body",
+          "category": "Dětské",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "child"
+        },
+        {
+          "name": "Happy Toddler",
+          "category": "Batolecí",
+          "pack": null,
+          "levels": 1,
+          "age": "toddler"
+        },
+        {
+          "name": "Top-Notch Toddler",
+          "category": "Batolecí",
+          "pack": null,
+          "levels": 1,
+          "age": "toddler"
+        }
+      ]
+    },
+    {
+      "id": "reward_traits",
+      "label": "Odměnové vlastnosti",
+      "groupBy": null,
+      "incomplete": true,
+      "note": "Ceny v bodech spokojenosti zatím nejsou doplněné a seznam není kompletní.",
+      "items": [
+        {
+          "name": "Antiseptic",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Beguiling",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Business Savvy",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Carefree",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Connections",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Creative Visionary",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Entrepreneurial",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Fertile",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Forever Fresh",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Forever Full",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Free Services",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Frugal",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Great Kisser",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Gym Rat",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Hardly Hungry",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Independent",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Long Lived",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Marketable",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Mentor",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Morning Sim",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Never Weary",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Night Owl",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Observant",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Professorial",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Savant",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Seldom Sleepy",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Shameless",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Speed Cleaner",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Speed Reader",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Steel Bladder",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Super Green Thumb",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        },
+        {
+          "name": "Webmaster",
+          "category": null,
+          "pack": null,
+          "levels": 1,
+          "age": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "label": "Dovednosti",
+      "groupBy": "category",
+      "incomplete": true,
+      "note": "Seznam dovedností zatím není kompletní – chybí části z nejnovějších balíčků.",
+      "items": [
+        {
+          "name": "Charisma",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Comedy",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Cooking",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Fishing",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Fitness",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Gardening",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Gourmet Cooking",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Guitar",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Handiness",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Logic",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Mischief",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Mixology",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Painting",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Photography",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Piano",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Programming",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Rocket Science",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Video Gaming",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Violin",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Writing",
+          "category": "Dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Baking",
+          "category": "Dovednosti",
+          "pack": "Get to Work",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Herbalism",
+          "category": "Dovednosti",
+          "pack": "Outdoor Retreat",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Wellness",
+          "category": "Dovednosti",
+          "pack": "Spa Day",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Pipe Organ",
+          "category": "Dovednosti",
+          "pack": "Vampires",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Vampire Lore",
+          "category": "Dovednosti",
+          "pack": "Vampires",
+          "levels": 15,
+          "age": null
+        },
+        {
+          "name": "Parenting",
+          "category": "Dovednosti",
+          "pack": "Parenthood",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Archaeology",
+          "category": "Dovednosti",
+          "pack": "Jungle Adventure",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Selvadoradian Culture",
+          "category": "Dovednosti",
+          "pack": "Jungle Adventure",
+          "levels": 5,
+          "age": null
+        },
+        {
+          "name": "DJ Mixing",
+          "category": "Dovednosti",
+          "pack": "Get Together",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Dancing",
+          "category": "Dovednosti",
+          "pack": "Get Together",
+          "levels": 5,
+          "age": null
+        },
+        {
+          "name": "Singing",
+          "category": "Dovednosti",
+          "pack": "City Living",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Veterinarian",
+          "category": "Dovednosti",
+          "pack": "Cats & Dogs",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Pet Training",
+          "category": "Dovednosti",
+          "pack": "Cats & Dogs",
+          "levels": 5,
+          "age": null
+        },
+        {
+          "name": "Flower Arranging",
+          "category": "Dovednosti",
+          "pack": "Seasons",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Acting",
+          "category": "Dovednosti",
+          "pack": "Get Famous",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Media Production",
+          "category": "Dovednosti",
+          "pack": "Get Famous",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Fabrication",
+          "category": "Dovednosti",
+          "pack": "Eco Lifestyle",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Juice Fizzing",
+          "category": "Dovednosti",
+          "pack": "Eco Lifestyle",
+          "levels": 5,
+          "age": null
+        },
+        {
+          "name": "Robotics",
+          "category": "Dovednosti",
+          "pack": "Discover University",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Research & Debate",
+          "category": "Dovednosti",
+          "pack": "Discover University",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Rock Climbing",
+          "category": "Dovednosti",
+          "pack": "Snowy Escape",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Skiing",
+          "category": "Dovednosti",
+          "pack": "Snowy Escape",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Snowboarding",
+          "category": "Dovednosti",
+          "pack": "Snowy Escape",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Cross-Stitch",
+          "category": "Dovednosti",
+          "pack": "Crystal Creations Stuff",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Knitting",
+          "category": "Dovednosti",
+          "pack": "Nifty Knitting Stuff",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Medium",
+          "category": "Dovednosti",
+          "pack": "Paranormal Stuff",
+          "levels": 5,
+          "age": null
+        },
+        {
+          "name": "Bowling",
+          "category": "Dovednosti",
+          "pack": "Bowling Night Stuff",
+          "levels": 5,
+          "age": null
+        },
+        {
+          "name": "Riding",
+          "category": "Dovednosti",
+          "pack": "Horse Ranch",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Nectar Making",
+          "category": "Dovednosti",
+          "pack": "Horse Ranch",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Thanatology",
+          "category": "Dovednosti",
+          "pack": "Life and Death",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Entrepreneur",
+          "category": "Dovednosti",
+          "pack": "Businesses & Hobbies",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Pottery",
+          "category": "Dovednosti",
+          "pack": "Businesses & Hobbies",
+          "levels": 10,
+          "age": null
+        },
+        {
+          "name": "Motor",
+          "category": "Dětské dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": "child"
+        },
+        {
+          "name": "Social",
+          "category": "Dětské dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": "child"
+        },
+        {
+          "name": "Creativity",
+          "category": "Dětské dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": "child"
+        },
+        {
+          "name": "Mental",
+          "category": "Dětské dovednosti",
+          "pack": null,
+          "levels": 10,
+          "age": "child"
+        },
+        {
+          "name": "Communication",
+          "category": "Batolecí dovednosti",
+          "pack": null,
+          "levels": 5,
+          "age": "toddler"
+        },
+        {
+          "name": "Imagination",
+          "category": "Batolecí dovednosti",
+          "pack": null,
+          "levels": 5,
+          "age": "toddler"
+        },
+        {
+          "name": "Movement",
+          "category": "Batolecí dovednosti",
+          "pack": null,
+          "levels": 5,
+          "age": "toddler"
+        },
+        {
+          "name": "Potty",
+          "category": "Batolecí dovednosti",
+          "pack": null,
+          "levels": 5,
+          "age": "toddler"
+        },
+        {
+          "name": "Thinking",
+          "category": "Batolecí dovednosti",
+          "pack": null,
+          "levels": 5,
+          "age": "toddler"
+        }
+      ]
+    },
+    {
+      "id": "careers",
+      "label": "Kariéry",
+      "groupBy": "category",
+      "incomplete": true,
+      "note": "Seznam kariér zatím není kompletní – chybí větve na volné noze a část brigád.",
+      "items": [
+        {
+          "name": "Astronaut",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Athlete",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Business",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Criminal",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Culinary",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Entertainer",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Painter",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Secret Agent",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Tech Guru",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Writer",
+          "category": "Plný úvazek",
+          "pack": null,
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Detective",
+          "category": "Plný úvazek",
+          "pack": "Get to Work",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Doctor",
+          "category": "Plný úvazek",
+          "pack": "Get to Work",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Scientist",
+          "category": "Plný úvazek",
+          "pack": "Get to Work",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Critic",
+          "category": "Plný úvazek",
+          "pack": "City Living",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Politician",
+          "category": "Plný úvazek",
+          "pack": "City Living",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Social Media",
+          "category": "Plný úvazek",
+          "pack": "City Living",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Style Influencer",
+          "category": "Plný úvazek",
+          "pack": "City Living",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Gardener",
+          "category": "Plný úvazek",
+          "pack": "Seasons",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Military",
+          "category": "Plný úvazek",
+          "pack": "StrangerVille",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Conservationist",
+          "category": "Plný úvazek",
+          "pack": "Island Living",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Education",
+          "category": "Plný úvazek",
+          "pack": "Discover University",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Engineer",
+          "category": "Plný úvazek",
+          "pack": "Discover University",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Law",
+          "category": "Plný úvazek",
+          "pack": "Discover University",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Civil Designer",
+          "category": "Plný úvazek",
+          "pack": "Eco Lifestyle",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Salaryperson",
+          "category": "Plný úvazek",
+          "pack": "Snowy Escape",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Romance Consultant",
+          "category": "Plný úvazek",
+          "pack": "Lovestruck",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Undertaker",
+          "category": "Plný úvazek",
+          "pack": "Life and Death",
+          "levels": 10,
+          "age": "adult"
+        },
+        {
+          "name": "Actor",
+          "category": "Zakázkové kariéry",
+          "pack": "Get Famous",
+          "levels": 5,
+          "age": "adult"
+        },
+        {
+          "name": "Interior Decorator",
+          "category": "Zakázkové kariéry",
+          "pack": "Dream Home Decorator",
+          "levels": 5,
+          "age": "adult"
+        },
+        {
+          "name": "Babysitter",
+          "category": "Brigády",
+          "pack": null,
+          "levels": 3,
+          "age": "teen"
+        },
+        {
+          "name": "Barista",
+          "category": "Brigády",
+          "pack": null,
+          "levels": 3,
+          "age": "teen"
+        },
+        {
+          "name": "Fast Food Employee",
+          "category": "Brigády",
+          "pack": null,
+          "levels": 3,
+          "age": "teen"
+        },
+        {
+          "name": "Manual Laborer",
+          "category": "Brigády",
+          "pack": null,
+          "levels": 3,
+          "age": "teen"
+        },
+        {
+          "name": "Retail Employee",
+          "category": "Brigády",
+          "pack": null,
+          "levels": 3,
+          "age": "teen"
+        },
+        {
+          "name": "Diver",
+          "category": "Brigády",
+          "pack": "Island Living",
+          "levels": 3,
+          "age": "teen"
+        },
+        {
+          "name": "Fisherman",
+          "category": "Brigády",
+          "pack": "Island Living",
+          "levels": 3,
+          "age": "teen"
+        },
+        {
+          "name": "Lifeguard",
+          "category": "Brigády",
+          "pack": "Island Living",
+          "levels": 3,
+          "age": "teen"
+        }
+      ]
+    },
+    {
+      "id": "degrees",
+      "label": "Vysokoškolské obory",
+      "groupBy": null,
+      "incomplete": false,
+      "note": "Dvě úrovně: běžný diplom a diplom s vyznamenáním.",
+      "items": [
+        {
+          "name": "Art History",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Biology",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Communications",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Computer Science",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Culinary Arts",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Drama",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Economics",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Fine Art",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "History",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Language & Literature",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Physics",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Psychology",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        },
+        {
+          "name": "Villainy",
+          "category": null,
+          "pack": "Discover University",
+          "levels": 2,
+          "age": "adult"
+        }
+      ]
+    },
+    {
+      "id": "vampire_powers",
+      "label": "Upíří síly",
+      "groupBy": null,
+      "incomplete": true,
+      "note": "Seznam upířích sil zatím není kompletní.",
+      "items": [
+        {
+          "name": "Bat Form",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Command",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Deprive Needs",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Detect Personality",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Eternal Bond",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Garlic Immunity",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Influence Emotion",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Irresistible Slumber",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Manipulate Life Spirit",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Mesmerize",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Mist Form",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Occult Meditation",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Odorless",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Sun Resistance",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Supernatural Speed",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Tamed Thirst",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Vampire Creation",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Vampiric Charm",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Vampiric Strength",
+          "category": null,
+          "pack": "Vampires",
+          "levels": 1,
+          "age": null
+        }
+      ]
+    },
+    {
+      "id": "spellcaster",
+      "label": "Schopnosti čaroděje",
+      "groupBy": "category",
+      "incomplete": true,
+      "note": "Seznam kouzel a lektvarů zatím není kompletní.",
+      "items": [
+        {
+          "name": "Spellcaster Rank",
+          "category": "Postup",
+          "pack": "Realm of Magic",
+          "levels": 5,
+          "age": null
+        },
+        {
+          "name": "Scruberoo",
+          "category": "Praktická magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Repairio",
+          "category": "Praktická magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Herbio",
+          "category": "Praktická magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Deliciosio",
+          "category": "Praktická magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Copypasto",
+          "category": "Praktická magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Transportalate",
+          "category": "Praktická magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Deliriate",
+          "category": "Zlomyslná magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Infatuate",
+          "category": "Zlomyslná magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Morphiate",
+          "category": "Zlomyslná magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Furio",
+          "category": "Zlomyslná magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Duplicato",
+          "category": "Nespoutaná magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Strangeify",
+          "category": "Nespoutaná magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Necrocall",
+          "category": "Nespoutaná magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Inferniate",
+          "category": "Nespoutaná magie",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Potion of Curse Cleansing",
+          "category": "Lektvary",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Potion of Emotional Stability",
+          "category": "Lektvary",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Potion of Immortality",
+          "category": "Lektvary",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Potion of Plentiful Needs",
+          "category": "Lektvary",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Potion of Truth",
+          "category": "Lektvary",
+          "pack": "Realm of Magic",
+          "levels": 1,
+          "age": null
+        }
+      ]
+    },
+    {
+      "id": "fame_perks",
+      "label": "Perky slávy",
+      "groupBy": null,
+      "incomplete": true,
+      "note": "Seznam perků slávy zatím není kompletní.",
+      "items": [
+        {
+          "name": "Established Name",
+          "category": null,
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Instant Bestie",
+          "category": null,
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Public Figure",
+          "category": null,
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Fan Favorite",
+          "category": null,
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Corporate Sponsor",
+          "category": null,
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Easy Street",
+          "category": null,
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Squad",
+          "category": null,
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        },
+        {
+          "name": "Influencer",
+          "category": null,
+          "pack": "Get Famous",
+          "levels": 1,
+          "age": null
+        }
+      ]
+    },
+    {
+      "id": "werewolf_abilities",
+      "label": "Schopnosti vlkodlaka",
+      "groupBy": null,
+      "incomplete": true,
+      "note": "Seznam schopností vlkodlaka zatím není doplněný.",
+      "items": []
+    },
+    {
+      "id": "ghost_mastery",
+      "label": "Ovládnutí ducha",
+      "groupBy": null,
+      "incomplete": true,
+      "note": "Seznam schopností ducha zatím není doplněný.",
+      "items": []
+    },
+    {
+      "id": "fairy_abilities",
+      "label": "Schopnosti víly",
+      "groupBy": null,
+      "incomplete": true,
+      "note": "Seznam schopností víly zatím není doplněný.",
+      "items": []
+    },
+    {
+      "id": "milestones",
+      "label": "Milníky",
+      "groupBy": "category",
+      "incomplete": true,
+      "note": "Seznam milníků zatím není kompletní – jde jen o malý výběr.",
+      "items": [
+        {
+          "name": "First Steps",
+          "category": "Batole",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "toddler"
+        },
+        {
+          "name": "First Words",
+          "category": "Batole",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "toddler"
+        },
+        {
+          "name": "First Best Friend",
+          "category": "Dítě",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "child"
+        },
+        {
+          "name": "First Kiss",
+          "category": "Teenager",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "teen"
+        },
+        {
+          "name": "First Job",
+          "category": "Teenager",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "teen"
+        },
+        {
+          "name": "Graduated High School",
+          "category": "Teenager",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "teen"
+        },
+        {
+          "name": "First Woohoo",
+          "category": "Dospělost",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "adult"
+        },
+        {
+          "name": "Got Married",
+          "category": "Dospělost",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "adult"
+        },
+        {
+          "name": "Had a Baby",
+          "category": "Dospělost",
+          "pack": "Growing Together",
+          "levels": 1,
+          "age": "adult"
+        }
+      ]
+    }
+  ]
+}

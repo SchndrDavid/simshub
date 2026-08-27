@@ -1,0 +1,7 @@
+.git
+.gitignore
+node_modules
+data
+.env
+*.log
+FOREMAN-REPO-TEMPLATE.txt

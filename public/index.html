@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#2b1f45">
+<title>Sims Hub</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%8E%B2%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">◆</span>
+      <span class="brand-name">Sims Hub</span>
+    </div>
+
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Nástroje">
+      <button class="tab" role="tab" id="tab-wheel" aria-controls="panel-wheel" data-route="wheel" type="button">
+        <span class="tab-icon" aria-hidden="true">🎡</span><span class="tab-label">Kolo</span>
+      </button>
+      <button class="tab" role="tab" id="tab-random" aria-controls="panel-random" data-route="random" type="button">
+        <span class="tab-icon" aria-hidden="true">🎲</span><span class="tab-label">Číslo</span>
+      </button>
+      <button class="tab" role="tab" id="tab-simgen" aria-controls="panel-simgen" data-route="simgen" type="button">
+        <span class="tab-icon" aria-hidden="true">🧬</span><span class="tab-label">Simík</span>
+      </button>
+      <button class="tab" role="tab" id="tab-packs" aria-controls="panel-packs" data-route="packs" type="button">
+        <span class="tab-icon" aria-hidden="true">📦</span><span class="tab-label">Packy</span>
+      </button>
+      <button class="tab" role="tab" id="tab-supersim" aria-controls="panel-supersim" data-route="supersim" type="button">
+        <span class="tab-icon" aria-hidden="true">🏆</span><span class="tab-label">Super Sim</span>
+      </button>
+    </nav>
+
+    <div class="topbar-right">
+      <select id="profile-select" class="profile-select" aria-label="Profil"></select>
+      <button id="profile-manage" class="icon-btn" type="button" aria-label="Správa profilů" title="Správa profilů">⚙</button>
+      <span id="save-status" class="save-status" role="status" aria-live="polite" data-state="saved">Uloženo</span>
+      <button id="save-retry" class="ghost-btn" type="button" hidden>Zkusit znovu</button>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Přepnout světlý a tmavý režim" title="Světlý / tmavý režim">◐</button>
+    </div>
+  </div>
+
+  <div id="conflict-banner" class="banner" hidden>
+    <span id="conflict-text">Profil mezitím někdo změnil na jiném zařízení.</span>
+    <button id="conflict-reload" class="ghost-btn" type="button">Načíst znovu</button>
+    <button id="conflict-dismiss" class="icon-btn" type="button" aria-label="Skrýt upozornění">✕</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================ WHEEL -->
+  <section class="panel" id="panel-wheel" role="tabpanel" aria-labelledby="tab-wheel" tabindex="-1" hidden>
+    <div class="panel-grid wheel-grid">
+      <div class="card">
+        <h2 class="card-title">Položky</h2>
+        <label class="field">
+          <span class="field-label">Jedna položka na řádek</span>
+          <textarea id="wheel-input" rows="10" spellcheck="false" placeholder="Pizza&#10;Sushi&#10;Palačinky x3"></textarea>
+        </label>
+        <p class="hint">Řádek zakončený <code>x3</code> dostane trojnásobně velký segment.</p>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" id="wheel-remove"> Odebrat vítěze po vytočení</label>
+          <label class="check"><input type="checkbox" id="wheel-sound"> Zvuk</label>
+        </div>
+
+        <h3 class="card-subtitle">Uložené seznamy</h3>
+        <div class="row">
+          <select id="wheel-lists" class="grow" aria-label="Uložené seznamy"></select>
+          <button id="wheel-list-load" class="ghost-btn" type="button">Načíst</button>
+          <button id="wheel-list-delete" class="ghost-btn danger" type="button">Smazat</button>
+        </div>
+        <div class="row">
+          <button id="wheel-list-save" class="primary-btn" type="button">Uložit aktuální seznam</button>
+        </div>
+      </div>
+
+      <div class="card wheel-card">
+        <div class="wheel-stage">
+          <div class="wheel-pointer" aria-hidden="true"></div>
+          <div id="wheel-rotor" class="wheel-rotor">
+            <svg id="wheel-svg" viewBox="0 0 400 400" role="img" aria-label="Kolo štěstí"></svg>
+          </div>
+        </div>
+        <div class="row center">
+          <button id="wheel-spin" class="primary-btn big" type="button">Zatočit</button>
+        </div>
+        <p id="wheel-message" class="hint center"></p>
+
+        <h3 class="card-subtitle">Historie</h3>
+        <ol id="wheel-history" class="history"></ol>
+        <button id="wheel-history-clear" class="ghost-btn" type="button">Vymazat historii</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== RANDOM -->
+  <section class="panel" id="panel-random" role="tabpanel" aria-labelledby="tab-random" tabindex="-1" hidden>
+    <div class="panel-grid random-grid">
+      <div class="card">
+        <h2 class="card-title">Nastavení</h2>
+        <div class="row">
+          <label class="field"><span class="field-label">Od</span>
+            <input type="number" id="rnd-min" value="1" step="1"></label>
+          <label class="field"><span class="field-label">Do</span>
+            <input type="number" id="rnd-max" value="100" step="1"></label>
+        </div>
+        <label class="field"><span class="field-label">Počet čísel (1–100)</span>
+          <input type="number" id="rnd-count" value="1" min="1" max="100" step="1"></label>
+        <div class="row">
+          <label class="check"><input type="checkbox" id="rnd-unique"> Bez opakování</label>
+          <label class="check"><input type="checkbox" id="rnd-sort"> Seřadit</label>
+        </div>
+        <p id="rnd-error" class="error-text" role="alert" hidden></p>
+        <div class="row">
+          <button id="rnd-go" class="primary-btn big" type="button">Generovat</button>
+          <button id="rnd-copy" class="ghost-btn" type="button">Kopírovat</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Výsledek</h2>
+        <div id="rnd-result" class="rnd-result" aria-live="polite"><span class="rnd-placeholder">—</span></div>
+
+        <h3 class="card-subtitle">Historie</h3>
+        <ol id="rnd-history" class="history"></ol>
+        <button id="rnd-history-clear" class="ghost-btn" type="button">Vymazat historii</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== SIMGEN -->
+  <section class="panel" id="panel-simgen" role="tabpanel" aria-labelledby="tab-simgen" tabindex="-1" hidden>
+    <div id="simgen-error" class="card error-card" hidden></div>
+    <div class="panel-grid simgen-grid">
+      <div class="card">
+        <h2 class="card-title">Co generovat</h2>
+        <div id="simgen-options" class="opt-list"></div>
+        <div class="row">
+          <button id="simgen-go" class="primary-btn big" type="button">Generovat</button>
+          <button id="simgen-unlock" class="ghost-btn" type="button">Odemknout vše</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Simík</h2>
+        <div id="simgen-result" class="sim-card" aria-live="polite"></div>
+        <div class="row">
+          <button id="simgen-copy" class="ghost-btn" type="button">Kopírovat jako text</button>
+          <button id="simgen-save" class="ghost-btn" type="button">Uložit simíka</button>
+        </div>
+
+        <h3 class="card-subtitle">Uložení simíci</h3>
+        <ul id="simgen-saved" class="saved-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ PACKS -->
+  <section class="panel" id="panel-packs" role="tabpanel" aria-labelledby="tab-packs" tabindex="-1" hidden>
+    <div id="packs-error" class="card error-card" hidden></div>
+    <div class="panel-grid packs-grid">
+      <div class="card">
+        <h2 class="card-title">Losování</h2>
+        <label class="field"><span class="field-label">Počet packů (1–20)</span>
+          <input type="number" id="packs-count" value="3" min="1" max="20" step="1"></label>
+        <label class="check"><input type="checkbox" id="packs-each-cat"> Alespoň jeden z každé kategorie</label>
+
+        <h3 class="card-subtitle">Váhy kategorií</h3>
+        <div id="packs-weights" class="weights"></div>
+
+        <p id="packs-message" class="hint" role="status"></p>
+        <div class="row">
+          <button id="packs-go" class="primary-btn big" type="button">Losovat</button>
+          <button id="packs-copy" class="ghost-btn" type="button">Kopírovat</button>
+        </div>
+
+        <div id="packs-results" class="pack-results" aria-live="polite"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Vlastněné packy</h2>
+        <p class="hint">Odškrtni packy, které nevlastníš. Filtr sdílí generátor simíka i Super Sim.</p>
+        <div class="row">
+          <button class="ghost-btn" type="button" data-packs-all="1">Vybrat vše</button>
+          <button class="ghost-btn" type="button" data-packs-all="0">Zrušit vše</button>
+          <span id="packs-owned-count" class="pill"></span>
+        </div>
+        <div id="packs-owned" class="owned-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= SUPERSIM -->
+  <section class="panel wide" id="panel-supersim" role="tabpanel" aria-labelledby="tab-supersim" tabindex="-1" hidden>
+    <div id="supersim-error" class="card error-card" hidden></div>
+
+    <div class="card sticky-tools">
+      <div class="summary">
+        <div class="summary-head">
+          <h2 class="card-title">Celkový postup</h2>
+          <span id="supersim-summary-text" class="pill"></span>
+        </div>
+        <div class="bar"><div id="supersim-summary-bar" class="bar-fill"></div></div>
+      </div>
+
+      <div class="row tools">
+        <input type="search" id="supersim-search" class="grow" placeholder="Hledat položku…" aria-label="Hledat položku">
+        <select id="supersim-age" aria-label="Filtr podle věku">
+          <option value="">Všechny věky</option>
+          <option value="toddler">Batole</option>
+          <option value="child">Dítě</option>
+          <option value="teen">Teenager</option>
+          <option value="adult">Dospělý</option>
+        </select>
+        <label class="check"><input type="checkbox" id="supersim-hide-done"> Skrýt hotové</label>
+        <button id="supersim-reset-all" class="ghost-btn danger" type="button">Vynulovat vše</button>
+      </div>
+      <p class="hint">Klik přidá úroveň, pravý klik nebo dlouhé podržení ji ubere.</p>
+    </div>
+
+    <div id="supersim-sections" class="sections"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Neoficiální fanouškovský nástroj pro The Sims 4. Není nijak spojený s EA ani Maxis a není jimi podporovaný.</p>
+</footer>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<dialog id="dialog" class="dialog">
+  <form method="dialog" id="dialog-form">
+    <h2 id="dialog-title" class="dialog-title"></h2>
+    <div id="dialog-body" class="dialog-body"></div>
+    <div class="dialog-actions">
+      <button id="dialog-cancel" class="ghost-btn" type="button">Zrušit</button>
+      <button id="dialog-ok" class="primary-btn" type="submit">OK</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+FOREMAN-REPO-TEMPLATE.txt
+node_modules/
+.env
+data/*
+!data/.gitkeep
+*.log
+.DS_Store
