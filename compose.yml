@@ -11,7 +11,7 @@ services:
     user: "${SIMSHUB_UID:-1000}:${SIMSHUB_GID:-1000}"
 
     ports:
-      - "${SIMSHUB_PORT:-8105}:8000"
+      - "${SIMSHUB_PORT:-8106}:8000"
 
     volumes:
       - ./data:/data

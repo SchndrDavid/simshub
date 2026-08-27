@@ -33,7 +33,7 @@ than the public internet.
 docker compose up -d --build
 ```
 
-Then open `http://<host>:8105/`.
+Then open `http://<host>:8106/`.
 
 Without Docker:
 
@@ -49,7 +49,7 @@ Copy `.env.example` to `.env` to override any of them.
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `SIMSHUB_PORT` | `8105` | Host port the container is published on |
+| `SIMSHUB_PORT` | `8106` | Host port the container is published on |
 | `SIMSHUB_UID` / `SIMSHUB_GID` | `1000` | User the container runs as; must own `./data` |
 | `PORT` | `8000` | Port inside the container |
 | `SIMSHUB_DB_PATH` | `/data/simshub.db` | SQLite file location inside the container |
