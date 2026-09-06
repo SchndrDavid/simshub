@@ -429,47 +429,47 @@
   <section class="panel" id="panel-random" role="tabpanel" aria-labelledby="tab-random" tabindex="-1" hidden>
     <div class="panel-grid random-grid">
       <div class="card">
-        <h2 class="card-title">Nastavení</h2>
+        <h2 class="card-title" data-i18n="rnd_title_settings">Настройки</h2>
 
         <div class="rnd-presets-row" aria-label="Rychlé předvolby">
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="2" data-count="1" data-unique="0" title="Hod mincí (1–2)">🪙 Mince (1–2)</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="6" data-count="1" data-unique="0" title="Kostka d6 (1–6)">🎲 Kostka d6</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="6" data-count="2" data-unique="0" title="Dvě kostky 2d6">🎲 2d6</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="20" data-count="1" data-unique="0" title="Kostka d20 (1–20)">🎯 d20</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="100" data-count="1" data-unique="0" title="Procenta / 1–100">💯 1–100</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="8" data-count="1" data-unique="0" title="Simík v domácnosti (1–8)">👨‍👩‍👧‍👦 Simík (1–8)</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="2" data-count="1" data-unique="0" title="🪙 Монета (1–2)">🪙 Монета (1–2)</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="6" data-count="1" data-unique="0" title="🎲 Кубик d6 (1–6)">🎲 Кубик d6</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="6" data-count="2" data-unique="0" title="🎲 2d6 (2 кубика)">🎲 2d6</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="20" data-count="1" data-unique="0" title="🎯 d20 (1–20)">🎯 d20</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="100" data-count="1" data-unique="0" title="💯 Проценты (1–100)">💯 1–100</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="8" data-count="1" data-unique="0" title="👨‍👩‍👧‍👦 Персонаж в семье (1–8)">👨‍👩‍👧‍👦 Сим (1–8)</button>
         </div>
 
         <div class="row">
-          <label class="field"><span class="field-label">Od</span>
+          <label class="field"><span class="field-label" data-i18n="rnd_from">От</span>
             <input type="number" id="rnd-min" value="1" step="1"></label>
-          <label class="field"><span class="field-label">Do</span>
+          <label class="field"><span class="field-label" data-i18n="rnd_to">До</span>
             <input type="number" id="rnd-max" value="100" step="1"></label>
         </div>
-        <label class="field"><span class="field-label">Počet čísel (1–100)</span>
+        <label class="field"><span class="field-label" data-i18n="rnd_count">Количество чисел (1–100)</span>
           <input type="number" id="rnd-count" value="1" min="1" max="100" step="1"></label>
         <div class="row">
-          <label class="check"><input type="checkbox" id="rnd-unique"> Bez opakování</label>
-          <label class="check"><input type="checkbox" id="rnd-sort"> Seřadit</label>
+          <label class="check"><input type="checkbox" id="rnd-unique"> <span data-i18n="rnd_unique">Без повторений</span></label>
+          <label class="check"><input type="checkbox" id="rnd-sort"> <span data-i18n="rnd_sort">Сортировать</span></label>
         </div>
         <p id="rnd-error" class="error-text" role="alert" hidden></p>
         <div class="row">
-          <button id="rnd-go" class="primary-btn big" type="button">Generovat</button>
-          <button id="rnd-copy" class="ghost-btn" type="button">Kopírovat</button>
+          <button id="rnd-go" class="primary-btn big" type="button" data-i18n="rnd_go">Сгенерировать</button>
+          <button id="rnd-copy" class="ghost-btn" type="button" data-i18n="rnd_copy">Копировать</button>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header-row">
-          <h2 class="card-title">Výsledek</h2>
+          <h2 class="card-title" data-i18n="rnd_title_result">Результат</h2>
           <div id="rnd-stats" class="pill" hidden></div>
         </div>
         <div id="rnd-result" class="rnd-result" aria-live="polite"><span class="rnd-placeholder">—</span></div>
-        <p id="rnd-hint" class="hint center" hidden>Kliknutím na číslo ho zkopíruješ</p>
+        <p id="rnd-hint" class="hint center" data-i18n="rnd_hint" hidden>Нажмите на число, чтобы скопировать его</p>
 
-        <h3 class="card-subtitle">Historie</h3>
+        <h3 class="card-subtitle" data-i18n="rnd_title_history">История</h3>
         <ol id="rnd-history" class="history"></ol>
-        <button id="rnd-history-clear" class="ghost-btn" type="button">Vymazat historii</button>
+        <button id="rnd-history-clear" class="ghost-btn" type="button" data-i18n="rnd_clear_history">Очистить историю</button>
       </div>
     </div>
   </section>

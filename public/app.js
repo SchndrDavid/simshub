@@ -17,6 +17,7 @@ const BASE = (() => {
 const SCHEMA_VERSION = 1;
 const SAVE_DEBOUNCE_MS = 1000;
 const POLL_INTERVAL_MS = 30000;
+const HISTORY_LIMIT = 50;
 /* ----------------------------------------------------------- localization */
 
 const I18N = {
@@ -94,6 +95,24 @@ const I18N = {
     supersim_reset_all: 'Сбросить всё',
     supersim_reset_section: 'Сбросить',
     supersim_hint: 'Клик: +1 уровень. Правый клик или долгое нажатие: −1 уровень.',
+    rnd_title_settings: 'Настройки',
+    rnd_title_result: 'Результат',
+    rnd_title_history: 'История',
+    rnd_from: 'От',
+    rnd_to: 'До',
+    rnd_count: 'Количество чисел (1–100)',
+    rnd_unique: 'Без повторений',
+    rnd_sort: 'Сортировать',
+    rnd_go: 'Сгенерировать',
+    rnd_copy: 'Копировать',
+    rnd_clear_history: 'Очистить историю',
+    rnd_hint: 'Нажмите на число, чтобы скопировать его',
+    rnd_empty: 'Пока пусто.',
+    rnd_err_bounds: 'Введите корректные целые числа «От» и «До».',
+    rnd_err_min_gt_max: 'Значение «От» должно быть меньше или равно «До».',
+    rnd_err_count: 'Количество чисел должно быть от 1 до 100.',
+    rnd_err_span: 'Диапазон слишком велик.',
+    rnd_err_unique: 'Без повторений нельзя выбрать столько чисел из заданного диапазона.',
     category_expansion: 'Дополнения',
     category_gamepack: 'Игровые наборы',
     category_stuffpack: 'Каталоги',
@@ -183,6 +202,24 @@ const I18N = {
     supersim_reset_all: 'Vynulovat vše',
     supersim_reset_section: 'Vynulovat',
     supersim_hint: 'Klik přidá úroveň, pravý klik nebo dlouhé podržení ji ubere.',
+    rnd_title_settings: 'Nastavení',
+    rnd_title_result: 'Výsledek',
+    rnd_title_history: 'Historie',
+    rnd_from: 'Od',
+    rnd_to: 'Do',
+    rnd_count: 'Počet čísel (1–100)',
+    rnd_unique: 'Bez opakování',
+    rnd_sort: 'Seřadit',
+    rnd_go: 'Generovat',
+    rnd_copy: 'Kopírovat',
+    rnd_clear_history: 'Vymazat historii',
+    rnd_hint: 'Kliknutím na číslo ho zkopíruješ',
+    rnd_empty: 'Zatím nic.',
+    rnd_err_bounds: 'Zadej platná celá čísla „Od“ i „Do“.',
+    rnd_err_min_gt_max: 'Hodnota „Od“ musí být menší nebo rovna „Do“.',
+    rnd_err_count: 'Počet čísel musí být 1 až 100.',
+    rnd_err_span: 'Rozsah je příliš velký.',
+    rnd_err_unique: 'Bez opakování nelze vylosovat tolik čísel z daného rozsahu.',
     category_expansion: 'Rozšíření',
     category_gamepack: 'Herní balíčky',
     category_stuffpack: 'Kolekce',
@@ -272,6 +309,24 @@ const I18N = {
     supersim_reset_all: 'Reset all',
     supersim_reset_section: 'Reset',
     supersim_hint: 'Left-click: +1 level. Right-click or long press: −1 level.',
+    rnd_title_settings: 'Settings',
+    rnd_title_result: 'Result',
+    rnd_title_history: 'History',
+    rnd_from: 'From',
+    rnd_to: 'To',
+    rnd_count: 'Count of numbers (1–100)',
+    rnd_unique: 'No duplicates',
+    rnd_sort: 'Sort',
+    rnd_go: 'Generate',
+    rnd_copy: 'Copy',
+    rnd_clear_history: 'Clear history',
+    rnd_hint: 'Click a number to copy it',
+    rnd_empty: 'Nothing yet.',
+    rnd_err_bounds: 'Enter valid integers for "From" and "To".',
+    rnd_err_min_gt_max: '"From" value must be less than or equal to "To".',
+    rnd_err_count: 'Count must be between 1 and 100.',
+    rnd_err_span: 'Range is too large.',
+    rnd_err_unique: 'Cannot draw that many unique numbers from the range.',
     category_expansion: 'Expansion Packs',
     category_gamepack: 'Game Packs',
     category_stuffpack: 'Stuff Packs',
@@ -402,27 +457,35 @@ function randomInt(bound) {
   if (!Number.isInteger(bound) || bound < 1) throw new RangeError('bound must be a positive integer');
   if (bound === 1) return 0;
 
-  if (bound <= 0x100000000) {
-    const limit = Math.floor(0x100000000 / bound) * bound;
-    const buffer = new Uint32Array(1);
-    let value;
-    do {
-      crypto.getRandomValues(buffer);
-      value = buffer[0];
-    } while (value >= limit);
-    return value % bound;
+  const cryptoObj = (typeof window !== 'undefined' && window.crypto) || (typeof crypto !== 'undefined' ? crypto : null);
+  if (!cryptoObj || typeof cryptoObj.getRandomValues !== 'function') {
+    return Math.floor(Math.random() * bound);
   }
 
-  // Larger ranges: build a 53-bit integer out of two words, same rejection rule.
-  const max = Number.MAX_SAFE_INTEGER + 1;
-  const limit = Math.floor(max / bound) * bound;
-  const buffer = new Uint32Array(2);
-  let value;
-  do {
-    crypto.getRandomValues(buffer);
-    value = (buffer[0] % 0x200000) * 0x100000000 + buffer[1];
-  } while (value >= limit);
-  return value % bound;
+  try {
+    if (bound <= 0x100000000) {
+      const limit = Math.floor(0x100000000 / bound) * bound;
+      const buffer = new Uint32Array(1);
+      let value;
+      do {
+        cryptoObj.getRandomValues(buffer);
+        value = buffer[0];
+      } while (value >= limit);
+      return value % bound;
+    }
+
+    const max = Number.MAX_SAFE_INTEGER + 1;
+    const limit = Math.floor(max / bound) * bound;
+    const buffer = new Uint32Array(2);
+    let value;
+    do {
+      cryptoObj.getRandomValues(buffer);
+      value = (buffer[0] % 0x200000) * 0x100000000 + buffer[1];
+    } while (value >= limit);
+    return value % bound;
+  } catch {
+    return Math.floor(Math.random() * bound);
+  }
 }
 
 function randomBetween(min, max) {
@@ -1770,16 +1833,17 @@ const RandomNumber = (() => {
     clearNode(list);
     const history = Store.state.random.history;
     if (!history.length) {
-      list.append(h('li', { class: 'muted' }, 'Zatím nic.'));
+      list.append(h('li', { class: 'muted' }, t('rnd_empty', 'Zatím nic.')));
       return;
     }
+    const loc = currentLang === 'ru' ? 'ru-RU' : (currentLang === 'en' ? 'en-US' : 'cs-CZ');
     for (const entry of history) {
       const nums = entry.numbers || [];
-      const text = nums.map((n) => n.toLocaleString('cs-CZ')).join(', ');
+      const text = nums.map((n) => n.toLocaleString(loc)).join(', ');
       const copyBtn = h('button', {
         class: 'ghost-btn tiny',
         type: 'button',
-        title: 'Zkopírovat tato čísla',
+        title: t('rnd_copy', 'Kopírovat'),
         onclick: () => copyText(nums.join(', ')),
       }, '📋');
 
@@ -1794,21 +1858,29 @@ const RandomNumber = (() => {
   }
 
   function generate() {
+    clearInterval(flickerTimer);
+    flickerTimer = null;
+
     const { min, max, count } = readInputs();
     const unique = $('#rnd-unique').checked;
     const sort = $('#rnd-sort').checked;
 
-    if (!Number.isFinite(min) || !Number.isFinite(max)) return setError('Zadej platná celá čísla „Od“ i „Do“.');
-    if (min > max) return setError('Hodnota „Od“ musí být menší nebo rovna „Do“.');
-    if (!Number.isFinite(count) || count < 1 || count > 100) return setError('Počet čísel musí být 1 až 100.');
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return setError(t('rnd_err_bounds', 'Zadej platná celá čísla „Od“ i „Do“.'));
+    if (min > max) return setError(t('rnd_err_min_gt_max', 'Hodnota „Od“ musí být menší nebo rovna „Do“.'));
+    if (!Number.isFinite(count) || count < 1 || count > 100) return setError(t('rnd_err_count', 'Počet čísel musí být 1 až 100.'));
     const span = max - min + 1;
-    if (span > Number.MAX_SAFE_INTEGER) return setError('Rozsah je příliš velký.');
+    if (span > Number.MAX_SAFE_INTEGER) return setError(t('rnd_err_span', 'Rozsah je příliš velký.'));
     if (unique && span < count) {
-      return setError(`Bez opakování nelze vylosovat ${count} čísel z rozsahu o velikosti ${span}.`);
+      return setError(t('rnd_err_unique', `Bez opakování nelze vylosovat ${count} čísel z rozsahu o velikosti ${span}.`));
     }
     setError('');
 
-    const result = draw(min, max, count, unique);
+    let result;
+    try {
+      result = draw(min, max, count, unique);
+    } catch (err) {
+      return setError(err.message || 'Chyba při generování.');
+    }
     if (sort) result.sort((a, b) => a - b);
     lastResult = result;
 
@@ -1819,7 +1891,6 @@ const RandomNumber = (() => {
     Store.touch();
     renderHistory();
 
-    clearInterval(flickerTimer);
     if (prefersReducedMotion()) {
       renderNumbers(result, true);
       return;
@@ -2880,7 +2951,46 @@ const SUPERSIM_CATEGORIES = {
   'Dětské milníky': { ru: 'Детские рубежи', cs: 'Dětské milníky', en: 'Child Milestones' },
   'Teenagerské milníky': { ru: 'Подростковые рубежи', cs: 'Teenagerské milníky', en: 'Teen Milestones' },
   'Dospělé milníky': { ru: 'Взрослые рубежи', cs: 'Dospělé milníky', en: 'Adult Milestones' },
+  'animal': { ru: 'Животные', cs: 'Zvířata', en: 'Animal' },
+  'athletic': { ru: 'Спорт', cs: 'Atletika', en: 'Athletic' },
+  'child': { ru: 'Детские', cs: 'Dětské', en: 'Child' },
+  'creativity': { ru: 'Творчество', cs: 'Kreativita', en: 'Creativity' },
+  'deviance': { ru: 'Дурной нрав', cs: 'Nepravost', en: 'Deviance' },
+  'family': { ru: 'Семья', cs: 'Rodina', en: 'Family' },
+  'food': { ru: 'Еда', cs: 'Jídlo', en: 'Food' },
+  'fortune': { ru: 'Состояние', cs: 'Bohatství', en: 'Fortune' },
+  'knowledge': { ru: 'Знания', cs: 'Vědomosti', en: 'Knowledge' },
+  'location': { ru: 'Место и культура', cs: 'Místo a kultura', en: 'Location' },
+  'love': { ru: 'Любовь', cs: 'Láska', en: 'Love' },
+  'nature': { ru: 'Природа', cs: 'Příroda', en: 'Nature' },
+  'popularity': { ru: 'Популярность', cs: 'Popularita', en: 'Popularity' },
+  'star wars': { ru: 'Star Wars', cs: 'Star Wars', en: 'Star Wars' },
+  'teen': { ru: 'Подростковые', cs: 'Teenagerské', en: 'Teen' },
+  'wellness': { ru: 'Здоровый образ жизни', cs: 'Wellness', en: 'Wellness' },
+  'werewolf': { ru: 'Оборотни', cs: 'Vlkodlaci', en: 'Werewolf' },
+  'fairy': { ru: 'Феи', cs: 'Víly', en: 'Fairy' },
 };
+
+const ASPIRATION_CATEGORY_DEFS = [
+  { id: 'animal', name: { ru: 'Животные', cs: 'Zvířata', en: 'Animal' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -2, iy: -2, iw: 96, ih: 96 },
+  { id: 'athletic', name: { ru: 'Спорт', cs: 'Atletika', en: 'Athletic' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -102, iy: -2, iw: 96, ih: 96 },
+  { id: 'child', name: { ru: 'Детские', cs: 'Dětské', en: 'Child' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -202, iy: -2, iw: 96, ih: 96 },
+  { id: 'creativity', name: { ru: 'Творчество', cs: 'Kreativita', en: 'Creativity' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -302, iy: -2, iw: 96, ih: 96 },
+  { id: 'deviance', name: { ru: 'Дурной нрав', cs: 'Nepravost', en: 'Deviance' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -402, iy: -2, iw: 96, ih: 96 },
+  { id: 'family', name: { ru: 'Семья', cs: 'Rodina', en: 'Family' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -2, iy: -102, iw: 96, ih: 96 },
+  { id: 'food', name: { ru: 'Еда', cs: 'Jídlo', en: 'Food' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -102, iy: -102, iw: 96, ih: 96 },
+  { id: 'fortune', name: { ru: 'Состояние', cs: 'Bohatství', en: 'Fortune' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -202, iy: -102, iw: 96, ih: 96 },
+  { id: 'knowledge', name: { ru: 'Знания', cs: 'Vědomosti', en: 'Knowledge' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -302, iy: -102, iw: 96, ih: 96 },
+  { id: 'location', name: { ru: 'Место и культура', cs: 'Místo a kultura', en: 'Location' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -402, iy: -102, iw: 96, ih: 96 },
+  { id: 'love', name: { ru: 'Любовь', cs: 'Láska', en: 'Love' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -2, iy: -202, iw: 96, ih: 96 },
+  { id: 'nature', name: { ru: 'Природа', cs: 'Příroda', en: 'Nature' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -102, iy: -202, iw: 96, ih: 96 },
+  { id: 'popularity', name: { ru: 'Популярность', cs: 'Popularita', en: 'Popularity' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -202, iy: -202, iw: 96, ih: 96 },
+  { id: 'star wars', name: { ru: 'Star Wars', cs: 'Star Wars', en: 'Star Wars' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -302, iy: -202, iw: 96, ih: 96 },
+  { id: 'teen', name: { ru: 'Подростковые', cs: 'Teenagerské', en: 'Teen' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -402, iy: -202, iw: 96, ih: 96 },
+  { id: 'wellness', name: { ru: 'Здоровый образ жизни', cs: 'Wellness', en: 'Wellness' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -2, iy: -302, iw: 96, ih: 96 },
+  { id: 'werewolf', name: { ru: 'Оборотни', cs: 'Vlkodlaci', en: 'Werewolf' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -102, iy: -302, iw: 96, ih: 96 },
+  { id: 'fairy', name: { ru: 'Феи', cs: 'Víly', en: 'Fairy' }, atlas: 'icons/supersim/a24dcbe0-53fe-4efb-6139-290b748d8900.png', aw: 500, ah: 400, ix: -202, iy: -302, iw: 96, ih: 96 },
+];
 
 const SUPERSIM_SECTION_EN = {
   aspirations: 'Aspirations',
@@ -2900,9 +3010,11 @@ const Supersim = (() => {
   let doc = null;
   let search = '';
   let active = false;
+  let selectedAspirationCat = '';
   let longPressTimer = null;
   let longPressFired = false;
   const sectionPills = new Map();
+  const sectionRowStats = new Map();
 
   const keyOf = (sectionId, item) => `${sectionId}::${item.name}`;
 
@@ -2965,6 +3077,9 @@ const Supersim = (() => {
         const matchCs = item.cs && item.cs.toLowerCase().includes(needle);
         if (!matchName && !matchEn && !matchRu && !matchCs) return false;
       }
+      if (section.id === 'aspirations' && selectedAspirationCat) {
+        if (item.category !== selectedAspirationCat) return false;
+      }
       if (state.age) {
         if (state.age === 'toddler') {
           if (item.age !== 'toddler') return false;
@@ -3004,7 +3119,7 @@ const Supersim = (() => {
     $('#supersim-summary-bar').style.width = `${percent}%`;
   }
 
-  /* A click only touches its own row: rebuilding every section would scroll
+  /* A click only touches its own card: rebuilding every section would scroll
      the list around and drop keyboard focus. */
   function applyChange(section, item, node, delta) {
     setProgress(section.id, item, progressOf(section.id, item) + delta);
@@ -3021,13 +3136,62 @@ const Supersim = (() => {
       const stats = sectionStats(section);
       pill.textContent = `${stats.done}/${stats.total} · ${stats.percent} %`;
     }
+    const rowStats = sectionRowStats.get(section.id);
+    if (rowStats) {
+      const stats = sectionStats(section);
+      rowStats.textContent = `${currentLang === 'ru' ? 'Выполнено:' : (currentLang === 'en' ? 'Completed:' : 'Dokončeno:')} ${stats.done} / ${stats.total} (${stats.percent}%)`;
+    }
     renderSummary();
+  }
+
+  function renderAspirationTabs() {
+    const tabsWrap = h('div', { class: 'aspiration_tabs_wrap' });
+
+    // All Tab
+    const allTab = h('button', {
+      type: 'button',
+      class: `aspiration_tab${!selectedAspirationCat ? ' active' : ''}`,
+      onclick: () => {
+        selectedAspirationCat = '';
+        render();
+      }
+    },
+    h('div', { style: 'height:36px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;' }, '★'),
+    h('div', { class: 'aspiration_name' }, currentLang === 'ru' ? 'Все' : (currentLang === 'en' ? 'All' : 'Vše')));
+    tabsWrap.append(allTab);
+
+    for (const cat of ASPIRATION_CATEGORY_DEFS) {
+      const isActive = selectedAspirationCat === cat.id;
+      const style = [
+        `--atlas:url('${cat.atlas}')`,
+        `--atlas-w:${cat.aw}`,
+        `--atlas-h:${cat.ah}`,
+        `--icon-x:${cat.ix}`,
+        `--icon-y:${cat.iy}`,
+        `--icon-w:${cat.iw}`,
+        `--icon-h:${cat.ih}`,
+        `--icon-size:36px`,
+      ].join(';');
+
+      const tab = h('button', {
+        type: 'button',
+        class: `aspiration_tab${isActive ? ' active' : ''}`,
+        onclick: () => {
+          selectedAspirationCat = (selectedAspirationCat === cat.id) ? '' : cat.id;
+          render();
+        }
+      },
+      h('div', { class: 'icon-item inline', style }),
+      h('div', { class: 'aspiration_name' }, cat.name[currentLang] || cat.name.ru || cat.id));
+      tabsWrap.append(tab);
+    }
+    return tabsWrap;
   }
 
   function itemControl(section, item) {
     const value = progressOf(section.id, item);
     const done = value >= item.levels;
-    const change = (delta) => applyChange(section, item, button, delta);
+    const change = (delta) => applyChange(section, item, card, delta);
     const title = itemTitleOf(item);
     const sub = itemSubOf(item);
 
@@ -3043,16 +3207,74 @@ const Supersim = (() => {
     }
     const labelText = `${title}${sub} – ${stateDesc}`;
 
-    let costBadge = null;
+    const iconSize = section.id === 'milestones' ? '38px' : '44px';
+    let iconEl;
+    if (item.atlas) {
+      const style = [
+        `--atlas:url('${item.atlas}')`,
+        `--atlas-w:${item.aw}`,
+        `--atlas-h:${item.ah}`,
+        `--icon-x:${item.ix}`,
+        `--icon-y:${item.iy}`,
+        `--icon-w:${item.iw}`,
+        `--icon-h:${item.ih}`,
+        `--icon-size:${iconSize}`,
+      ].join(';');
+      iconEl = h('div', { class: 'icon-item inline', style, title });
+    } else if (item.pack && packIconOf(item.pack)) {
+      iconEl = h('img', {
+        class: 'pack-icon-mini',
+        src: packIconUrl(packIconOf(item.pack)),
+        alt: '',
+        style: `width:${iconSize};height:${iconSize};object-fit:contain;`
+      });
+    } else {
+      iconEl = h('div', { class: 'icon-item inline', style: `--icon-size:${iconSize};` });
+    }
+
+    const iconContainer = section.id === 'milestones'
+      ? h('div', { class: 'milestone_circle_cont' }, iconEl)
+      : h('div', { class: 'supersim-card-icon' }, iconEl);
+
+    const metaParts = [];
     if (item.cost) {
       const formatted = item.cost.toLocaleString(currentLang === 'ru' ? 'ru-RU' : (currentLang === 'en' ? 'en-US' : 'cs-CZ'));
       const unit = currentLang === 'ru' ? 'б.' : (currentLang === 'en' ? 'pts' : 'b.');
-      costBadge = h('span', { class: 'item-cost-badge' }, `${formatted} ${unit}`);
+      metaParts.push(h('span', { class: 'reward_cost' },
+        h('span', { 'aria-hidden': 'true' }, '💎'),
+        `${formatted} ${unit}`
+      ));
+    }
+    if (item.pack) {
+      const pIcon = packIconOf(item.pack);
+      metaParts.push(h('span', { class: 'item-pack-label', style: 'display:inline-flex;align-items:center;gap:4px;' },
+        pIcon ? h('img', {
+          class: 'pack-icon-mini',
+          src: packIconUrl(pIcon),
+          alt: '',
+          loading: 'lazy',
+          onerror: (e) => { e.target.style.display = 'none'; },
+        }) : null,
+        h('span', {}, packNameOf(item.pack) || item.pack)
+      ));
+    }
+    if (item.levels > 1) {
+      metaParts.push(h('div', { class: 'skill_bar_container' },
+        h('div', { class: 'skill_progress', style: `width:${Math.round((value / item.levels) * 100)}%` })
+      ));
     }
 
-    const button = h('button', {
+    let badgeText = '';
+    if (item.levels === 1) {
+      badgeText = done ? '✓' : '';
+    } else {
+      badgeText = done ? '✓' : String(value);
+    }
+    const levelBadge = h('span', { class: 'supersim-level-badge' }, badgeText);
+
+    const card = h('button', {
       type: 'button',
-      class: `item-btn${done ? ' done' : ''}`,
+      class: `supersim-card${done ? ' done' : ''}`,
       'aria-pressed': item.levels === 1 ? String(done) : null,
       'aria-label': labelText,
       onclick: () => {
@@ -3084,29 +3306,17 @@ const Supersim = (() => {
         }
       },
     },
-    h('span', { class: 'item-name' },
-      h('span', { class: 'item-title' }, title),
-      sub ? h('span', { class: 'item-en-sub' }, sub) : null,
-      costBadge,
+    iconContainer,
+    h('div', { class: 'supersim-card-body' },
+      h('span', { class: 'supersim-card-title' },
+        title,
+        sub ? h('span', { class: 'muted', style: 'font-weight:normal;font-size:.8em;margin-left:4px;' }, sub) : null
+      ),
+      metaParts.length ? h('div', { class: 'supersim-card-meta' }, metaParts) : null
     ),
-    item.pack ? h('span', { class: 'item-pack' },
-      packIconOf(item.pack) ? h('img', {
-        class: 'pack-icon-mini',
-        src: packIconUrl(packIconOf(item.pack)),
-        alt: '',
-        loading: 'lazy',
-        onerror: (e) => { e.target.style.display = 'none'; },
-      }) : null,
-      h('span', {}, packNameOf(item.pack) || item.pack)) : null,
-    item.levels === 1
-      ? h('span', { class: 'item-state' }, done ? '✓' : '')
-      : h('span', { class: 'item-level' }, `${value}/${item.levels}`));
+    levelBadge);
 
-    if (item.levels > 1) {
-      button.append(h('span', { class: 'item-bar' },
-        h('span', { class: 'item-bar-fill', style: `width:${(value / item.levels) * 100}%` })));
-    }
-    return button;
+    return card;
   }
 
   function renderSection(section) {
@@ -3121,23 +3331,42 @@ const Supersim = (() => {
     const sNote = sectionNoteOf(section);
     const resetText = t('supersim_reset_section');
 
-    const header = h('div', { class: 'section-head' },
-      h('button', {
-        type: 'button',
-        class: 'section-toggle',
-        'aria-expanded': String(!collapsed),
-        'aria-controls': bodyId,
-        onclick: () => {
+    const titleBar = h('div', {
+      class: 'sims_title',
+      role: 'button',
+      tabindex: 0,
+      'aria-expanded': String(!collapsed),
+      'aria-controls': bodyId,
+      onclick: () => {
+        Store.state.supersim.collapsed[section.id] = !collapsed;
+        Store.touch();
+        render();
+      },
+      onkeydown: (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
           Store.state.supersim.collapsed[section.id] = !collapsed;
           Store.touch();
           render();
-        },
-      }, h('span', { class: 'chevron', 'aria-hidden': 'true' }, collapsed ? '▸' : '▾'), sLabel),
+        }
+      }
+    },
+    h('span', { class: 'sims_title_text' }, sLabel),
+    h('div', { style: 'display:flex;align-items:center;gap:10px;' },
       pill,
+      h('span', { class: 'minimize', 'aria-hidden': 'true' }, collapsed ? '▸' : '▾')
+    ));
+
+    const rowStatsEl = h('span', { class: 'row_bar_stats' }, `${currentLang === 'ru' ? 'Выполнено:' : (currentLang === 'en' ? 'Completed:' : 'Dokončeno:')} ${stats.done} / ${stats.total} (${stats.percent}%)`);
+    sectionRowStats.set(section.id, rowStatsEl);
+
+    const rowBar = h('div', { class: 'row_bar' },
+      rowStatsEl,
       h('button', {
         type: 'button',
         class: 'ghost-btn small danger',
-        onclick: async () => {
+        onclick: async (e) => {
+          e.stopPropagation();
           const msg = currentLang === 'ru'
             ? `Действительно сбросить прогресс в разделе «${sLabel}»?`
             : (currentLang === 'en' ? `Really reset progress in "${sLabel}"?` : `Opravdu vynulovat postup v sekci „${sLabel}“?`);
@@ -3147,7 +3376,8 @@ const Supersim = (() => {
           Store.touch();
           render();
         },
-      }, resetText));
+      }, resetText)
+    );
 
     const body = h('div', { class: 'section-body', id: bodyId, hidden: collapsed });
 
@@ -3157,12 +3387,16 @@ const Supersim = (() => {
       body.append(h('p', { class: 'note' }, sNote));
     }
 
+    if (section.id === 'aspirations') {
+      body.append(renderAspirationTabs());
+    }
+
     if (!items.length) {
       const emptyMsg = availableItems(section).length
         ? (currentLang === 'ru' ? 'Фильтрам ничего не соответствует.' : (currentLang === 'en' ? 'No items match the filters.' : 'Filtrům nic neodpovídá.'))
         : (currentLang === 'ru' ? 'Здесь пока нет элементов.' : (currentLang === 'en' ? 'No items here yet.' : 'Zatím tu nejsou žádné položky.'));
-      body.append(h('p', { class: 'muted' }, emptyMsg));
-    } else if (section.groupBy === 'category') {
+      body.append(h('p', { class: 'muted', style: 'padding:16px;' }, emptyMsg));
+    } else if (section.groupBy === 'category' && section.id !== 'aspirations') {
       const groups = new Map();
       for (const item of items) {
         if (!groups.has(item.category)) groups.set(item.category, []);
@@ -3170,14 +3404,14 @@ const Supersim = (() => {
       }
       for (const [category, groupItems] of groups) {
         body.append(h('div', { class: 'group' },
-          h('h4', { class: 'group-title' }, categoryTitleOf(category)),
-          h('div', { class: 'items' }, groupItems.map((item) => itemControl(section, item)))));
+          h('h4', { class: 'group-title', style: 'padding:12px 18px 4px;' }, categoryTitleOf(category)),
+          h('div', { class: 'supersim-grid' }, groupItems.map((item) => itemControl(section, item)))));
       }
     } else {
-      body.append(h('div', { class: 'items' }, items.map((item) => itemControl(section, item))));
+      body.append(h('div', { class: 'supersim-grid' }, items.map((item) => itemControl(section, item))));
     }
 
-    return h('section', { class: 'card tracker-section' }, header, body);
+    return h('section', { class: 'card tracker-section' }, titleBar, rowBar, body);
   }
 
   function render() {
@@ -3185,6 +3419,7 @@ const Supersim = (() => {
     const box = $('#supersim-sections');
     clearNode(box);
     sectionPills.clear();
+    sectionRowStats.clear();
     const state = Store.state.supersim;
     for (const section of doc.sections) {
       // While searching or filtering by age, sections with no hit only add noise.
