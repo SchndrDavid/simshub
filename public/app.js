@@ -119,12 +119,99 @@ const I18N = {
     category_kit: 'Комплекты',
     copied_toast: 'Скопировано в буфер обмена.',
     copy_failed_toast: 'Не удалось скопировать.',
+    lock: 'Заблокировать',
+    unlock: 'Разблокировать',
+    dialog_cancel: 'Отмена',
+    dialog_ok: 'OK',
+    rp_msg_no_active: 'Нет активных наборов. Отметьте хотя бы один набор с ненулевым весом категории.',
+    rp_msg_only_n_available: 'Доступно только {n} наборов, отображаются все.',
+    rnd_preset_coin: '🪙 Монета (1–2)',
+    rnd_preset_d6: '🎲 Кубик d6',
+    rnd_preset_2d6: '🎲 2d6',
+    rnd_preset_d20: '🎯 d20',
+    rnd_preset_100: '💯 1–100',
+    rnd_preset_sim: '👨‍👩‍👧‍👦 Сим (1–8)',
+    rnd_stats_sum: 'Сумма',
+    rnd_stats_avg: 'Среднее',
+    rnd_stats_min: 'Мин',
+    rnd_stats_max: 'Макс',
+    rnd_nothing_to_copy: 'Нечего копировать.',
+    wheel_items_title: 'Элементы',
+    wheel_item_one: 'элемент',
+    wheel_item_few: 'элемента',
+    wheel_item_many: 'элементов',
+    wheel_weight_one: 'вес',
+    wheel_weight_few: 'веса',
+    wheel_weight_many: 'весов',
+    wheel_one_per_line: 'Один элемент на строку',
+    wheel_placeholder: 'Пицца\nСуши\nБлинчики x3',
+    wheel_hint_weight: 'Строка с окончанием x3 получает утроенный сектор.',
+    wheel_shuffle: '🔀 Перемешать',
+    wheel_shuffle_title: 'Случайно перемешать порядок элементов',
+    wheel_sort: '🔤 Сортировать',
+    wheel_sort_title: 'Отсортировать элементы по алфавиту',
+    wheel_clear: 'Очистить',
+    wheel_clear_title: 'Очистить весь список',
+    wheel_remove_winner: 'Удалять победителя после вращения',
+    wheel_sound: 'Звук',
+    wheel_presets_title: 'Шаблоны и сохраненные списки',
+    wheel_select_preset: '— Выбрать шаблон —',
+    wheel_preset_challenges: 'Челленджи The Sims 4',
+    wheel_preset_aspirations: 'Случайные цели The Sims 4',
+    wheel_preset_food: 'Что сегодня приготовить',
+    wheel_preset_activities: 'Чем заняться',
+    wheel_preset_yes_no: 'Да / Нет / Возможно',
+    wheel_preset_who_turn: 'Чья очередь',
+    wheel_preset_load: 'Вставить',
+    wheel_list_load: 'Загрузить',
+    wheel_list_delete: 'Удалить',
+    wheel_list_save: 'Сохранить текущий список',
+    wheel_spin: 'Крутить',
+    wheel_history_title: 'История',
+    wheel_history_clear: 'Очистить историю',
+    wheel_empty: 'Добавьте элементы',
+    wheel_winner_badge: '🎉 Победитель',
+    wheel_winner_title: 'Колесо фортуны',
+    wheel_winner_ok: 'Отлично!',
+    wheel_msg_add_first: 'Сначала добавьте хотя бы один элемент.',
+    wheel_no_saved_lists: 'Нет сохраненных списков',
+    wheel_shuffled_toast: 'Список случайно перемешан.',
+    wheel_sorted_toast: 'Список отсортирован по алфавиту.',
+    wheel_cleared_toast: 'Список очищен.',
+    wheel_clear_confirm_title: 'Очистить список',
+    wheel_clear_confirm_msg: 'Вы уверены, что хотите удалить все элементы с колеса?',
+    wheel_preset_confirm_title: 'Вставить шаблон',
+    wheel_preset_confirm_msg: 'Текущий список на колесе будет заменен этим шаблоном. Продолжить?',
+    wheel_preset_loaded_toast: 'Шаблон загружен на колесо.',
+    wheel_save_title: 'Сохранить список',
+    wheel_save_prompt: 'Название списка',
+    wheel_save_overwrite_title: 'Перезаписать список',
+    wheel_save_overwrite_msg: 'Список «{name}» уже существует. Перезаписать?',
+    wheel_saved_toast: 'Список сохранен.',
+    wheel_delete_confirm_title: 'Удалить список',
+    wheel_delete_confirm_msg: 'Действительно удалить список «{name}»?',
+    wheel_deleted_toast: 'Список удален.',
     profile_manage: 'Управление профилями',
     profile_new: 'Новый профиль',
+    profile_name_prompt: 'Название профиля',
+    profile_create_btn: 'Создать',
+    profile_created_toast: 'Профиль «{name}» готов.',
     profile_rename: 'Переименовать',
+    profile_new_name: 'Новое название',
+    profile_rename_btn: 'Переименовать',
+    profile_renamed_toast: 'Профиль переименован.',
     profile_export: 'Экспорт JSON',
     profile_import: 'Импорт JSON',
+    profile_import_title: 'Импорт профиля',
+    profile_import_prompt: 'Название нового профиля',
+    profile_import_btn: 'Импортировать',
+    profile_imported_toast: 'Профиль импортирован.',
+    profile_import_error: 'Не удалось прочитать файл как JSON.',
     profile_delete: 'Удалить профиль',
+    profile_delete_title: 'Удалить профиль',
+    profile_delete_confirm: 'Действительно удалить профиль «{name}» со всеми данными?',
+    profile_delete_btn: 'Удалить',
+    profile_deleted_toast: 'Профиль удален.',
     profile_close: 'Закрыть',
     footer_disclaimer: 'Неофициальный фанатский инструмент для The Sims 4. Не связан с EA или Maxis.',
   },
@@ -226,12 +313,99 @@ const I18N = {
     category_kit: 'Výbava (Kity)',
     copied_toast: 'Zkopírováno do schránky.',
     copy_failed_toast: 'Kopírování se nepovedlo.',
+    lock: 'Zamknout',
+    unlock: 'Odemknout',
+    dialog_cancel: 'Zrušit',
+    dialog_ok: 'OK',
+    rp_msg_no_active: 'Žádné aktivní balíčky. Zaškrtněte alespoň jeden balíček s nenulovou vahou kategorie.',
+    rp_msg_only_n_available: 'K dispozici je pouze {n} balíčků, zobrazeny jsou všechny.',
+    rnd_preset_coin: '🪙 Mince (1–2)',
+    rnd_preset_d6: '🎲 Kostka d6',
+    rnd_preset_2d6: '🎲 2d6',
+    rnd_preset_d20: '🎯 d20',
+    rnd_preset_100: '💯 1–100',
+    rnd_preset_sim: '👨‍👩‍👧‍👦 Simík (1–8)',
+    rnd_stats_sum: 'Součet',
+    rnd_stats_avg: 'Průměr',
+    rnd_stats_min: 'Min',
+    rnd_stats_max: 'Max',
+    rnd_nothing_to_copy: 'Není co kopírovat.',
+    wheel_items_title: 'Položky',
+    wheel_item_one: 'položka',
+    wheel_item_few: 'položky',
+    wheel_item_many: 'položek',
+    wheel_weight_one: 'váha',
+    wheel_weight_few: 'váhy',
+    wheel_weight_many: 'vah',
+    wheel_one_per_line: 'Jedna položka na řádek',
+    wheel_placeholder: 'Pizza\nSushi\nPalačinky x3',
+    wheel_hint_weight: 'Řádek zakončený x3 dostane trojnásobně velký segment.',
+    wheel_shuffle: '🔀 Zamíchat',
+    wheel_shuffle_title: 'Náhodně promíchat pořadí položek',
+    wheel_sort: '🔤 Seřadit',
+    wheel_sort_title: 'Seřadit položky podle abecedy',
+    wheel_clear: 'Vyčistit',
+    wheel_clear_title: 'Vymazat celý seznam',
+    wheel_remove_winner: 'Odebrat vítěze po vytočení',
+    wheel_sound: 'Zvuk',
+    wheel_presets_title: 'Předlohy a uložené seznamy',
+    wheel_select_preset: '— Vybrat předlohu —',
+    wheel_preset_challenges: 'Sims 4 výzvy',
+    wheel_preset_aspirations: 'Sims 4 náhodné cíle',
+    wheel_preset_food: 'Co dnes k jídlu',
+    wheel_preset_activities: 'Co dnes podniknout',
+    wheel_preset_yes_no: 'Ano / Ne / Možná',
+    wheel_preset_who_turn: 'Kdo je na řadě',
+    wheel_preset_load: 'Vložit',
+    wheel_list_load: 'Načíst',
+    wheel_list_delete: 'Smazat',
+    wheel_list_save: 'Uložit aktuální seznam',
+    wheel_spin: 'Zatočit',
+    wheel_history_title: 'Historie',
+    wheel_history_clear: 'Vymazat historii',
+    wheel_empty: 'Přidej položky',
+    wheel_winner_badge: '🎉 Vítězná volba',
+    wheel_winner_title: 'Kolo štěstí',
+    wheel_winner_ok: 'Skvělé!',
+    wheel_msg_add_first: 'Nejdřív přidej aspoň jednu položku.',
+    wheel_no_saved_lists: 'Žádný uložený seznam',
+    wheel_shuffled_toast: 'Seznam byl náhodně promíchán.',
+    wheel_sorted_toast: 'Seznam byl seřazen podle abecedy.',
+    wheel_cleared_toast: 'Seznam byl vyčištěn.',
+    wheel_clear_confirm_title: 'Vyčistit seznam',
+    wheel_clear_confirm_msg: 'Opravdu chceš smazat všechny položky z kola?',
+    wheel_preset_confirm_title: 'Vložit předlohu',
+    wheel_preset_confirm_msg: 'Aktuální seznam na kole bude nahrazen touto předlohou. Chceš pokračovat?',
+    wheel_preset_loaded_toast: 'Předloha byla vložena na kolo.',
+    wheel_save_title: 'Uložit seznam',
+    wheel_save_prompt: 'Název seznamu',
+    wheel_save_overwrite_title: 'Přepsat seznam',
+    wheel_save_overwrite_msg: 'Seznam „{name}“ už existuje. Přepsat ho?',
+    wheel_saved_toast: 'Seznam uložený.',
+    wheel_delete_confirm_title: 'Smazat seznam',
+    wheel_delete_confirm_msg: 'Opravdu smazat seznam „{name}“?',
+    wheel_deleted_toast: 'Seznam smazaný.',
     profile_manage: 'Správa profilů',
     profile_new: 'Nový profil',
+    profile_name_prompt: 'Název profilu',
+    profile_create_btn: 'Vytvořit',
+    profile_created_toast: 'Profil „{name}“ je připravený.',
     profile_rename: 'Přejmenovat',
+    profile_new_name: 'Nový název',
+    profile_rename_btn: 'Přejmenovat',
+    profile_renamed_toast: 'Profil přejmenovaný.',
     profile_export: 'Exportovat JSON',
     profile_import: 'Importovat JSON',
+    profile_import_title: 'Import profilu',
+    profile_import_prompt: 'Název nového profilu',
+    profile_import_btn: 'Importovat',
+    profile_imported_toast: 'Profil naimportovaný.',
+    profile_import_error: 'Soubor se nepodařilo načíst jako JSON.',
     profile_delete: 'Smazat profil',
+    profile_delete_title: 'Smazat profil',
+    profile_delete_confirm: 'Opravdu smazat profil „{name}“ i se všemi daty?',
+    profile_delete_btn: 'Smazat',
+    profile_deleted_toast: 'Profil smazaný.',
     profile_close: 'Zavřít',
     footer_disclaimer: 'Neoficiální fanouškovský nástroj pro The Sims 4. Není nijak spojený s EA ani Maxis.',
   },
@@ -333,12 +507,99 @@ const I18N = {
     category_kit: 'Kits',
     copied_toast: 'Copied to clipboard.',
     copy_failed_toast: 'Failed to copy.',
+    lock: 'Lock',
+    unlock: 'Unlock',
+    dialog_cancel: 'Cancel',
+    dialog_ok: 'OK',
+    rp_msg_no_active: 'No active packs. Select at least one pack with non-zero category weight.',
+    rp_msg_only_n_available: 'Only {n} packs available, displaying all.',
+    rnd_preset_coin: '🪙 Coin (1–2)',
+    rnd_preset_d6: '🎲 Die d6',
+    rnd_preset_2d6: '🎲 2d6',
+    rnd_preset_d20: '🎯 d20',
+    rnd_preset_100: '💯 1–100',
+    rnd_preset_sim: '👨‍👩‍👧‍👦 Sim (1–8)',
+    rnd_stats_sum: 'Sum',
+    rnd_stats_avg: 'Average',
+    rnd_stats_min: 'Min',
+    rnd_stats_max: 'Max',
+    rnd_nothing_to_copy: 'Nothing to copy.',
+    wheel_items_title: 'Items',
+    wheel_item_one: 'item',
+    wheel_item_few: 'items',
+    wheel_item_many: 'items',
+    wheel_weight_one: 'weight',
+    wheel_weight_few: 'weight',
+    wheel_weight_many: 'weight',
+    wheel_one_per_line: 'One item per line',
+    wheel_placeholder: 'Pizza\nSushi\nPancakes x3',
+    wheel_hint_weight: 'A line ending in x3 gets a 3x larger slice.',
+    wheel_shuffle: '🔀 Shuffle',
+    wheel_shuffle_title: 'Randomly shuffle item order',
+    wheel_sort: '🔤 Sort',
+    wheel_sort_title: 'Sort items alphabetically',
+    wheel_clear: 'Clear',
+    wheel_clear_title: 'Clear entire list',
+    wheel_remove_winner: 'Remove winner after spin',
+    wheel_sound: 'Sound',
+    wheel_presets_title: 'Presets and saved lists',
+    wheel_select_preset: '— Select preset —',
+    wheel_preset_challenges: 'Sims 4 Challenges',
+    wheel_preset_aspirations: 'Sims 4 Aspirations',
+    wheel_preset_food: 'What to eat today',
+    wheel_preset_activities: 'What to do today',
+    wheel_preset_yes_no: 'Yes / No / Maybe',
+    wheel_preset_who_turn: 'Whose turn is it',
+    wheel_preset_load: 'Load',
+    wheel_list_load: 'Load',
+    wheel_list_delete: 'Delete',
+    wheel_list_save: 'Save current list',
+    wheel_spin: 'Spin',
+    wheel_history_title: 'History',
+    wheel_history_clear: 'Clear history',
+    wheel_empty: 'Add items',
+    wheel_winner_badge: '🎉 Winner',
+    wheel_winner_title: 'Wheel of Fortune',
+    wheel_winner_ok: 'Awesome!',
+    wheel_msg_add_first: 'Add at least one item first.',
+    wheel_no_saved_lists: 'No saved lists',
+    wheel_shuffled_toast: 'List was shuffled.',
+    wheel_sorted_toast: 'List was sorted alphabetically.',
+    wheel_cleared_toast: 'List was cleared.',
+    wheel_clear_confirm_title: 'Clear list',
+    wheel_clear_confirm_msg: 'Are you sure you want to remove all items from the wheel?',
+    wheel_preset_confirm_title: 'Load preset',
+    wheel_preset_confirm_msg: 'The current list on the wheel will be replaced with this preset. Continue?',
+    wheel_preset_loaded_toast: 'Preset loaded to wheel.',
+    wheel_save_title: 'Save list',
+    wheel_save_prompt: 'List name',
+    wheel_save_overwrite_title: 'Overwrite list',
+    wheel_save_overwrite_msg: 'List "{name}" already exists. Overwrite?',
+    wheel_saved_toast: 'List saved.',
+    wheel_delete_confirm_title: 'Delete list',
+    wheel_delete_confirm_msg: 'Really delete list "{name}"?',
+    wheel_deleted_toast: 'List deleted.',
     profile_manage: 'Manage Profiles',
     profile_new: 'New Profile',
+    profile_name_prompt: 'Profile name',
+    profile_create_btn: 'Create',
+    profile_created_toast: 'Profile "{name}" is ready.',
     profile_rename: 'Rename',
+    profile_new_name: 'New name',
+    profile_rename_btn: 'Rename',
+    profile_renamed_toast: 'Profile renamed.',
     profile_export: 'Export JSON',
     profile_import: 'Import JSON',
+    profile_import_title: 'Import Profile',
+    profile_import_prompt: 'New profile name',
+    profile_import_btn: 'Import',
+    profile_imported_toast: 'Profile imported.',
+    profile_import_error: 'Could not parse file as JSON.',
     profile_delete: 'Delete Profile',
+    profile_delete_title: 'Delete Profile',
+    profile_delete_confirm: 'Really delete profile "{name}" with all data?',
+    profile_delete_btn: 'Delete',
+    profile_deleted_toast: 'Profile deleted.',
     profile_close: 'Close',
     footer_disclaimer: 'Unofficial fan tool for The Sims 4. Not affiliated with EA or Maxis.',
   }
@@ -387,12 +648,16 @@ function applyLanguage(lang) {
   if (ssSearch) ssSearch.placeholder = t('supersim_search_placeholder');
   const rpSearch = $('#rp-search');
   if (rpSearch) rpSearch.placeholder = t('rp_search_placeholder');
+  const wheelInput = $('#wheel-input');
+  if (wheelInput) wheelInput.placeholder = t('wheel_placeholder');
 
   document.title = t('app_title', 'Sims Hub');
 
   if (typeof Simsmix !== 'undefined' && Simsmix.refreshIfActive) Simsmix.refreshIfActive();
   if (typeof RandomPacks !== 'undefined' && RandomPacks.refreshIfActive) RandomPacks.refreshIfActive();
   if (typeof Supersim !== 'undefined' && Supersim.refreshIfActive) Supersim.refreshIfActive();
+  if (typeof Wheel !== 'undefined' && Wheel.refreshIfActive) Wheel.refreshIfActive();
+  if (typeof RandomNumber !== 'undefined' && RandomNumber.refreshIfActive) RandomNumber.refreshIfActive();
 }
 
 function initLanguageSwitcher() {
@@ -885,13 +1150,13 @@ function renderProfileSelect() {
 }
 
 async function createProfileFlow() {
-  const name = await promptDialog('Nový profil', 'Název profilu', '', 'Vytvořit');
+  const name = await promptDialog(t('profile_new', 'Nový profil'), t('profile_name_prompt', 'Název profilu'), '', t('profile_create_btn', 'Vytvořit'));
   if (!name) return;
   try {
     const profile = await api('/api/profiles', { method: 'POST', body: JSON.stringify({ name }) });
     await Store.loadProfiles();
     await Store.selectProfile(profile.id, { force: true });
-    toast(`Profil „${profile.name}“ je připravený.`, 'ok');
+    toast(t('profile_created_toast', 'Profil je připravený.').replace('{name}', profile.name), 'ok');
   } catch (error) {
     toast(error.message, 'error');
   }
@@ -900,12 +1165,12 @@ async function createProfileFlow() {
 async function renameProfileFlow() {
   const current = Store.profiles.find((p) => p.id === Store.currentId);
   if (!current) return;
-  const name = await promptDialog('Přejmenovat profil', 'Nový název', current.name, 'Přejmenovat');
+  const name = await promptDialog(t('profile_rename', 'Přejmenovat profil'), t('profile_new_name', 'Nový název'), current.name, t('profile_rename_btn', 'Přejmenovat'));
   if (!name || name === current.name) return;
   try {
     await api(`/api/profiles/${current.id}`, { method: 'PATCH', body: JSON.stringify({ name }) });
     await Store.loadProfiles();
-    toast('Profil přejmenovaný.', 'ok');
+    toast(t('profile_renamed_toast', 'Profil přejmenovaný.'), 'ok');
   } catch (error) {
     toast(error.message, 'error');
   }
@@ -914,7 +1179,7 @@ async function renameProfileFlow() {
 async function deleteProfileFlow() {
   const current = Store.profiles.find((p) => p.id === Store.currentId);
   if (!current) return;
-  const ok = await confirmDialog('Smazat profil', `Opravdu smazat profil „${current.name}“ i se všemi daty?`, 'Smazat');
+  const ok = await confirmDialog(t('profile_delete_title', 'Smazat profil'), t('profile_delete_confirm', 'Opravdu smazat profil?').replace('{name}', current.name), t('profile_delete_btn', 'Smazat'));
   if (!ok) return;
   try {
     await api(`/api/profiles/${current.id}`, { method: 'DELETE' });
@@ -922,7 +1187,7 @@ async function deleteProfileFlow() {
     await Store.loadProfiles();
     const next = Store.profiles[0];
     if (next) await Store.selectProfile(next.id, { force: true });
-    toast('Profil smazaný.', 'ok');
+    toast(t('profile_deleted_toast', 'Profil smazaný.'), 'ok');
   } catch (error) {
     toast(error.message, 'error');
   }
@@ -937,14 +1202,14 @@ async function importProfileFlow() {
       const payload = JSON.parse(await file.text());
       const data = payload && payload.data && typeof payload.data === 'object' ? payload.data : payload;
       const suggested = (payload && payload.name) || file.name.replace(/\.json$/i, '');
-      const name = await promptDialog('Import profilu', 'Název nového profilu', suggested, 'Importovat');
+      const name = await promptDialog(t('profile_import_title', 'Import profilu'), t('profile_import_prompt', 'Název nového profilu'), suggested, t('profile_import_btn', 'Importovat'));
       if (!name) return;
       const profile = await api('/api/profiles/import', { method: 'POST', body: JSON.stringify({ name, data }) });
       await Store.loadProfiles();
       await Store.selectProfile(profile.id, { force: true });
-      toast('Profil naimportovaný.', 'ok');
+      toast(t('profile_imported_toast', 'Profil naimportovaný.'), 'ok');
     } catch (error) {
-      toast(error instanceof ApiError ? error.message : 'Soubor se nepodařilo načíst jako JSON.', 'error');
+      toast(error instanceof ApiError ? error.message : t('profile_import_error', 'Soubor se nepodařilo načíst jako JSON.'), 'error');
     }
   });
   input.click();
@@ -1033,6 +1298,7 @@ function hideTabError(elementId) {
 /* Owned packs live in the profile and are shared by three tools. Packs missing
    from the map count as owned, so a newly released pack is not silently off. */
 function isPackOwned(packName) {
+  if (packRegistry.size > 0 && !packRegistry.has(packName)) return false;
   const owned = Store.state.packs.owned || {};
   return owned[packName] !== false;
 }
@@ -1165,56 +1431,165 @@ const Wheel = (() => {
   ];
 
   const PRESETS = {
-    'sims-challenges': [
-      'Rags to Riches',
-      '100 dětí',
-      'Not So Berry',
-      'Černá vdova',
-      'Generační výzva (Legacy)',
-      'Bezdomovec',
-      'Život na samotě',
-      'Malý dům (Tiny Living)',
-    ].join('\n'),
-    'sims-aspirations': [
-      'Kreativita x2',
-      'Bohatství',
-      'Láska a romantika',
-      'Znalosti a věda x2',
-      'Příroda a outdoor',
-      'Jídlo a vaření',
-      'Rodina',
-      'Popularita',
-    ].join('\n'),
-    'food': [
-      'Pizza x2',
-      'Sushi',
-      'Těstoviny',
-      'Burgery x2',
-      'Palačinky',
-      'Salát',
-      'Kuře s rýží',
-      'Čína / Wok',
-    ].join('\n'),
-    'activities': [
-      'Hrát The Sims 4 x3',
-      'Koukat na film',
-      'Jít na procházku',
-      'Číst knížku',
-      'Stavět dům v Sims x2',
-      'Společenská hra',
-    ].join('\n'),
-    'yes-no': [
-      'Určitě ano x2',
-      'Spíše ano',
-      'Rozhodně ne x2',
-      'Spíše ne',
-      'Zeptej se později',
-    ].join('\n'),
-    'who-turn': [
-      'Hráč 1',
-      'Hráč 2',
-    ].join('\n'),
+    ru: {
+      'sims-challenges': [
+        'Из грязи в князи (Rags to Riches)',
+        '100 детей',
+        'Не такой как все (Not So Berry)',
+        'Черная вдова',
+        'Династия (Legacy)',
+        'Бомж (Бездомный)',
+        'Жизнь в глуши',
+        'Крошечный дом (Tiny Living)',
+      ].join('\n'),
+      'sims-aspirations': [
+        'Творчество x2',
+        'Состояние',
+        'Любовь и романтика',
+        'Знания и наука x2',
+        'Природа и спорт',
+        'Еда и кулинария',
+        'Семья',
+        'Популярность',
+      ].join('\n'),
+      'food': [
+        'Пицца x2',
+        'Суши',
+        'Паста',
+        'Бургеры x2',
+        'Блинчики',
+        'Салат',
+        'Курица с рисом',
+        'Вок / Азиатская кухня',
+      ].join('\n'),
+      'activities': [
+        'Играть в The Sims 4 x3',
+        'Посмотреть фильм',
+        'Пойти на прогулку',
+        'Почитать книгу',
+        'Построить дом в Sims x2',
+        'Настольная игра',
+      ].join('\n'),
+      'yes-no': [
+        'Определенно да x2',
+        'Скорее да',
+        'Точно нет x2',
+        'Скорее нет',
+        'Спроси позже',
+      ].join('\n'),
+      'who-turn': [
+        'Игрок 1',
+        'Игрок 2',
+      ].join('\n'),
+    },
+    cs: {
+      'sims-challenges': [
+        'Rags to Riches',
+        '100 dětí',
+        'Not So Berry',
+        'Černá vdova',
+        'Generační výzva (Legacy)',
+        'Bezdomovec',
+        'Život na samotě',
+        'Malý dům (Tiny Living)',
+      ].join('\n'),
+      'sims-aspirations': [
+        'Kreativita x2',
+        'Bohatství',
+        'Láska a romantika',
+        'Znalosti a věda x2',
+        'Příroda a outdoor',
+        'Jídlo a vaření',
+        'Rodina',
+        'Popularita',
+      ].join('\n'),
+      'food': [
+        'Pizza x2',
+        'Sushi',
+        'Těstoviny',
+        'Burgery x2',
+        'Palačinky',
+        'Salát',
+        'Kuře s rýží',
+        'Čína / Wok',
+      ].join('\n'),
+      'activities': [
+        'Hrát The Sims 4 x3',
+        'Koukat na film',
+        'Jít na procházku',
+        'Číst knížku',
+        'Stavět dům v Sims x2',
+        'Společenská hra',
+      ].join('\n'),
+      'yes-no': [
+        'Určitě ano x2',
+        'Spíše ano',
+        'Rozhodně ne x2',
+        'Spíše ne',
+        'Zeptej se později',
+      ].join('\n'),
+      'who-turn': [
+        'Hráč 1',
+        'Hráč 2',
+      ].join('\n'),
+    },
+    en: {
+      'sims-challenges': [
+        'Rags to Riches',
+        '100 Baby Challenge',
+        'Not So Berry',
+        'Black Widow',
+        'Legacy Challenge',
+        'Homeless Challenge',
+        'Off the Grid',
+        'Tiny Living',
+      ].join('\n'),
+      'sims-aspirations': [
+        'Creativity x2',
+        'Fortune',
+        'Love & Romance',
+        'Knowledge & Science x2',
+        'Nature & Outdoor',
+        'Food & Cooking',
+        'Family',
+        'Popularity',
+      ].join('\n'),
+      'food': [
+        'Pizza x2',
+        'Sushi',
+        'Pasta',
+        'Burgers x2',
+        'Pancakes',
+        'Salad',
+        'Chicken & Rice',
+        'Asian / Wok',
+      ].join('\n'),
+      'activities': [
+        'Play The Sims 4 x3',
+        'Watch a Movie',
+        'Go for a Walk',
+        'Read a Book',
+        'Build a House in Sims x2',
+        'Board Game',
+      ].join('\n'),
+      'yes-no': [
+        'Definitely Yes x2',
+        'Probably Yes',
+        'Definitely No x2',
+        'Probably Not',
+        'Ask Again Later',
+      ].join('\n'),
+      'who-turn': [
+        'Player 1',
+        'Player 2',
+      ].join('\n'),
+    },
   };
+
+  function getPreset(key) {
+    const dict = PRESETS[currentLang] || PRESETS.ru;
+    return (dict && dict[key]) || (PRESETS.cs && PRESETS.cs[key]) || '';
+  }
 
   let segments = [];
   let rotation = 0;
@@ -1267,15 +1642,15 @@ const Wheel = (() => {
     if (!countEl) return;
     const count = items.length;
     if (count === 0) {
-      countEl.textContent = '0 položek';
+      countEl.textContent = `0 ${t('wheel_item_many', 'položek')}`;
       return;
     }
     const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
-    const itemWord = count === 1 ? 'položka' : count >= 2 && count <= 4 ? 'položky' : 'položek';
+    const itemWord = count === 1 ? t('wheel_item_one', 'položka') : count >= 2 && count <= 4 ? t('wheel_item_few', 'položky') : t('wheel_item_many', 'položek');
     if (totalWeight === count) {
       countEl.textContent = `${count} ${itemWord}`;
     } else {
-      const weightWord = totalWeight === 1 ? 'váha' : totalWeight >= 2 && totalWeight <= 4 ? 'váhy' : 'vah';
+      const weightWord = totalWeight === 1 ? t('wheel_weight_one', 'váha') : totalWeight >= 2 && totalWeight <= 4 ? t('wheel_weight_few', 'váhy') : t('wheel_weight_many', 'vah');
       countEl.textContent = `${count} ${itemWord} · ${totalWeight} ${weightWord}`;
     }
   }
@@ -1313,7 +1688,7 @@ const Wheel = (() => {
       label.setAttribute('y', '206');
       label.setAttribute('text-anchor', 'middle');
       label.setAttribute('class', 'wheel-empty-text');
-      label.textContent = 'Přidej položky';
+      label.textContent = t('wheel_empty', 'Přidej položky');
       svg.append(label);
       return;
     }
@@ -1504,14 +1879,14 @@ const Wheel = (() => {
     const winnerContent = h(
       'div',
       { class: 'winner-wrap' },
-      h('div', { class: 'winner-badge' }, '🎉 Vítězná volba'),
+      h('div', { class: 'winner-badge' }, t('wheel_winner_badge', '🎉 Vítězná volba')),
       h('p', { class: 'winner' }, winner.label)
     );
 
     openDialog({
-      title: 'Kolo štěstí',
+      title: t('wheel_winner_title', 'Kolo štěstí'),
       content: winnerContent,
-      okLabel: 'Skvělé!',
+      okLabel: t('wheel_winner_ok', 'Skvělé!'),
       hideCancel: true,
     });
   }
@@ -1519,7 +1894,7 @@ const Wheel = (() => {
   function spin() {
     if (spinning) return;
     if (!segments.length) {
-      $('#wheel-message').textContent = 'Nejdřív přidej aspoň jednu položku.';
+      $('#wheel-message').textContent = t('wheel_msg_add_first', 'Nejdřív přidej aspoň jednu položku.');
       return;
     }
     $('#wheel-message').textContent = '';
@@ -1574,7 +1949,7 @@ const Wheel = (() => {
     clearNode(list);
     const history = Store.state.wheel.history;
     if (!history.length) {
-      list.append(h('li', { class: 'muted' }, 'Zatím nic.'));
+      list.append(h('li', { class: 'muted' }, t('rnd_empty', 'Zatím nic.')));
       return;
     }
     for (const entry of history) {
@@ -1587,7 +1962,7 @@ const Wheel = (() => {
     clearNode(select);
     const lists = Store.state.wheel.lists;
     if (!lists.length) {
-      select.append(h('option', { value: '' }, 'Žádný uložený seznam'));
+      select.append(h('option', { value: '' }, t('wheel_no_saved_lists', 'Žádný uložený seznam')));
       select.disabled = true;
       return;
     }
@@ -1635,46 +2010,47 @@ const Wheel = (() => {
       $('#wheel-input').value = Store.state.wheel.text;
       render();
       Store.touch();
-      toast('Seznam byl náhodně promíchán.', 'ok');
+      toast(t('wheel_shuffled_toast', 'Seznam byl náhodně promíchán.'), 'ok');
     });
 
     $('#wheel-sort').addEventListener('click', () => {
       if (spinning) return;
       const lines = String($('#wheel-input').value || '').split('\n').map((l) => l.trim()).filter(Boolean);
       if (lines.length <= 1) return;
-      lines.sort((a, b) => a.localeCompare(b, 'cs'));
+      lines.sort((a, b) => a.localeCompare(b, currentLang));
       Store.state.wheel.text = lines.join('\n');
       $('#wheel-input').value = Store.state.wheel.text;
       render();
       Store.touch();
-      toast('Seznam byl seřazen podle abecedy.', 'ok');
+      toast(t('wheel_sorted_toast', 'Seznam byl seřazen podle abecedy.'), 'ok');
     });
 
     $('#wheel-clear').addEventListener('click', async () => {
       if (spinning) return;
       if (!Store.state.wheel.text.trim()) return;
-      const ok = await confirmDialog('Vyčistit seznam', 'Opravdu chceš smazat všechny položky z kola?', 'Vyčistit');
+      const ok = await confirmDialog(t('wheel_clear_confirm_title', 'Vyčistit seznam'), t('wheel_clear_confirm_msg', 'Opravdu chceš smazat všechny položky z kola?'), t('wheel_clear', 'Vyčistit'));
       if (!ok) return;
       Store.state.wheel.text = '';
       $('#wheel-input').value = '';
       render();
       Store.touch();
-      toast('Seznam byl vyčištěn.', 'ok');
+      toast(t('wheel_cleared_toast', 'Seznam byl vyčištěn.'), 'ok');
     });
 
     $('#wheel-preset-load').addEventListener('click', async () => {
       if (spinning) return;
       const key = $('#wheel-presets').value;
-      if (!key || !PRESETS[key]) return;
+      const presetText = getPreset(key);
+      if (!key || !presetText) return;
       if (Store.state.wheel.text.trim()) {
-        const ok = await confirmDialog('Vložit předlohu', 'Aktuální seznam na kole bude nahrazen touto předlohou. Chceš pokračovat?', 'Vložit');
+        const ok = await confirmDialog(t('wheel_preset_confirm_title', 'Vložit předlohu'), t('wheel_preset_confirm_msg', 'Aktuální seznam na kole bude nahrazen touto předlohou. Chceš pokračovat?'), t('wheel_preset_load', 'Vložit'));
         if (!ok) return;
       }
-      Store.state.wheel.text = PRESETS[key];
+      Store.state.wheel.text = presetText;
       $('#wheel-input').value = Store.state.wheel.text;
       render();
       Store.touch();
-      toast('Předloha byla vložena na kolo.', 'ok');
+      toast(t('wheel_preset_loaded_toast', 'Předloha byla vložena na kolo.'), 'ok');
     });
 
     $('#wheel-history-clear').addEventListener('click', () => {
@@ -1684,12 +2060,12 @@ const Wheel = (() => {
     });
 
     $('#wheel-list-save').addEventListener('click', async () => {
-      const name = await promptDialog('Uložit seznam', 'Název seznamu');
+      const name = await promptDialog(t('wheel_save_title', 'Uložit seznam'), t('wheel_save_prompt', 'Název seznamu'));
       if (!name) return;
       const lists = Store.state.wheel.lists;
       const existing = lists.findIndex((list) => list.name === name);
       if (existing >= 0) {
-        const ok = await confirmDialog('Přepsat seznam', `Seznam „${name}“ už existuje. Přepsat ho?`, 'Přepsat');
+        const ok = await confirmDialog(t('wheel_save_overwrite_title', 'Přepsat seznam'), t('wheel_save_overwrite_msg', 'Seznam „{name}“ už existuje. Přepsat ho?').replace('{name}', name), t('wheel_save_overwrite_title', 'Přepsat'));
         if (!ok) return;
         lists[existing].text = Store.state.wheel.text;
       } else {
@@ -1698,7 +2074,7 @@ const Wheel = (() => {
       renderLists();
       $('#wheel-lists').value = name;
       Store.touch();
-      toast('Seznam uložený.', 'ok');
+      toast(t('wheel_saved_toast', 'Seznam uložený.'), 'ok');
     });
 
     $('#wheel-list-load').addEventListener('click', () => {
@@ -1714,22 +2090,30 @@ const Wheel = (() => {
     $('#wheel-list-delete').addEventListener('click', async () => {
       const name = $('#wheel-lists').value;
       if (!name) return;
-      const ok = await confirmDialog('Smazat seznam', `Opravdu smazat seznam „${name}“?`, 'Smazat');
+      const ok = await confirmDialog(t('wheel_delete_confirm_title', 'Smazat seznam'), t('wheel_delete_confirm_msg', 'Opravdu smazat seznam „{name}“?').replace('{name}', name), t('wheel_list_delete', 'Smazat'));
       if (!ok) return;
       Store.state.wheel.lists = Store.state.wheel.lists.filter((list) => list.name !== name);
       renderLists();
       Store.touch();
+      toast(t('wheel_deleted_toast', 'Seznam smazaný.'), 'ok');
     });
 
     registerTab('wheel', { activate: () => {} });
   }
 
-  return { init, syncFromState };
+  return {
+    init,
+    syncFromState,
+    refreshIfActive: () => {
+      render();
+      renderHistory();
+      renderLists();
+    }
+  };
 })();
 
 /* ==========================================================================
    TAB 2 — Náhodné číslo
-   ========================================================================== */
 
 const RandomNumber = (() => {
   const FLICKER_MS = 500;
@@ -1793,8 +2177,9 @@ const RandomNumber = (() => {
     box.classList.toggle('grid', numbers.length > 6);
 
     const count = numbers.length;
+    const loc = currentLang === 'ru' ? 'ru-RU' : (currentLang === 'en' ? 'en-US' : 'cs-CZ');
     for (const value of numbers) {
-      const formatted = value.toLocaleString('cs-CZ');
+      const formatted = value.toLocaleString(loc);
       let cellClass = 'rnd-single';
       if (count >= 2 && count <= 6) {
         cellClass = 'rnd-pill';
@@ -1802,9 +2187,12 @@ const RandomNumber = (() => {
         cellClass = 'rnd-cell';
       }
 
+      const copyTitle = isFinal
+        ? (currentLang === 'ru' ? `Нажмите, чтобы скопировать число ${formatted}` : (currentLang === 'en' ? `Click to copy number ${formatted}` : `Kliknutím zkopíruješ číslo ${formatted}`))
+        : '';
       const item = h('span', {
         class: cellClass,
-        title: isFinal ? `Kliknutím zkopíruješ číslo ${formatted}` : '',
+        title: copyTitle,
         onclick: isFinal ? () => copyText(String(value)) : null,
       }, formatted);
       box.append(item);
@@ -1816,7 +2204,7 @@ const RandomNumber = (() => {
         const avg = Math.round((sum / count) * 10) / 10;
         const minVal = Math.min(...numbers);
         const maxVal = Math.max(...numbers);
-        statsEl.textContent = `Součet: ${sum.toLocaleString('cs-CZ')} · Průměr: ${avg.toLocaleString('cs-CZ')} · Min: ${minVal} · Max: ${maxVal}`;
+        statsEl.textContent = `${t('rnd_stats_sum', 'Součet')}: ${sum.toLocaleString(loc)} · ${t('rnd_stats_avg', 'Průměr')}: ${avg.toLocaleString(loc)} · ${t('rnd_stats_min', 'Min')}: ${minVal} · ${t('rnd_stats_max', 'Max')}: ${maxVal}`;
         statsEl.hidden = false;
       } else {
         statsEl.hidden = true;
@@ -1931,7 +2319,7 @@ const RandomNumber = (() => {
   function init() {
     $('#rnd-go').addEventListener('click', generate);
     $('#rnd-copy').addEventListener('click', () => {
-      if (!lastResult.length) return toast('Není co kopírovat.', 'warn');
+      if (!lastResult.length) return toast(t('rnd_nothing_to_copy', 'Není co kopírovat.'), 'warn');
       copyText(lastResult.join(', '));
     });
     $('#rnd-history-clear').addEventListener('click', () => {
@@ -1989,7 +2377,14 @@ const RandomNumber = (() => {
     });
   }
 
-  return { init, syncFromState };
+  return {
+    init,
+    syncFromState,
+    refreshIfActive: () => {
+      if (lastResult && lastResult.length) renderNumbers(lastResult, true);
+      renderHistory();
+    }
+  };
 })();
 
 /* ==========================================================================
@@ -2078,7 +2473,7 @@ const Simsmix = (() => {
     const locked = isLocked(key);
     btn.textContent = locked ? '🔒' : '🔓';
     btn.classList.toggle('locked', locked);
-    btn.title = locked ? 'Разблокировать' : 'Заблокировать';
+    btn.title = locked ? t('unlock', 'Разблокировать') : t('lock', 'Заблокировать');
   }
 
   function updateAllLocksUI() {
@@ -2315,7 +2710,7 @@ const Simsmix = (() => {
       const lockBtn = h('button', {
         type: 'button',
         class: `lock-btn-mini${locked ? ' locked' : ''}`,
-        title: locked ? 'Разблокировать' : 'Заблокировать',
+        title: locked ? t('unlock', 'Разблокировать') : t('lock', 'Заблокировать'),
         onclick: () => {
           toggleLock(lockKey);
           renderValues();
@@ -2635,11 +3030,11 @@ const RandomPacks = (() => {
     const pool = ownedPacks().filter((pack) => weightOf(pack.category) > 0);
 
     if (!pool.length) {
-      setMessage('Нет активных наборов. Отметьте хотя бы один набор с ненулевым весом категории.', 'error');
+      setMessage(t('rp_msg_no_active'), 'error');
       return null;
     }
     if (pool.length <= count) {
-      setMessage(`Доступно только ${pool.length} наборов, отображаются все.`);
+      setMessage(t('rp_msg_only_n_available').replace('{n}', pool.length));
       return shuffled(pool);
     }
 
@@ -2656,13 +3051,14 @@ const RandomPacks = (() => {
       return true;
     };
 
-    if (state.eachCategory && count >= activeCategories.length) {
-      for (const category of activeCategories) {
+    if (state.eachCategory) {
+      const catsToPick = count >= activeCategories.length
+        ? activeCategories
+        : shuffled(activeCategories.slice()).slice(0, count);
+      for (const category of catsToPick) {
         take(remaining.filter((pack) => pack.category === category));
       }
       setMessage('');
-    } else if (state.eachCategory) {
-      setMessage(`Количество (${count}) меньше числа активных категорий (${activeCategories.length}), опция гарантии категории пропущена.`);
     } else {
       setMessage('');
     }
@@ -2764,6 +3160,7 @@ const RandomPacks = (() => {
                 Store.touch();
                 renderCategoriesTables();
                 if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+                if (Simsmix && Simsmix.refreshIfActive) Simsmix.refreshIfActive();
               }
             }, t('rp_select_all')),
             h('button', {
@@ -2774,6 +3171,7 @@ const RandomPacks = (() => {
                 Store.touch();
                 renderCategoriesTables();
                 if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+                if (Simsmix && Simsmix.refreshIfActive) Simsmix.refreshIfActive();
               }
             }, t('rp_deselect_all'))
           )
@@ -2791,6 +3189,7 @@ const RandomPacks = (() => {
             Store.touch();
             renderCategoriesTables();
             if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+            if (Simsmix && Simsmix.refreshIfActive) Simsmix.refreshIfActive();
           }
         });
 
@@ -2859,6 +3258,15 @@ const RandomPacks = (() => {
 
     $('#rp-each-cat').addEventListener('change', (event) => {
       Store.state.packs.eachCategory = event.target.checked;
+      if (event.target.checked) {
+        const pool = ownedPacks().filter((pack) => weightOf(pack.category) > 0);
+        const activeCategories = [...new Set(pool.map((pack) => pack.category))];
+        const currentCount = Number($('#rp-count').value) || 0;
+        if (activeCategories.length > 0 && currentCount < activeCategories.length) {
+          Store.state.packs.count = activeCategories.length;
+          $('#rp-count').value = activeCategories.length;
+        }
+      }
       Store.touch();
     });
 
@@ -2892,6 +3300,7 @@ const RandomPacks = (() => {
       Store.touch();
       renderCategoriesTables();
       if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+      if (Simsmix && Simsmix.refreshIfActive) Simsmix.refreshIfActive();
     });
 
     $('#rp-all-off').addEventListener('click', () => {
@@ -2900,6 +3309,7 @@ const RandomPacks = (() => {
       Store.touch();
       renderCategoriesTables();
       if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+      if (Simsmix && Simsmix.refreshIfActive) Simsmix.refreshIfActive();
     });
 
     registerTab('randompacks', { activate });

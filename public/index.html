@@ -44,8 +44,8 @@
       </div>
       <select id="profile-select" class="profile-select" aria-label="Profil"></select>
       <button id="profile-manage" class="icon-btn" type="button" aria-label="Správa profilů" title="Správa profilů">⚙</button>
-      <span id="save-status" class="save-status" role="status" aria-live="polite" data-state="saved">Сохранено</span>
-      <button id="save-retry" class="ghost-btn" type="button" hidden>Zkusit znovu</button>
+      <span id="save-status" class="save-status" role="status" aria-live="polite" data-state="saved" data-i18n="saved">Сохранено</span>
+      <button id="save-retry" class="ghost-btn" type="button" data-i18n="retry" hidden>Повторить</button>
       <button id="theme-toggle" class="icon-btn" type="button" aria-label="Přepnout světlý a tmavý režim" title="Světlý / tmavý režim">◐</button>
     </div>
   </div>
@@ -362,47 +362,47 @@
     <div class="panel-grid wheel-grid">
       <div class="card">
         <div class="card-header-row">
-          <h2 class="card-title">Položky</h2>
-          <span id="wheel-count" class="pill">0 položek</span>
+          <h2 class="card-title" data-i18n="wheel_items_title">Элементы</h2>
+          <span id="wheel-count" class="pill">0 элементов</span>
         </div>
         <label class="field">
-          <span class="field-label">Jedna položka na řádek</span>
-          <textarea id="wheel-input" rows="10" spellcheck="false" placeholder="Pizza&#10;Sushi&#10;Palačinky x3"></textarea>
+          <span class="field-label" data-i18n="wheel_one_per_line">Один элемент на строку</span>
+          <textarea id="wheel-input" rows="10" spellcheck="false" placeholder="Пицца&#10;Суши&#10;Блинчики x3"></textarea>
         </label>
-        <p class="hint">Řádek zakončený <code>x3</code> dostane trojnásobně velký segment.</p>
+        <p class="hint" data-i18n="wheel_hint_weight">Строка с окончанием x3 получает утроенный сектор.</p>
 
         <div class="row wheel-actions">
-          <button id="wheel-shuffle" class="ghost-btn" type="button" title="Náhodně promíchat pořadí položek">🔀 Zamíchat</button>
-          <button id="wheel-sort" class="ghost-btn" type="button" title="Seřadit položky podle abecedy">🔤 Seřadit</button>
-          <button id="wheel-clear" class="ghost-btn danger-text" type="button" title="Vymazat celý seznam">Vyčistit</button>
+          <button id="wheel-shuffle" class="ghost-btn" type="button" title="Случайно перемешать порядок элементов" data-i18n="wheel_shuffle">🔀 Перемешать</button>
+          <button id="wheel-sort" class="ghost-btn" type="button" title="Отсортировать элементы по алфавиту" data-i18n="wheel_sort">🔤 Сортировать</button>
+          <button id="wheel-clear" class="ghost-btn danger-text" type="button" title="Очистить весь список" data-i18n="wheel_clear">Очистить</button>
         </div>
 
         <div class="row">
-          <label class="check"><input type="checkbox" id="wheel-remove"> Odebrat vítěze po vytočení</label>
-          <label class="check"><input type="checkbox" id="wheel-sound"> Zvuk</label>
+          <label class="check"><input type="checkbox" id="wheel-remove"> <span data-i18n="wheel_remove_winner">Удалять победителя после вращения</span></label>
+          <label class="check"><input type="checkbox" id="wheel-sound"> <span data-i18n="wheel_sound">Звук</span></label>
         </div>
 
-        <h3 class="card-subtitle">Předlohy a uložené seznamy</h3>
+        <h3 class="card-subtitle" data-i18n="wheel_presets_title">Шаблоны и сохраненные списки</h3>
         <div class="row">
-          <select id="wheel-presets" class="grow" aria-label="Vybrat předlohu">
-            <option value="">— Vybrat předlohu —</option>
-            <option value="sims-challenges">Sims 4 výzvy</option>
-            <option value="sims-aspirations">Sims 4 náhodné cíle</option>
-            <option value="food">Co dnes k jídlu</option>
-            <option value="activities">Co dnes podniknout</option>
-            <option value="yes-no">Ano / Ne / Možná</option>
-            <option value="who-turn">Kdo je na řadě</option>
+          <select id="wheel-presets" class="grow" aria-label="Выбрать шаблон">
+            <option value="" data-i18n="wheel_select_preset">— Выбрать шаблон —</option>
+            <option value="sims-challenges" data-i18n="wheel_preset_challenges">Челленджи The Sims 4</option>
+            <option value="sims-aspirations" data-i18n="wheel_preset_aspirations">Случайные цели The Sims 4</option>
+            <option value="food" data-i18n="wheel_preset_food">Что сегодня приготовить</option>
+            <option value="activities" data-i18n="wheel_preset_activities">Чем заняться</option>
+            <option value="yes-no" data-i18n="wheel_preset_yes_no">Да / Нет / Возможно</option>
+            <option value="who-turn" data-i18n="wheel_preset_who_turn">Чья очередь</option>
           </select>
-          <button id="wheel-preset-load" class="ghost-btn" type="button">Vložit</button>
+          <button id="wheel-preset-load" class="ghost-btn" type="button" data-i18n="wheel_preset_load">Вставить</button>
         </div>
 
         <div class="row">
-          <select id="wheel-lists" class="grow" aria-label="Uložené seznamy"></select>
-          <button id="wheel-list-load" class="ghost-btn" type="button">Načíst</button>
-          <button id="wheel-list-delete" class="ghost-btn danger" type="button">Smazat</button>
+          <select id="wheel-lists" class="grow" aria-label="Сохраненные списки"></select>
+          <button id="wheel-list-load" class="ghost-btn" type="button" data-i18n="wheel_list_load">Загрузить</button>
+          <button id="wheel-list-delete" class="ghost-btn danger" type="button" data-i18n="wheel_list_delete">Удалить</button>
         </div>
         <div class="row">
-          <button id="wheel-list-save" class="primary-btn" type="button">Uložit aktuální seznam</button>
+          <button id="wheel-list-save" class="primary-btn" type="button" data-i18n="wheel_list_save">Сохранить текущий список</button>
         </div>
       </div>
 
@@ -410,17 +410,17 @@
         <div class="wheel-stage">
           <div class="wheel-pointer" aria-hidden="true"></div>
           <div id="wheel-rotor" class="wheel-rotor">
-            <svg id="wheel-svg" viewBox="0 0 400 400" role="img" aria-label="Kolo štěstí"></svg>
+            <svg id="wheel-svg" viewBox="0 0 400 400" role="img" aria-label="Колесо фортуны"></svg>
           </div>
         </div>
         <div class="row center">
-          <button id="wheel-spin" class="primary-btn big" type="button">Zatočit</button>
+          <button id="wheel-spin" class="primary-btn big" type="button" data-i18n="wheel_spin">Крутить</button>
         </div>
         <p id="wheel-message" class="hint center"></p>
 
-        <h3 class="card-subtitle">Historie</h3>
+        <h3 class="card-subtitle" data-i18n="wheel_history_title">История</h3>
         <ol id="wheel-history" class="history"></ol>
-        <button id="wheel-history-clear" class="ghost-btn" type="button">Vymazat historii</button>
+        <button id="wheel-history-clear" class="ghost-btn" type="button" data-i18n="wheel_history_clear">Очистить историю</button>
       </div>
     </div>
   </section>
@@ -431,13 +431,13 @@
       <div class="card">
         <h2 class="card-title" data-i18n="rnd_title_settings">Настройки</h2>
 
-        <div class="rnd-presets-row" aria-label="Rychlé předvolby">
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="2" data-count="1" data-unique="0" title="🪙 Монета (1–2)">🪙 Монета (1–2)</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="6" data-count="1" data-unique="0" title="🎲 Кубик d6 (1–6)">🎲 Кубик d6</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="6" data-count="2" data-unique="0" title="🎲 2d6 (2 кубика)">🎲 2d6</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="20" data-count="1" data-unique="0" title="🎯 d20 (1–20)">🎯 d20</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="100" data-count="1" data-unique="0" title="💯 Проценты (1–100)">💯 1–100</button>
-          <button class="rnd-preset-btn" type="button" data-min="1" data-max="8" data-count="1" data-unique="0" title="👨‍👩‍👧‍👦 Персонаж в семье (1–8)">👨‍👩‍👧‍👦 Сим (1–8)</button>
+        <div class="rnd-presets-row" aria-label="Быстрые предустановки">
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="2" data-count="1" data-unique="0" data-i18n="rnd_preset_coin">🪙 Монета (1–2)</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="6" data-count="1" data-unique="0" data-i18n="rnd_preset_d6">🎲 Кубик d6</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="6" data-count="2" data-unique="0" data-i18n="rnd_preset_2d6">🎲 2d6</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="20" data-count="1" data-unique="0" data-i18n="rnd_preset_d20">🎯 d20</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="100" data-count="1" data-unique="0" data-i18n="rnd_preset_100">💯 1–100</button>
+          <button class="rnd-preset-btn" type="button" data-min="1" data-max="8" data-count="1" data-unique="0" data-i18n="rnd_preset_sim">👨‍👩‍👧‍👦 Сим (1–8)</button>
         </div>
 
         <div class="row">
@@ -487,8 +487,8 @@
     <h2 id="dialog-title" class="dialog-title"></h2>
     <div id="dialog-body" class="dialog-body"></div>
     <div class="dialog-actions">
-      <button id="dialog-cancel" class="ghost-btn" type="button">Отмена</button>
-      <button id="dialog-ok" class="primary-btn" type="submit">OK</button>
+      <button id="dialog-cancel" class="ghost-btn" type="button" data-i18n="dialog_cancel">Отмена</button>
+      <button id="dialog-ok" class="primary-btn" type="submit" data-i18n="dialog_ok">OK</button>
     </div>
   </form>
 </dialog>

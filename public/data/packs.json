@@ -348,7 +348,7 @@
       "name": "Laundry Day Stuff",
       "category": "stuffpack",
       "subtype": null,
-      "icon": "icons/packs/laundry-day-stuff.png",
+      "icon": "icons/packs/laundry-day-stuff.svg",
       "nameCs": "Pereme",
       "nameRu": "День стирки — Каталог"
     },
@@ -380,7 +380,7 @@
       "name": "Nifty Knitting Stuff",
       "category": "stuffpack",
       "subtype": null,
-      "icon": "icons/packs/nifty-knitting-stuff.png",
+      "icon": "icons/packs/nifty-knitting-stuff.svg",
       "nameCs": "Parádní pletení",
       "nameRu": "Нарядные нитки Каталог"
     },

@@ -42,8 +42,11 @@ function drawPacksLogic({ packs, ownedMap, weights, count, eachCategory }) {
     return true;
   };
 
-  if (eachCategory && count >= activeCategories.length) {
-    for (const category of activeCategories) {
+  if (eachCategory) {
+    const catsToPick = count >= activeCategories.length
+      ? activeCategories
+      : activeCategories.slice(0, count);
+    for (const category of catsToPick) {
       take(remaining.filter((p) => p.category === category));
     }
   }
@@ -149,4 +152,25 @@ test('drawPacksLogic guarantees at least one per category when option is active 
   assert.ok(categories.has('expansion'));
   assert.ok(categories.has('gamepack'));
   assert.ok(categories.has('stuffpack'));
+});
+
+test('drawPacksLogic guarantees distinct categories when count is smaller than active categories', () => {
+  const dummyPacks = [
+    { name: 'Expansion 1', category: 'expansion' },
+    { name: 'Gamepack 1', category: 'gamepack' },
+    { name: 'Stuffpack 1', category: 'stuffpack' },
+    { name: 'Kit 1', category: 'kit' },
+  ];
+
+  const result = drawPacksLogic({
+    packs: dummyPacks,
+    ownedMap: {},
+    weights: { expansion: 1, gamepack: 1, stuffpack: 1, kit: 1 },
+    count: 2,
+    eachCategory: true,
+  });
+
+  assert.equal(result.results.length, 2);
+  const categories = new Set(result.results.map((p) => p.category));
+  assert.equal(categories.size, 2, 'Must pick 2 distinct categories without duplicates');
 });
