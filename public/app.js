@@ -280,7 +280,7 @@ const localCache = {
 function defaultState() {
   return {
     schemaVersion: SCHEMA_VERSION,
-    wheel: { text: '', removeWinner: false, sound: false, lists: [], history: [] },
+    wheel: { text: 'Pizza\nSushi\nPalačinky x3\nBurgery', removeWinner: false, sound: false, lists: [], history: [] },
     random: { min: 1, max: 100, count: 1, unique: false, sort: false, history: [] },
     simgen: { enabled: null, locks: {}, current: null, saved: [] },
     packs: { owned: {}, count: 3, eachCategory: false, weights: {}, results: [] },
@@ -693,11 +693,77 @@ const Wheel = (() => {
   const EASING = [0.12, 0.72, 0.12, 1];
   const MAX_TICKS = 240;
 
+  const WHEEL_PALETTE = [
+    '#5a3fc0', // Deep purple
+    '#0284c7', // Sapphire blue
+    '#059669', // Emerald green
+    '#d97706', // Amber gold
+    '#db2777', // Rose pink
+    '#7c3aed', // Bright violet
+    '#0d9488', // Teal
+    '#ea580c', // Orange
+    '#0891b2', // Cyan
+    '#be123c', // Crimson
+    '#4f46e5', // Indigo
+    '#65a30d', // Lime
+  ];
+
+  const PRESETS = {
+    'sims-challenges': [
+      'Rags to Riches',
+      '100 dětí',
+      'Not So Berry',
+      'Černá vdova',
+      'Generační výzva (Legacy)',
+      'Bezdomovec',
+      'Život na samotě',
+      'Malý dům (Tiny Living)',
+    ].join('\n'),
+    'sims-aspirations': [
+      'Kreativita x2',
+      'Bohatství',
+      'Láska a romantika',
+      'Znalosti a věda x2',
+      'Příroda a outdoor',
+      'Jídlo a vaření',
+      'Rodina',
+      'Popularita',
+    ].join('\n'),
+    'food': [
+      'Pizza x2',
+      'Sushi',
+      'Těstoviny',
+      'Burgery x2',
+      'Palačinky',
+      'Salát',
+      'Kuře s rýží',
+      'Čína / Wok',
+    ].join('\n'),
+    'activities': [
+      'Hrát The Sims 4 x3',
+      'Koukat na film',
+      'Jít na procházku',
+      'Číst knížku',
+      'Stavět dům v Sims x2',
+      'Společenská hra',
+    ].join('\n'),
+    'yes-no': [
+      'Určitě ano x2',
+      'Spíše ano',
+      'Rozhodně ne x2',
+      'Spíše ne',
+      'Zeptej se později',
+    ].join('\n'),
+    'who-turn': [
+      'Hráč 1',
+      'Hráč 2',
+    ].join('\n'),
+  };
+
   let segments = [];
   let rotation = 0;
   let spinning = false;
   let audioCtx = null;
-  let tickTimers = [];
 
   const rotor = () => $('#wheel-rotor');
 
@@ -726,17 +792,69 @@ const Wheel = (() => {
     return `${label.slice(0, Math.max(1, maxChars - 1)).trimEnd()}…`;
   }
 
+  function getSegmentColor(index, count) {
+    if (count <= WHEEL_PALETTE.length) {
+      if (count === 2) return index === 0 ? '#5a3fc0' : '#0d9488';
+      let cIndex = index % WHEEL_PALETTE.length;
+      if (index === count - 1 && cIndex === 0) {
+        cIndex = (cIndex + 1) % WHEEL_PALETTE.length;
+      }
+      return WHEEL_PALETTE[cIndex];
+    }
+    const hue = Math.round((index * 360) / count);
+    const lightness = index % 2 === 0 ? 46 : 56;
+    return `hsl(${hue} 68% ${lightness}%)`;
+  }
+
+  function updateCounter(items) {
+    const countEl = $('#wheel-count');
+    if (!countEl) return;
+    const count = items.length;
+    if (count === 0) {
+      countEl.textContent = '0 položek';
+      return;
+    }
+    const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
+    const itemWord = count === 1 ? 'položka' : count >= 2 && count <= 4 ? 'položky' : 'položek';
+    if (totalWeight === count) {
+      countEl.textContent = `${count} ${itemWord}`;
+    } else {
+      const weightWord = totalWeight === 1 ? 'váha' : totalWeight >= 2 && totalWeight <= 4 ? 'váhy' : 'vah';
+      countEl.textContent = `${count} ${itemWord} · ${totalWeight} ${weightWord}`;
+    }
+  }
+
+  function renderHub(svg) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const hub = document.createElementNS(ns, 'circle');
+    hub.setAttribute('cx', '200');
+    hub.setAttribute('cy', '200');
+    hub.setAttribute('r', '27');
+    hub.setAttribute('class', 'wheel-hub');
+    svg.append(hub);
+
+    const mark = document.createElementNS(ns, 'text');
+    mark.setAttribute('x', '200');
+    mark.setAttribute('y', '201');
+    mark.setAttribute('text-anchor', 'middle');
+    mark.setAttribute('dominant-baseline', 'central');
+    mark.setAttribute('class', 'wheel-hub-mark');
+    mark.textContent = '◆';
+    svg.append(mark);
+  }
+
   function render() {
     const svg = $('#wheel-svg');
     const items = parseItems(Store.state.wheel.text);
     clearNode(svg);
     segments = [];
+    updateCounter(items);
 
     if (!items.length) {
       svg.append(h('circle', { cx: 200, cy: 200, r: 190, class: 'wheel-empty' }));
       const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       label.setAttribute('x', '200');
-      label.setAttribute('y', '205');
+      label.setAttribute('y', '206');
       label.setAttribute('text-anchor', 'middle');
       label.setAttribute('class', 'wheel-empty-text');
       label.textContent = 'Přidej položky';
@@ -746,51 +864,87 @@ const Wheel = (() => {
 
     const total = items.reduce((sum, item) => sum + item.weight, 0);
     let cursor = 0;
+    const ns = 'http://www.w3.org/2000/svg';
+
+    if (items.length === 1) {
+      const item = items[0];
+      segments.push({ ...item, start: 0, end: 360, mid: 180, index: 0 });
+
+      const circle = document.createElementNS(ns, 'circle');
+      circle.setAttribute('cx', '200');
+      circle.setAttribute('cy', '200');
+      circle.setAttribute('r', '190');
+      circle.setAttribute('fill', '#5a3fc0');
+      circle.setAttribute('stroke', 'rgba(0,0,0,0.18)');
+      circle.setAttribute('stroke-width', '2');
+      svg.append(circle);
+
+      const label = document.createElementNS(ns, 'text');
+      label.setAttribute('x', '200');
+      label.setAttribute('y', '125');
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('dominant-baseline', 'central');
+      label.setAttribute('font-size', '22');
+      label.setAttribute('class', 'wheel-label');
+      label.textContent = truncate(item.label, 20);
+      svg.append(label);
+
+      renderHub(svg);
+      return;
+    }
 
     items.forEach((item, index) => {
       const sweep = (item.weight / total) * 360;
       const start = cursor;
       const end = cursor + sweep;
       cursor = end;
-      segments.push({ ...item, start, end, mid: (start + end) / 2, index });
+      const mid = (start + end) / 2;
+      segments.push({ ...item, start, end, mid, index });
 
-      const ns = 'http://www.w3.org/2000/svg';
+      const group = document.createElementNS(ns, 'g');
+
+      const title = document.createElementNS(ns, 'title');
+      title.textContent = item.weight > 1 ? `${item.label} (${item.weight}× váha)` : item.label;
+      group.append(title);
+
       const path = document.createElementNS(ns, 'path');
-      if (items.length === 1) {
-        path.setAttribute('d', 'M200,10 A190,190 0 1,1 199.9,10 Z');
-      } else {
-        const [x1, y1] = pointOnCircle(start, 190);
-        const [x2, y2] = pointOnCircle(end, 190);
-        path.setAttribute('d', `M200,200 L${x1.toFixed(2)},${y1.toFixed(2)} A190,190 0 ${sweep > 180 ? 1 : 0},1 ${x2.toFixed(2)},${y2.toFixed(2)} Z`);
-      }
-      path.setAttribute('fill', `hsl(${Math.round((index * 360) / items.length + 12)} 62% ${index % 2 ? 46 : 56}%)`);
-      path.setAttribute('stroke', 'rgba(0,0,0,.18)');
-      path.setAttribute('stroke-width', '1');
-      svg.append(path);
+      const [x1, y1] = pointOnCircle(start, 190);
+      const [x2, y2] = pointOnCircle(end, 190);
+      const largeArc = sweep > 180 ? 1 : 0;
+      path.setAttribute('d', `M200,200 L${x1.toFixed(2)},${y1.toFixed(2)} A190,190 0 ${largeArc},1 ${x2.toFixed(2)},${y2.toFixed(2)} Z`);
+      path.setAttribute('fill', getSegmentColor(index, items.length));
+      path.setAttribute('stroke', 'rgba(0,0,0,0.2)');
+      path.setAttribute('stroke-width', '1.5');
+      group.append(path);
 
-      const fontSize = clamp(Math.round(sweep * 0.5), 9, 16);
+      let fontSize = 16;
+      if (sweep >= 100) fontSize = 21;
+      else if (sweep >= 60) fontSize = 18;
+      else if (sweep >= 35) fontSize = 15;
+      else if (sweep >= 22) fontSize = 13;
+      else if (sweep >= 14) fontSize = 11;
+      else if (sweep >= 9) fontSize = 10;
+      else fontSize = 9;
+
+      const maxChars = Math.max(3, Math.floor(140 / (fontSize * 0.56)));
+
       const label = document.createElementNS(ns, 'text');
-      label.setAttribute('x', '182');
+      label.setAttribute('x', '378');
       label.setAttribute('y', '200');
       label.setAttribute('text-anchor', 'end');
-      label.setAttribute('dominant-baseline', 'middle');
+      label.setAttribute('dominant-baseline', 'central');
       label.setAttribute('font-size', String(fontSize));
       label.setAttribute('class', 'wheel-label');
-      label.setAttribute('transform', `rotate(${(((start + end) / 2) - 90).toFixed(2)} 200 200)`);
-      label.textContent = truncate(item.label, Math.floor(150 / (fontSize * 0.55)));
-      svg.append(label);
+      label.setAttribute('transform', `rotate(${(mid - 90).toFixed(2)} 200 200)`);
+      label.textContent = truncate(item.label, maxChars);
+      group.append(label);
+
+      svg.append(group);
     });
 
-    const hub = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    hub.setAttribute('cx', '200');
-    hub.setAttribute('cy', '200');
-    hub.setAttribute('r', '26');
-    hub.setAttribute('class', 'wheel-hub');
-    svg.append(hub);
+    renderHub(svg);
   }
 
-  /* Cubic bezier easing solved numerically so ticks can be scheduled at the
-     exact moments the pointer crosses a segment boundary. */
   function bezierTimeForProgress(progress, [x1, y1, x2, y2]) {
     const curve = (t, a, b) => 3 * (1 - t) * (1 - t) * t * a + 3 * (1 - t) * t * t * b + t * t * t;
     let low = 0;
@@ -815,10 +969,9 @@ const Wheel = (() => {
 
   function scheduleTicks(from, to) {
     const ctx = ensureAudio();
-    if (!ctx || !segments.length) return;
+    if (!ctx || !segments.length || to <= from) return;
     const boundaries = segments.map((segment) => segment.start);
     const crossings = [];
-    // The pointer sits at angle 0; a boundary is under it when rotation === -boundary.
     for (const boundary of boundaries) {
       const first = Math.ceil((from + boundary) / 360);
       for (let k = first; ; k += 1) {
@@ -835,26 +988,52 @@ const Wheel = (() => {
       const at = ctx.currentTime + (bezierTimeForProgress(progress, EASING) * SPIN_MS) / 1000;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(1100, at);
-      gain.gain.setValueAtTime(0.0001, at);
-      gain.gain.exponentialRampToValueAtTime(0.05, at + 0.005);
-      gain.gain.exponentialRampToValueAtTime(0.0001, at + 0.04);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(800, at);
+      osc.frequency.exponentialRampToValueAtTime(200, at + 0.025);
+      gain.gain.setValueAtTime(0.001, at);
+      gain.gain.linearRampToValueAtTime(0.06, at + 0.004);
+      gain.gain.exponentialRampToValueAtTime(0.0001, at + 0.03);
       osc.connect(gain).connect(ctx.destination);
       osc.start(at);
-      osc.stop(at + 0.05);
+      osc.stop(at + 0.035);
+    }
+  }
+
+  function setControlsDisabled(disabled) {
+    const ids = [
+      '#wheel-spin',
+      '#wheel-input',
+      '#wheel-shuffle',
+      '#wheel-sort',
+      '#wheel-clear',
+      '#wheel-remove',
+      '#wheel-sound',
+      '#wheel-preset-load',
+      '#wheel-list-save',
+      '#wheel-list-load',
+      '#wheel-list-delete',
+      '#wheel-history-clear',
+    ];
+    for (const id of ids) {
+      const el = $(id);
+      if (el) el.disabled = disabled;
     }
   }
 
   function finish(winner) {
     spinning = false;
+    setControlsDisabled(false);
     const state = Store.state.wheel;
     state.history.unshift({ label: winner.label, at: new Date().toISOString() });
     state.history = state.history.slice(0, HISTORY_LIMIT);
 
     if (state.removeWinner) {
       const lines = state.text.split('\n');
-      const target = lines.findIndex((line) => parseItems(line)[0] && parseItems(line)[0].label === winner.label);
+      const target = lines.findIndex((line) => {
+        const parsed = parseItems(line)[0];
+        return parsed && parsed.label === winner.label;
+      });
       if (target >= 0) {
         lines.splice(target, 1);
         state.text = lines.join('\n');
@@ -865,10 +1044,18 @@ const Wheel = (() => {
 
     Store.touch();
     renderHistory();
+
+    const winnerContent = h(
+      'div',
+      { class: 'winner-wrap' },
+      h('div', { class: 'winner-badge' }, '🎉 Vítězná volba'),
+      h('p', { class: 'winner' }, winner.label)
+    );
+
     openDialog({
-      title: 'Vítěz',
-      content: h('p', { class: 'winner' }, winner.label),
-      okLabel: 'Zavřít',
+      title: 'Kolo štěstí',
+      content: winnerContent,
+      okLabel: 'Skvělé!',
       hideCancel: true,
     });
   }
@@ -881,14 +1068,13 @@ const Wheel = (() => {
     }
     $('#wheel-message').textContent = '';
 
-    // The winner is drawn first; the animation only has to land on it.
     const winner = weightedPick(segments, (segment) => segment.weight);
     const half = (winner.end - winner.start) / 2;
     const jitter = (randomInt(1000) / 1000 - 0.5) * 2 * half * 0.7;
     const targetAngle = winner.mid + jitter;
 
     const normalized = ((rotation % 360) + 360) % 360;
-    const delta = ((360 - ((targetAngle + normalized) % 360)) % 360);
+    const delta = (360 - ((targetAngle + normalized) % 360)) % 360;
     const turns = 4 + randomInt(3);
     const to = rotation + turns * 360 + delta;
 
@@ -901,13 +1087,30 @@ const Wheel = (() => {
     }
 
     spinning = true;
+    setControlsDisabled(true);
     scheduleTicks(rotation, to);
     rotor().style.transition = `transform ${SPIN_MS}ms cubic-bezier(${EASING.join(',')})`;
-    // Force a reflow so a repeated spin animates from the current angle.
     void rotor().offsetWidth;
     rotation = to;
     rotor().style.transform = `rotate(${rotation}deg)`;
-    setTimeout(() => { if (spinning) finish(winner); }, SPIN_MS + 60);
+
+    let finished = false;
+    const onEnd = (event) => {
+      if (event && event.target !== rotor()) return;
+      if (finished) return;
+      finished = true;
+      rotor().removeEventListener('transitionend', onEnd);
+      if (spinning) finish(winner);
+    };
+
+    rotor().addEventListener('transitionend', onEnd);
+    setTimeout(() => {
+      if (!finished && spinning) {
+        finished = true;
+        rotor().removeEventListener('transitionend', onEnd);
+        finish(winner);
+      }
+    }, SPIN_MS + 120);
   }
 
   function renderHistory() {
@@ -966,6 +1169,58 @@ const Wheel = (() => {
     });
     $('#wheel-spin').addEventListener('click', spin);
     $('#wheel-svg').addEventListener('click', spin);
+
+    $('#wheel-shuffle').addEventListener('click', () => {
+      if (spinning) return;
+      const lines = String($('#wheel-input').value || '').split('\n').map((l) => l.trim()).filter(Boolean);
+      if (lines.length <= 1) return;
+      const mixed = shuffled(lines);
+      Store.state.wheel.text = mixed.join('\n');
+      $('#wheel-input').value = Store.state.wheel.text;
+      render();
+      Store.touch();
+      toast('Seznam byl náhodně promíchán.', 'ok');
+    });
+
+    $('#wheel-sort').addEventListener('click', () => {
+      if (spinning) return;
+      const lines = String($('#wheel-input').value || '').split('\n').map((l) => l.trim()).filter(Boolean);
+      if (lines.length <= 1) return;
+      lines.sort((a, b) => a.localeCompare(b, 'cs'));
+      Store.state.wheel.text = lines.join('\n');
+      $('#wheel-input').value = Store.state.wheel.text;
+      render();
+      Store.touch();
+      toast('Seznam byl seřazen podle abecedy.', 'ok');
+    });
+
+    $('#wheel-clear').addEventListener('click', async () => {
+      if (spinning) return;
+      if (!Store.state.wheel.text.trim()) return;
+      const ok = await confirmDialog('Vyčistit seznam', 'Opravdu chceš smazat všechny položky z kola?', 'Vyčistit');
+      if (!ok) return;
+      Store.state.wheel.text = '';
+      $('#wheel-input').value = '';
+      render();
+      Store.touch();
+      toast('Seznam byl vyčištěn.', 'ok');
+    });
+
+    $('#wheel-preset-load').addEventListener('click', async () => {
+      if (spinning) return;
+      const key = $('#wheel-presets').value;
+      if (!key || !PRESETS[key]) return;
+      if (Store.state.wheel.text.trim()) {
+        const ok = await confirmDialog('Vložit předlohu', 'Aktuální seznam na kole bude nahrazen touto předlohou. Chceš pokračovat?', 'Vložit');
+        if (!ok) return;
+      }
+      Store.state.wheel.text = PRESETS[key];
+      $('#wheel-input').value = Store.state.wheel.text;
+      render();
+      Store.touch();
+      toast('Předloha byla vložena na kolo.', 'ok');
+    });
+
     $('#wheel-history-clear').addEventListener('click', () => {
       Store.state.wheel.history = [];
       renderHistory();

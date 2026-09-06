@@ -58,19 +58,41 @@
   <section class="panel" id="panel-wheel" role="tabpanel" aria-labelledby="tab-wheel" tabindex="-1" hidden>
     <div class="panel-grid wheel-grid">
       <div class="card">
-        <h2 class="card-title">Položky</h2>
+        <div class="card-header-row">
+          <h2 class="card-title">Položky</h2>
+          <span id="wheel-count" class="pill">0 položek</span>
+        </div>
         <label class="field">
           <span class="field-label">Jedna položka na řádek</span>
           <textarea id="wheel-input" rows="10" spellcheck="false" placeholder="Pizza&#10;Sushi&#10;Palačinky x3"></textarea>
         </label>
         <p class="hint">Řádek zakončený <code>x3</code> dostane trojnásobně velký segment.</p>
 
+        <div class="row wheel-actions">
+          <button id="wheel-shuffle" class="ghost-btn" type="button" title="Náhodně promíchat pořadí položek">🔀 Zamíchat</button>
+          <button id="wheel-sort" class="ghost-btn" type="button" title="Seřadit položky podle abecedy">🔤 Seřadit</button>
+          <button id="wheel-clear" class="ghost-btn danger-text" type="button" title="Vymazat celý seznam">Vyčistit</button>
+        </div>
+
         <div class="row">
           <label class="check"><input type="checkbox" id="wheel-remove"> Odebrat vítěze po vytočení</label>
           <label class="check"><input type="checkbox" id="wheel-sound"> Zvuk</label>
         </div>
 
-        <h3 class="card-subtitle">Uložené seznamy</h3>
+        <h3 class="card-subtitle">Předlohy a uložené seznamy</h3>
+        <div class="row">
+          <select id="wheel-presets" class="grow" aria-label="Vybrat předlohu">
+            <option value="">— Vybrat předlohu —</option>
+            <option value="sims-challenges">Sims 4 výzvy</option>
+            <option value="sims-aspirations">Sims 4 náhodné cíle</option>
+            <option value="food">Co dnes k jídlu</option>
+            <option value="activities">Co dnes podniknout</option>
+            <option value="yes-no">Ano / Ne / Možná</option>
+            <option value="who-turn">Kdo je na řadě</option>
+          </select>
+          <button id="wheel-preset-load" class="ghost-btn" type="button">Vložit</button>
+        </div>
+
         <div class="row">
           <select id="wheel-lists" class="grow" aria-label="Uložené seznamy"></select>
           <button id="wheel-list-load" class="ghost-btn" type="button">Načíst</button>
