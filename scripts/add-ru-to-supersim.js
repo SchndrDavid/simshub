@@ -1,3 +1,4 @@
+// ru augment script
 'use strict';
 
 const fs = require('node:fs');

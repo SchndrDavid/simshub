@@ -237,6 +237,11 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
   color: var(--warn);
 }
 
+.banner[hidden],
+[hidden] {
+  display: none !important;
+}
+
 /* ----------------------------------------------------------------- buttons */
 
 button { font: inherit; }
@@ -847,6 +852,8 @@ main {
 }
 .item-level { font-variant-numeric: tabular-nums; font-size: .82rem; color: var(--muted); font-weight: 700; }
 .item-state { color: var(--green); font-weight: 800; }
+.item-bar { grid-column: 1 / -1; height: 4px; border-radius: 999px; background: var(--surface-3); overflow: hidden; margin-top: 4px; }
+.item-bar-fill { display: block; height: 100%; background: var(--accent); }
 /* ----------------------------------------------------------- language switch */
 
 .lang-switch {

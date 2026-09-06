@@ -732,50 +732,30 @@ const Store = {
 
   async selectProfile(id, { force = false } = {}) {
     if (!force && id === this.currentId) return;
-    // Never lose pending edits when switching away.
     if (this.dirty) await this.flush();
     this.currentId = id;
     try { localStorage.setItem('simshub:lastProfile', String(id)); } catch { /* ignore */ }
 
     try {
       const profile = await api(`/api/profiles/${id}`);
-      const cached = localCache.read(id);
-      const remoteChanged = Boolean(cached && cached.updated_at && profile.updated_at !== cached.updated_at);
-      // Changes that never reached the server (tab closed while offline) are
-      // recovered as long as nobody else wrote in the meantime.
-      const recoverable = Boolean(cached && cached.dirty && !remoteChanged && !force);
-
       this.serverUpdatedAt = profile.updated_at;
-      if (recoverable) {
-        this.state = migrateState(cached.data);
-        this.dirty = true;
-        hideConflictBanner();
-        this.flush();
-        toast('Obnovil jsem neuložené změny z minule.', 'warn');
-      } else {
-        // A conflict is ONLY relevant if the user had uncommitted local changes that would be overwritten.
-        if (cached && cached.dirty && remoteChanged && !force) {
-          showConflictBanner(profile.updated_at);
-        } else {
-          hideConflictBanner();
-        }
-        this.state = migrateState(profile.data);
-        this.dirty = false;
-        localCache.write(id, { data: this.state, updated_at: profile.updated_at, dirty: false });
-        this.setStatus('saved');
-      }
+      this.state = migrateState(profile.data);
+      this.dirty = false;
+      localCache.write(id, { data: this.state, updated_at: profile.updated_at, dirty: false });
+      hideConflictBanner();
+      this.setStatus('saved');
     } catch (error) {
       const cached = localCache.read(id);
       if (cached) {
         this.state = migrateState(cached.data);
         this.serverUpdatedAt = cached.updated_at;
         this.setStatus('offline', error.message);
-        toast('Server není dostupný, pracuješ s poslední známou verzí.', 'warn');
+        toast(currentLang === 'ru' ? 'Сервер недоступен, работаем с сохраненной версией.' : (currentLang === 'en' ? 'Server unavailable, working with cached version.' : 'Server není dostupný, pracuješ s poslední známou verzí.'), 'warn');
       } else {
         this.state = defaultState();
         this.serverUpdatedAt = null;
         this.setStatus('offline', error.message);
-        toast('Server není dostupný, začínáš s prázdným profilem.', 'warn');
+        toast(currentLang === 'ru' ? 'Сервер недоступен, пустой профиль.' : (currentLang === 'en' ? 'Server unavailable, starting empty.' : 'Server není dostupný, začínáš s prázdným profilem.'), 'warn');
       }
     }
     renderProfileSelect();
@@ -812,13 +792,23 @@ const Store = {
 
 function showConflictBanner(updatedAt) {
   const banner = $('#conflict-banner');
-  const warning = Store.dirty ? ' Tvoje neuložené změny se načtením zahodí.' : '';
-  $('#conflict-text').textContent = `Profil mezitím někdo změnil (${formatTime(updatedAt)}).${warning}`;
+  if (!banner) return;
+  const warning = Store.dirty
+    ? (currentLang === 'ru' ? ' Несохраненные изменения будут потеряны.' : (currentLang === 'en' ? ' Unsaved changes will be lost.' : ' Tvoje neuložené změny se načtením zahodí.'))
+    : '';
+  const prefix = currentLang === 'ru'
+    ? `Профиль был изменен (${formatTime(updatedAt)}).`
+    : (currentLang === 'en' ? `Profile was modified (${formatTime(updatedAt)}).` : `Profil mezitím někdo změnil (${formatTime(updatedAt)}).`);
+  $('#conflict-text').textContent = `${prefix}${warning}`;
   banner.hidden = false;
+  banner.style.display = 'flex';
 }
 
 function hideConflictBanner() {
-  $('#conflict-banner').hidden = true;
+  const banner = $('#conflict-banner');
+  if (!banner) return;
+  banner.hidden = true;
+  banner.style.display = 'none';
 }
 
 /* ------------------------------------------------------------- profile bar */
@@ -1055,6 +1045,7 @@ async function activateRoute(route) {
   for (const [name, handlers] of tabs) {
     const panel = $(`#panel-${name}`);
     const button = $(`#tab-${name}`);
+    if (!panel || !button) continue;
     const active = name === route;
     panel.hidden = !active;
     button.setAttribute('aria-selected', active ? 'true' : 'false');
@@ -2522,7 +2513,6 @@ const Simsmix = (() => {
     }
 
     registerTab('simsmix', { activate });
-    registerTab('simgen', { activate });
   }
 
   return {
@@ -2842,7 +2832,6 @@ const RandomPacks = (() => {
     });
 
     registerTab('randompacks', { activate });
-    registerTab('packs', { activate });
   }
 
   return {
@@ -3198,6 +3187,7 @@ const Supersim = (() => {
     sectionPills.clear();
     const state = Store.state.supersim;
     for (const section of doc.sections) {
+      // While searching or filtering by age, sections with no hit only add noise.
       if ((state.age || search.trim()) && !visibleItems(section).length) continue;
       box.append(renderSection(section));
     }
@@ -3286,7 +3276,10 @@ function initProfileBar() {
     await Store.selectProfile(Store.currentId, { force: true });
     toast(currentLang === 'ru' ? 'Профиль перезагружен.' : (currentLang === 'en' ? 'Profile reloaded.' : 'Profil načtený znovu.'), 'ok');
   });
-  $('#conflict-dismiss').addEventListener('click', hideConflictBanner);
+  $('#conflict-dismiss').addEventListener('click', () => {
+    hideConflictBanner();
+    Store.dirty = false;
+  });
 }
 
 async function boot() {
@@ -3302,8 +3295,6 @@ async function boot() {
   RandomPacks.init();
   Wheel.init();
   RandomNumber.init();
-  SimGen.init();
-  Packs.init();
 
   Store.onChange(() => {
     Simsmix.syncFromState();
@@ -3311,8 +3302,6 @@ async function boot() {
     RandomPacks.syncFromState();
     Wheel.syncFromState();
     RandomNumber.syncFromState();
-    SimGen.syncFromState();
-    Packs.syncFromState();
   });
 
   try {
@@ -3353,4 +3342,3 @@ async function boot() {
 }
 
 boot();
-
