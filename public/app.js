@@ -416,9 +416,12 @@ const Store = {
         this.flush();
         toast('Obnovil jsem neuložené změny z minule.', 'warn');
       } else {
-        // A different stamp than the one this client last saw means someone else wrote.
-        if (remoteChanged && !force) showConflictBanner(profile.updated_at);
-        else hideConflictBanner();
+        // A conflict is ONLY relevant if the user had uncommitted local changes that would be overwritten.
+        if (cached && cached.dirty && remoteChanged && !force) {
+          showConflictBanner(profile.updated_at);
+        } else {
+          hideConflictBanner();
+        }
         this.state = migrateState(profile.data);
         this.dirty = false;
         localCache.write(id, { data: this.state, updated_at: profile.updated_at, dirty: false });
@@ -444,7 +447,7 @@ const Store = {
 
   /* Cheap poll: the list endpoint carries updated_at for every profile. */
   async pollForRemoteChange() {
-    if (this.currentId === null || this.saving || this.dirty) return;
+    if (this.currentId === null || this.saving) return;
     try {
       const list = await api('/api/profiles');
       this.profiles = list;
@@ -452,7 +455,17 @@ const Store = {
       renderProfileSelect();
       const mine = list.find((p) => p.id === this.currentId);
       if (mine && this.serverUpdatedAt && mine.updated_at !== this.serverUpdatedAt) {
-        showConflictBanner(mine.updated_at);
+        if (this.dirty) {
+          showConflictBanner(mine.updated_at);
+        } else {
+          // If the user has no unsaved local changes, smoothly sync latest state from server
+          this.serverUpdatedAt = mine.updated_at;
+          const full = await api(`/api/profiles/${this.currentId}`);
+          this.state = migrateState(full.data);
+          localCache.write(this.currentId, { data: this.state, updated_at: full.updated_at, dirty: false });
+          hideConflictBanner();
+          this.emit();
+        }
       }
     } catch { /* offline polls are not worth reporting */ }
   },
@@ -632,6 +645,38 @@ function hideTabError(elementId) {
 function isPackOwned(packName) {
   const owned = Store.state.packs.owned || {};
   return owned[packName] !== false;
+}
+
+const packRegistry = new Map();
+
+async function ensurePacksLoaded() {
+  if (packRegistry.size > 0) return packRegistry;
+  try {
+    const doc = await loadData('packs');
+    if (doc && Array.isArray(doc.packs)) {
+      for (const p of doc.packs) {
+        packRegistry.set(p.name, p);
+      }
+    }
+  } catch { /* offline or load error */ }
+  return packRegistry;
+}
+
+function packIconUrl(icon) {
+  if (!icon) return null;
+  return BASE ? `${BASE}/${icon}` : icon;
+}
+
+function packIconOf(packName) {
+  if (!packName) return null;
+  const p = packRegistry.get(packName);
+  return p && p.icon ? p.icon : null;
+}
+
+function packNameCsOf(packName) {
+  if (!packName) return null;
+  const p = packRegistry.get(packName);
+  return p && p.nameCs ? p.nameCs : packName;
 }
 
 /* --------------------------------------------------------------- tab router */
@@ -1276,14 +1321,18 @@ const Wheel = (() => {
    ========================================================================== */
 
 const RandomNumber = (() => {
-  const FLICKER_MS = 600;
+  const FLICKER_MS = 500;
   let flickerTimer = null;
   let lastResult = [];
 
   function readInputs() {
-    const min = Math.trunc(Number($('#rnd-min').value));
-    const max = Math.trunc(Number($('#rnd-max').value));
-    const count = Math.trunc(Number($('#rnd-count').value));
+    const minRaw = $('#rnd-min').value.trim();
+    const maxRaw = $('#rnd-max').value.trim();
+    const countRaw = $('#rnd-count').value.trim();
+
+    const min = minRaw === '' ? NaN : Math.trunc(Number(minRaw));
+    const max = maxRaw === '' ? NaN : Math.trunc(Number(maxRaw));
+    const count = countRaw === '' ? NaN : Math.trunc(Number(countRaw));
     return { min, max, count };
   }
 
@@ -1298,20 +1347,73 @@ const RandomNumber = (() => {
     if (!unique) {
       return Array.from({ length: count }, () => randomBetween(min, max));
     }
-    // Small counts against a possibly huge range: rejection into a set beats
-    // materialising the range.
+    // Partial Fisher-Yates shuffle for small spans: O(count) and zero duplicate collisions
+    if (span <= 2000) {
+      const pool = Array.from({ length: span }, (_, i) => min + i);
+      for (let i = 0; i < count; i += 1) {
+        const j = i + randomInt(span - i);
+        const temp = pool[i];
+        pool[i] = pool[j];
+        pool[j] = temp;
+      }
+      return pool.slice(0, count);
+    }
+    // Set rejection for very large spans
     const chosen = new Set();
     while (chosen.size < count) chosen.add(randomBetween(min, max));
-    return Array.from(chosen).slice(0, Math.min(count, span));
+    return Array.from(chosen);
   }
 
   function renderNumbers(numbers, isFinal) {
     const box = $('#rnd-result');
+    const statsEl = $('#rnd-stats');
+    const hintEl = $('#rnd-hint');
     clearNode(box);
-    box.classList.toggle('grid', numbers.length > 1);
+
+    if (!numbers.length) {
+      box.classList.remove('grid', 'flickering');
+      box.append(h('span', { class: 'rnd-placeholder' }, '—'));
+      if (statsEl) statsEl.hidden = true;
+      if (hintEl) hintEl.hidden = true;
+      return;
+    }
+
     box.classList.toggle('flickering', !isFinal);
+    box.classList.toggle('grid', numbers.length > 6);
+
+    const count = numbers.length;
     for (const value of numbers) {
-      box.append(h('span', { class: numbers.length > 1 ? 'rnd-cell' : 'rnd-single' }, String(value)));
+      const formatted = value.toLocaleString('cs-CZ');
+      let cellClass = 'rnd-single';
+      if (count >= 2 && count <= 6) {
+        cellClass = 'rnd-pill';
+      } else if (count > 6) {
+        cellClass = 'rnd-cell';
+      }
+
+      const item = h('span', {
+        class: cellClass,
+        title: isFinal ? `Kliknutím zkopíruješ číslo ${formatted}` : '',
+        onclick: isFinal ? () => copyText(String(value)) : null,
+      }, formatted);
+      box.append(item);
+    }
+
+    if (statsEl) {
+      if (isFinal && count > 1) {
+        const sum = numbers.reduce((acc, n) => acc + n, 0);
+        const avg = Math.round((sum / count) * 10) / 10;
+        const minVal = Math.min(...numbers);
+        const maxVal = Math.max(...numbers);
+        statsEl.textContent = `Součet: ${sum.toLocaleString('cs-CZ')} · Průměr: ${avg.toLocaleString('cs-CZ')} · Min: ${minVal} · Max: ${maxVal}`;
+        statsEl.hidden = false;
+      } else {
+        statsEl.hidden = true;
+      }
+    }
+
+    if (hintEl) {
+      hintEl.hidden = !isFinal;
     }
   }
 
@@ -1324,9 +1426,22 @@ const RandomNumber = (() => {
       return;
     }
     for (const entry of history) {
+      const nums = entry.numbers || [];
+      const text = nums.map((n) => n.toLocaleString('cs-CZ')).join(', ');
+      const copyBtn = h('button', {
+        class: 'ghost-btn tiny',
+        type: 'button',
+        title: 'Zkopírovat tato čísla',
+        onclick: () => copyText(nums.join(', ')),
+      }, '📋');
+
       list.append(h('li', {},
-        h('span', {}, entry.numbers.join(', ')),
-        h('time', { class: 'muted' }, `${entry.min}–${entry.max} · ${formatTime(entry.at)}`)));
+        h('span', { class: 'history-nums' }, text),
+        h('div', { class: 'row gap-sm' },
+          h('time', { class: 'muted' }, `${entry.min}–${entry.max} · ${formatTime(entry.at)}`),
+          copyBtn
+        )
+      ));
     }
   }
 
@@ -1335,13 +1450,13 @@ const RandomNumber = (() => {
     const unique = $('#rnd-unique').checked;
     const sort = $('#rnd-sort').checked;
 
-    if (!Number.isFinite(min) || !Number.isFinite(max)) return setError('Zadej platná čísla.');
-    if (min > max) return setError('Hodnota „od“ musí být menší nebo rovna „do“.');
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return setError('Zadej platná celá čísla „Od“ i „Do“.');
+    if (min > max) return setError('Hodnota „Od“ musí být menší nebo rovna „Do“.');
     if (!Number.isFinite(count) || count < 1 || count > 100) return setError('Počet čísel musí být 1 až 100.');
     const span = max - min + 1;
     if (span > Number.MAX_SAFE_INTEGER) return setError('Rozsah je příliš velký.');
     if (unique && span < count) {
-      return setError(`Bez opakování nejde vylosovat ${count} čísel z rozsahu o velikosti ${span}.`);
+      return setError(`Bez opakování nelze vylosovat ${count} čísel z rozsahu o velikosti ${span}.`);
     }
     setError('');
 
@@ -1361,6 +1476,7 @@ const RandomNumber = (() => {
       renderNumbers(result, true);
       return;
     }
+
     const started = Date.now();
     flickerTimer = setInterval(() => {
       if (Date.now() - started >= FLICKER_MS) {
@@ -1368,7 +1484,9 @@ const RandomNumber = (() => {
         renderNumbers(result, true);
         return;
       }
-      renderNumbers(result.map(() => randomBetween(min, max)), false);
+      const preview = draw(min, max, count, unique);
+      if (sort) preview.sort((a, b) => a - b);
+      renderNumbers(preview, false);
     }, 60);
   }
 
@@ -1379,10 +1497,15 @@ const RandomNumber = (() => {
     $('#rnd-count').value = state.count;
     $('#rnd-unique').checked = Boolean(state.unique);
     $('#rnd-sort').checked = Boolean(state.sort);
-    lastResult = [];
-    renderNumbers([], true);
-    $('#rnd-result').append(h('span', { class: 'rnd-placeholder' }, '—'));
     setError('');
+
+    if (state.history && state.history[0] && Array.isArray(state.history[0].numbers) && state.history[0].numbers.length) {
+      lastResult = state.history[0].numbers;
+      renderNumbers(lastResult, true);
+    } else {
+      lastResult = [];
+      renderNumbers([], true);
+    }
     renderHistory();
   }
 
@@ -1397,22 +1520,54 @@ const RandomNumber = (() => {
       renderHistory();
       Store.touch();
     });
+
     for (const id of ['#rnd-min', '#rnd-max', '#rnd-count', '#rnd-unique', '#rnd-sort']) {
+      $(id).addEventListener('input', () => {
+        setError('');
+      });
       $(id).addEventListener('change', () => {
         const { min, max, count } = readInputs();
-        Object.assign(Store.state.random, {
-          min, max, count, unique: $('#rnd-unique').checked, sort: $('#rnd-sort').checked,
-        });
+        if (Number.isFinite(min)) Store.state.random.min = min;
+        if (Number.isFinite(max)) Store.state.random.max = max;
+        if (Number.isFinite(count) && count >= 1 && count <= 100) Store.state.random.count = count;
+        Store.state.random.unique = $('#rnd-unique').checked;
+        Store.state.random.sort = $('#rnd-sort').checked;
         Store.touch();
       });
     }
+
+    $$('.rnd-preset-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const min = Number(btn.dataset.min);
+        const max = Number(btn.dataset.max);
+        const count = Number(btn.dataset.count);
+        const unique = btn.dataset.unique === '1';
+
+        $('#rnd-min').value = min;
+        $('#rnd-max').value = max;
+        $('#rnd-count').value = count;
+        $('#rnd-unique').checked = unique;
+        setError('');
+
+        Object.assign(Store.state.random, { min, max, count, unique });
+        Store.touch();
+        generate();
+      });
+    });
+
     $('#panel-random').addEventListener('keydown', (event) => {
       if (event.key === 'Enter' && event.target.tagName === 'INPUT') {
         event.preventDefault();
         generate();
       }
     });
-    registerTab('random', { activate: () => {} });
+
+    registerTab('random', {
+      activate: () => {},
+      deactivate: () => {
+        if (flickerTimer) clearInterval(flickerTimer);
+      },
+    });
   }
 
   return { init, syncFromState };
@@ -1445,7 +1600,7 @@ const SimGen = (() => {
   const FIELDS = [
     { key: 'gender', label: 'Pohlaví', bonus: false },
     { key: 'age', label: 'Věk', bonus: false },
-    { key: 'traits', label: 'Vlastnosti (3)', bonus: false },
+    { key: 'traits', label: 'Vlastnosti', bonus: false },
     { key: 'aspiration', label: 'Aspirace', bonus: false },
     { key: 'career', label: 'Kariéra', bonus: false },
     { key: 'occult', label: 'Okultní typ', bonus: false },
@@ -1466,10 +1621,24 @@ const SimGen = (() => {
     return list.filter((item) => !item.pack || isPackOwned(item.pack));
   }
 
-  /* Traits are drawn one at a time so every pick can exclude everything it
-     clashes with, which a bulk sample could not guarantee. */
-  function drawTraits(count = 3) {
-    const pool = ownedOnly(data.traits);
+  function renderPackTag(packName) {
+    if (!packName) return null;
+    const icon = packIconOf(packName);
+    const pack = packRegistry.get(packName);
+    const label = pack && pack.nameCs ? pack.nameCs : packName;
+    const fullTitle = pack && pack.nameCs && pack.nameCs !== packName ? `${pack.nameCs} (${packName})` : packName;
+    return h('span', { class: 'item-pack-tag', title: fullTitle },
+      icon ? h('img', {
+        class: 'pack-icon-mini',
+        src: packIconUrl(icon),
+        alt: '',
+        loading: 'lazy',
+        onerror: (e) => { e.target.style.display = 'none'; },
+      }) : null,
+      h('span', { class: 'pack-tag-name' }, label));
+  }
+
+  function drawTraitsFrom(pool, count = 3) {
     const picked = [];
     const blocked = new Set();
     let candidates = pool.slice();
@@ -1483,25 +1652,49 @@ const SimGen = (() => {
     return picked;
   }
 
-  function generateField(key) {
+  function generateField(key, current = {}) {
+    const age = current.age || 'Dospělý';
     switch (key) {
       case 'gender': return pickOne(data.genders);
       case 'age': return pickOne(data.ages).label;
-      case 'traits': return drawTraits(3).map((trait) => ({ name: trait.name, en: trait.en }));
+      case 'traits': {
+        if (age === 'Batole') {
+          const pool = ownedOnly(data.toddler_traits || []);
+          const picked = pickOne(pool);
+          return picked ? [{ name: picked.name, en: picked.en, pack: picked.pack }] : [];
+        }
+        const count = age === 'Dítě' ? 1 : (age === 'Teenager' ? 2 : 3);
+        const isChild = age === 'Dítě';
+        const rawPool = ownedOnly(data.traits || []);
+        const pool = isChild ? rawPool.filter((t) => t.childOk) : rawPool;
+        return drawTraitsFrom(pool, count).map((t) => ({ name: t.name, en: t.en, pack: t.pack }));
+      }
       case 'aspiration': {
-        const list = ownedOnly(data.aspirations);
-        if (!list.length) return null;
-        const item = pickOne(list);
-        return { name: item.name, category: item.category };
+        if (age === 'Batole') return null;
+        const pool = age === 'Dítě'
+          ? ownedOnly(data.child_aspirations || [])
+          : ownedOnly(data.aspirations || []);
+        if (!pool.length) return null;
+        const item = pickOne(pool);
+        return { name: item.name, en: item.en, category: item.category, pack: item.pack };
       }
       case 'career': {
-        const list = ownedOnly(data.careers);
-        return list.length ? pickOne(list).name : null;
+        if (age === 'Batole' || age === 'Dítě') return null;
+        if (age === 'Teenager') {
+          const pool = ownedOnly(data.teen_careers || []);
+          if (!pool.length) return null;
+          const item = pickOne(pool);
+          return { name: item.name, en: item.en, pack: item.pack };
+        }
+        const pool = ownedOnly(data.careers || []);
+        if (!pool.length) return null;
+        const item = pickOne(pool);
+        return { name: item.name, en: item.en, pack: item.pack };
       }
       case 'occult': {
-        const list = ownedOnly(data.occults);
+        const list = ownedOnly(data.occults || []);
         const item = weightedPick(list, (entry) => entry.weight);
-        return item ? item.name : null;
+        return item ? { name: item.name, en: item.en, pack: item.pack } : null;
       }
       case 'color': return pickOne(data.bonuses.colors);
       case 'music': return pickOne(data.bonuses.music);
@@ -1513,13 +1706,20 @@ const SimGen = (() => {
   function generate() {
     const state = Store.state.simgen;
     const current = { ...(state.current || {}) };
+    if (state.enabled.age && (!state.locks.age || !current.age)) {
+      current.age = generateField('age', current);
+    }
+    if (state.enabled.gender && (!state.locks.gender || !current.gender)) {
+      current.gender = generateField('gender', current);
+    }
     for (const field of FIELDS) {
       if (!state.enabled[field.key]) {
         delete current[field.key];
         continue;
       }
+      if (field.key === 'gender' || field.key === 'age') continue;
       if (state.locks[field.key] && current[field.key] !== undefined && current[field.key] !== null) continue;
-      current[field.key] = generateField(field.key);
+      current[field.key] = generateField(field.key, current);
     }
     state.current = current;
     Store.touch();
@@ -1528,16 +1728,72 @@ const SimGen = (() => {
 
   function valueToText(key, value) {
     if (value === null || value === undefined) return '—';
-    if (key === 'traits') return value.map((trait) => (trait.en ? `${trait.name} (${trait.en})` : trait.name)).join(', ');
-    if (key === 'aspiration') return `${value.name} — ${value.category}`;
+    if (key === 'traits') {
+      if (!Array.isArray(value)) return '—';
+      return value.map((t) => {
+        const en = t.en && t.en !== t.name ? ` (${t.en})` : '';
+        const pack = t.pack ? ` [${t.pack}]` : '';
+        return `${t.name}${en}${pack}`;
+      }).join(', ');
+    }
+    if (key === 'aspiration') {
+      if (typeof value === 'object') {
+        const en = value.en && value.en !== value.name ? ` (${value.en})` : '';
+        const pack = value.pack ? ` [${value.pack}]` : '';
+        return `${value.name}${en} — ${value.category}${pack}`;
+      }
+      return String(value);
+    }
+    if (key === 'career' || key === 'occult') {
+      if (typeof value === 'object') {
+        const en = value.en && value.en !== value.name ? ` (${value.en})` : '';
+        const pack = value.pack ? ` [${value.pack}]` : '';
+        return `${value.name}${en}${pack}`;
+      }
+      return String(value);
+    }
     return String(value);
   }
 
   function asText(current) {
     return FIELDS
       .filter((field) => current && current[field.key] !== undefined)
-      .map((field) => `${field.label.replace(' (3)', '')}: ${valueToText(field.key, current[field.key])}`)
+      .map((field) => `${field.label}: ${valueToText(field.key, current[field.key])}`)
       .join('\n');
+  }
+
+  function renderFieldNode(key, value, current) {
+    if (value === null || value === undefined) {
+      let note = '—';
+      if (key === 'career') {
+        note = (current.age === 'Batole' ? '— (batolata nepracují)' : (current.age === 'Dítě' ? '— (děti nepracují)' : '—'));
+      } else if (key === 'aspiration' && current.age === 'Batole') {
+        note = '— (batolata nemají aspirace)';
+      }
+      return h('span', { class: 'muted' }, note);
+    }
+
+    if (key === 'traits' && Array.isArray(value)) {
+      if (!value.length) return h('span', { class: 'muted' }, '—');
+      return h('div', { class: 'sim-traits-list' },
+        value.map((t) => h('div', { class: 'sim-trait-chip' },
+          h('span', { class: 'trait-name' }, t.name),
+          t.en && t.en !== t.name ? h('span', { class: 'trait-en' }, `(${t.en})`) : null,
+          t.pack ? renderPackTag(t.pack) : h('span', { class: 'item-pack-tag base-tag' }, 'Základní hra'))));
+    }
+
+    if (typeof value === 'object' && value !== null) {
+      let mainText = value.name;
+      if (key === 'aspiration' && value.category) {
+        mainText = `${value.name} — ${value.category}`;
+      }
+      return h('div', { class: 'sim-val-wrap' },
+        h('span', { class: 'sim-main-val' }, mainText),
+        value.en && value.en !== value.name ? h('span', { class: 'sim-sub-val' }, `(${value.en})`) : null,
+        value.pack ? renderPackTag(value.pack) : h('span', { class: 'item-pack-tag base-tag' }, 'Základní hra'));
+    }
+
+    return h('span', { class: 'sim-value' }, String(value));
   }
 
   function renderResult() {
@@ -1551,8 +1807,8 @@ const SimGen = (() => {
     for (const field of FIELDS) {
       if (current[field.key] === undefined) continue;
       box.append(h('div', { class: 'sim-row' },
-        h('span', { class: 'sim-key' }, field.label.replace(' (3)', '')),
-        h('span', { class: 'sim-value' }, valueToText(field.key, current[field.key]))));
+        h('span', { class: 'sim-key' }, field.label),
+        renderFieldNode(field.key, current[field.key], current)));
     }
   }
 
@@ -1688,6 +1944,7 @@ const SimGen = (() => {
 const Packs = (() => {
   let packs = null;
   let lastResults = [];
+  let search = '';
 
   const weightOf = (categoryId) => {
     const weights = Store.state.packs.weights || {};
@@ -1753,10 +2010,21 @@ const Packs = (() => {
     const box = $('#packs-results');
     clearNode(box);
     if (!lastResults.length) return;
-    for (const pack of lastResults) {
+    for (const item of lastResults) {
+      const pack = (packs && packs.find((p) => p.name === item.name)) || item;
+      const title = pack.nameCs || pack.name;
       box.append(h('div', { class: 'pack-card' },
-        h('span', { class: `badge badge-${pack.category}` }, categoryLabel(pack.category)),
-        h('span', { class: 'pack-name' }, pack.name)));
+        pack.icon ? h('img', {
+          class: 'pack-card-icon',
+          src: packIconUrl(pack.icon),
+          alt: '',
+          loading: 'lazy',
+          onerror: (e) => { e.target.style.display = 'none'; },
+        }) : null,
+        h('div', { class: 'pack-card-info' },
+          h('span', { class: `badge badge-${pack.category}` }, categoryLabel(pack.category)),
+          h('span', { class: 'pack-name' }, title),
+          pack.nameCs && pack.nameCs !== pack.name ? h('span', { class: 'pack-sub-name' }, pack.name) : null)));
     }
   }
 
@@ -1800,6 +2068,8 @@ const Packs = (() => {
     const box = $('#packs-owned');
     clearNode(box);
 
+    const query = search.trim().toLowerCase();
+
     const groups = [];
     for (const category of PACK_CATEGORIES) {
       if (category.id === 'kit') {
@@ -1815,7 +2085,12 @@ const Packs = (() => {
     }
 
     for (const group of groups) {
-      if (!group.items.length) continue;
+      const visible = query
+        ? group.items.filter((pack) =>
+            pack.name.toLowerCase().includes(query) ||
+            (pack.nameCs && pack.nameCs.toLowerCase().includes(query)))
+        : group.items;
+      if (!visible.length) continue;
       const names = group.items.map((pack) => pack.name);
       const ownedInGroup = names.filter((name) => isPackOwned(name)).length;
       box.append(h('div', { class: 'owned-group' },
@@ -1824,7 +2099,7 @@ const Packs = (() => {
           h('span', { class: 'pill tiny' }, `${ownedInGroup}/${names.length}`),
           h('button', { class: 'ghost-btn small', type: 'button', onclick: () => setOwned(names, true) }, 'Vše'),
           h('button', { class: 'ghost-btn small', type: 'button', onclick: () => setOwned(names, false) }, 'Nic')),
-        h('div', { class: 'owned-items' }, group.items.map((pack) => h('label', { class: 'check pack-check' },
+        h('div', { class: 'owned-items' }, visible.map((pack) => h('label', { class: 'check pack-check' },
           h('input', {
             type: 'checkbox',
             checked: isPackOwned(pack.name),
@@ -1839,7 +2114,17 @@ const Packs = (() => {
               if (Supersim.refreshIfActive) Supersim.refreshIfActive();
             },
           }),
-          pack.name)))));
+          pack.icon ? h('img', {
+            class: 'pack-icon',
+            src: packIconUrl(pack.icon),
+            alt: '',
+            loading: 'lazy',
+            onerror: (e) => { e.target.style.display = 'none'; },
+          }) : null,
+          h('span', { class: 'pack-name-text' },
+            pack.nameCs && pack.nameCs !== pack.name
+              ? [h('strong', { class: 'pack-cs-title' }, pack.nameCs), ' ', h('span', { class: 'pack-en-sub' }, `(${pack.name})`)]
+              : pack.name))))));
     }
     updateOwnedCount();
   }
@@ -1865,6 +2150,7 @@ const Packs = (() => {
     try {
       const doc = await loadData('packs');
       packs = doc.packs;
+      for (const p of packs) packRegistry.set(p.name, p);
       hideTabError('packs-error');
       syncFromState();
     } catch (error) {
@@ -1896,6 +2182,13 @@ const Packs = (() => {
       Store.state.packs.eachCategory = event.target.checked;
       Store.touch();
     });
+    const searchInput = $('#packs-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', (event) => {
+        search = event.target.value;
+        renderOwned();
+      });
+    }
     for (const button of $$('[data-packs-all]')) {
       button.addEventListener('click', () => {
         if (!packs) return;
@@ -1942,8 +2235,22 @@ const Supersim = (() => {
     const state = Store.state.supersim;
     const needle = search.trim().toLowerCase();
     return availableItems(section).filter((item) => {
-      if (needle && !item.name.toLowerCase().includes(needle)) return false;
-      if (state.age && item.age !== state.age) return false;
+      if (needle) {
+        const matchName = item.name && item.name.toLowerCase().includes(needle);
+        const matchEn = item.en && item.en.toLowerCase().includes(needle);
+        if (!matchName && !matchEn) return false;
+      }
+      if (state.age) {
+        if (state.age === 'toddler') {
+          if (item.age !== 'toddler') return false;
+        } else if (state.age === 'child') {
+          if (item.age !== 'child') return false;
+        } else if (state.age === 'teen') {
+          if (item.age === 'toddler' || item.age === 'child' || item.age === 'adult') return false;
+        } else if (state.age === 'adult') {
+          if (item.age === 'toddler' || item.age === 'child' || item.age === 'teen') return false;
+        }
+      }
       if (state.hideDone && progressOf(section.id, item) >= item.levels) return false;
       return true;
     });
@@ -1996,14 +2303,15 @@ const Supersim = (() => {
     const value = progressOf(section.id, item);
     const done = value >= item.levels;
     const change = (delta) => applyChange(section, item, button, delta);
+    const labelText = item.levels === 1
+      ? `${item.name}${item.en ? ' (' + item.en + ')' : ''} – ${done ? 'hotovo' : 'nehotovo'}`
+      : `${item.name}${item.en ? ' (' + item.en + ')' : ''} – úroveň ${value} z ${item.levels}`;
 
     const button = h('button', {
       type: 'button',
       class: `item-btn${done ? ' done' : ''}`,
       'aria-pressed': item.levels === 1 ? String(done) : null,
-      'aria-label': item.levels === 1
-        ? `${item.name} – ${done ? 'hotovo' : 'nehotovo'}`
-        : `${item.name} – úroveň ${value} z ${item.levels}`,
+      'aria-label': labelText,
       onclick: () => {
         if (longPressFired) { longPressFired = false; return; }
         change(item.levels === 1 ? (done ? -1 : 1) : 1);
@@ -2033,8 +2341,20 @@ const Supersim = (() => {
         }
       },
     },
-    h('span', { class: 'item-name' }, item.name),
-    item.pack ? h('span', { class: 'item-pack' }, item.pack) : null,
+    h('span', { class: 'item-name' },
+      h('span', { class: 'item-title' }, item.name),
+      item.en && item.en !== item.name ? h('span', { class: 'item-en-sub' }, ` (${item.en})`) : null,
+      item.cost ? h('span', { class: 'item-cost-badge' }, `${item.cost.toLocaleString('cs-CZ')} b.`) : null,
+    ),
+    item.pack ? h('span', { class: 'item-pack' },
+      packIconOf(item.pack) ? h('img', {
+        class: 'pack-icon-mini',
+        src: packIconUrl(packIconOf(item.pack)),
+        alt: '',
+        loading: 'lazy',
+        onerror: (e) => { e.target.style.display = 'none'; },
+      }) : null,
+      h('span', {}, packNameCsOf(item.pack) || item.pack)) : null,
     item.levels === 1
       ? h('span', { class: 'item-state' }, done ? '✓' : '')
       : h('span', { class: 'item-level' }, `${value}/${item.levels}`));
@@ -2136,7 +2456,11 @@ const Supersim = (() => {
     active = true;
     if (doc) { syncFromState(); return; }
     try {
-      doc = await loadData('supersim');
+      const [superDoc] = await Promise.all([
+        loadData('supersim'),
+        ensurePacksLoaded(),
+      ]);
+      doc = superDoc;
       hideTabError('supersim-error');
       syncFromState();
     } catch (error) {
@@ -2199,6 +2523,7 @@ function initProfileBar() {
 }
 
 async function boot() {
+  ensurePacksLoaded();
   initTheme();
   initTabs();
   initProfileBar();

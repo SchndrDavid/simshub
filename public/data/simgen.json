@@ -6,23 +6,611 @@
   "ages": [
     {
       "id": "toddler",
-      "label": "Batole"
+      "label": "Batole",
+      "maxTraits": 1,
+      "hasCareer": false,
+      "hasAspiration": false
     },
     {
       "id": "child",
-      "label": "Dítě"
+      "label": "Dítě",
+      "maxTraits": 1,
+      "hasCareer": false,
+      "hasAspiration": true
     },
     {
       "id": "teen",
-      "label": "Teenager"
+      "label": "Teenager",
+      "maxTraits": 2,
+      "hasCareer": true,
+      "hasAspiration": true
     },
     {
       "id": "adult",
-      "label": "Dospělý"
+      "label": "Dospělý",
+      "maxTraits": 3,
+      "hasCareer": true,
+      "hasAspiration": true
     },
     {
       "id": "elder",
-      "label": "Senior"
+      "label": "Senior",
+      "maxTraits": 3,
+      "hasCareer": true,
+      "hasAspiration": true
+    }
+  ],
+  "occults": [
+    {
+      "name": "Člověk",
+      "en": "Human",
+      "weight": 60,
+      "pack": null
+    },
+    {
+      "name": "Upír",
+      "en": "Vampire",
+      "weight": 8,
+      "pack": "Vampires"
+    },
+    {
+      "name": "Mimozemšťan",
+      "en": "Alien",
+      "weight": 8,
+      "pack": "Get to Work"
+    },
+    {
+      "name": "Čaroděj",
+      "en": "Spellcaster",
+      "weight": 8,
+      "pack": "Realm of Magic"
+    },
+    {
+      "name": "Vlkodlak",
+      "en": "Werewolf",
+      "weight": 8,
+      "pack": "Werewolves"
+    },
+    {
+      "name": "Mořská panna",
+      "en": "Mermaid",
+      "weight": 8,
+      "pack": "Island Living"
+    },
+    {
+      "name": "Duch",
+      "en": "Ghost",
+      "weight": 6,
+      "pack": null
+    }
+  ],
+  "toddler_traits": [
+    {
+      "name": "Andílek",
+      "en": "Angelic",
+      "pack": null
+    },
+    {
+      "name": "Rošťák",
+      "en": "Silly",
+      "pack": null
+    },
+    {
+      "name": "Okouzlující",
+      "en": "Charmer",
+      "pack": null
+    },
+    {
+      "name": "Mazel",
+      "en": "Clingy",
+      "pack": null
+    },
+    {
+      "name": "Ufňukaný",
+      "en": "Fussy",
+      "pack": null
+    },
+    {
+      "name": "Samostatný",
+      "en": "Independent",
+      "pack": null
+    },
+    {
+      "name": "Zvídavý",
+      "en": "Inquisitive",
+      "pack": null
+    },
+    {
+      "name": "Divoký",
+      "en": "Wild",
+      "pack": null
+    }
+  ],
+  "child_aspirations": [
+    {
+      "name": "Kreativní zázrak",
+      "en": "Artistic Prodigy",
+      "category": "Kreativita",
+      "pack": null
+    },
+    {
+      "name": "Dětský génius",
+      "en": "Whiz Kid",
+      "category": "Duševní",
+      "pack": null
+    },
+    {
+      "name": "Neřízená střela",
+      "en": "Rambunctious Scamp",
+      "category": "Motorická",
+      "pack": null
+    },
+    {
+      "name": "Společenské kvítko",
+      "en": "Social Butterfly",
+      "category": "Společenská",
+      "pack": null
+    }
+  ],
+  "teen_careers": [
+    {
+      "name": "Hlídání dětí",
+      "en": "Babysitter",
+      "pack": null
+    },
+    {
+      "name": "Barista",
+      "en": "Barista",
+      "pack": null
+    },
+    {
+      "name": "Rychlé občerstvení",
+      "en": "Fast Food Employee",
+      "pack": null
+    },
+    {
+      "name": "Manuální práce",
+      "en": "Manual Laborer",
+      "pack": null
+    },
+    {
+      "name": "Maloobchodní prodejce",
+      "en": "Retail Employee",
+      "pack": null
+    },
+    {
+      "name": "Plavčík",
+      "en": "Lifeguard",
+      "pack": "Island Living"
+    },
+    {
+      "name": "Potápěč",
+      "en": "Diver",
+      "pack": "Island Living"
+    },
+    {
+      "name": "Rybář",
+      "en": "Fisherman",
+      "pack": "Island Living"
+    }
+  ],
+  "careers": [
+    {
+      "name": "Astronaut",
+      "en": "Astronaut",
+      "pack": null
+    },
+    {
+      "name": "Sportovec",
+      "en": "Athlete",
+      "pack": null
+    },
+    {
+      "name": "Obchodník",
+      "en": "Business",
+      "pack": null
+    },
+    {
+      "name": "Zločinec",
+      "en": "Criminal",
+      "pack": null
+    },
+    {
+      "name": "Kulinářství",
+      "en": "Culinary",
+      "pack": null
+    },
+    {
+      "name": "Bavič",
+      "en": "Entertainer",
+      "pack": null
+    },
+    {
+      "name": "Malíř",
+      "en": "Painter",
+      "pack": null
+    },
+    {
+      "name": "Tajný agent",
+      "en": "Secret Agent",
+      "pack": null
+    },
+    {
+      "name": "Technický guru",
+      "en": "Tech Guru",
+      "pack": null
+    },
+    {
+      "name": "Spisovatel",
+      "en": "Writer",
+      "pack": null
+    },
+    {
+      "name": "Influencer stylu",
+      "en": "Style Influencer",
+      "pack": null
+    },
+    {
+      "name": "Detektiv",
+      "en": "Detective",
+      "pack": "Get to Work"
+    },
+    {
+      "name": "Lékař",
+      "en": "Doctor",
+      "pack": "Get to Work"
+    },
+    {
+      "name": "Vědec",
+      "en": "Scientist",
+      "pack": "Get to Work"
+    },
+    {
+      "name": "Kritik",
+      "en": "Critic",
+      "pack": "City Living"
+    },
+    {
+      "name": "Politik",
+      "en": "Politician",
+      "pack": "City Living"
+    },
+    {
+      "name": "Sociální sítě",
+      "en": "Social Media",
+      "pack": "City Living"
+    },
+    {
+      "name": "Herec",
+      "en": "Actor",
+      "pack": "Get Famous"
+    },
+    {
+      "name": "Zahradník",
+      "en": "Gardener",
+      "pack": "Seasons"
+    },
+    {
+      "name": "Voják",
+      "en": "Military",
+      "pack": "StrangerVille"
+    },
+    {
+      "name": "Ochránce přírody",
+      "en": "Conservationist",
+      "pack": "Island Living"
+    },
+    {
+      "name": "Učitel",
+      "en": "Education",
+      "pack": "Discover University"
+    },
+    {
+      "name": "Inženýr",
+      "en": "Engineer",
+      "pack": "Discover University"
+    },
+    {
+      "name": "Právník",
+      "en": "Law",
+      "pack": "Discover University"
+    },
+    {
+      "name": "Městský projektant",
+      "en": "Civil Designer",
+      "pack": "Eco Lifestyle"
+    },
+    {
+      "name": "Kancelářská krysa",
+      "en": "Salaryperson",
+      "pack": "Snowy Escape"
+    },
+    {
+      "name": "Bytový dekoratér",
+      "en": "Interior Decorator",
+      "pack": "Dream Home Decorator"
+    },
+    {
+      "name": "Konzultant pro romantiku",
+      "en": "Romance Consultant",
+      "pack": "Lovestruck"
+    },
+    {
+      "name": "Pohřebník",
+      "en": "Undertaker",
+      "pack": "Life and Death"
+    }
+  ],
+  "aspirations": [
+    {
+      "name": "Výjimečný malíř",
+      "en": "Painter Extraordinaire",
+      "category": "Kreativita",
+      "pack": null
+    },
+    {
+      "name": "Hudební génius",
+      "en": "Musical Genius",
+      "category": "Kreativita",
+      "pack": null
+    },
+    {
+      "name": "Úspěšný autor",
+      "en": "Bestselling Author",
+      "category": "Kreativita",
+      "pack": null
+    },
+    {
+      "name": "Mistr výroby",
+      "en": "Master Maker",
+      "category": "Kreativita",
+      "pack": "Eco Lifestyle"
+    },
+    {
+      "name": "Kulturista",
+      "en": "Bodybuilder",
+      "category": "Sport",
+      "pack": null
+    },
+    {
+      "name": "Nadšenec do extrémních sportů",
+      "en": "Extreme Sports Enthusiast",
+      "category": "Sport",
+      "pack": "Snowy Escape"
+    },
+    {
+      "name": "Veřejný nepřítel",
+      "en": "Public Enemy",
+      "category": "Zločin",
+      "pack": null
+    },
+    {
+      "name": "Král neplechy",
+      "en": "Chief of Mischief",
+      "category": "Zločin",
+      "pack": null
+    },
+    {
+      "name": "Úspěšný rodokmen",
+      "en": "Successful Lineage",
+      "category": "Rodina",
+      "pack": null
+    },
+    {
+      "name": "Velká šťastná rodina",
+      "en": "Big Happy Family",
+      "category": "Rodina",
+      "pack": null
+    },
+    {
+      "name": "Super rodič",
+      "en": "Super Parent",
+      "category": "Rodina",
+      "pack": "Parenthood"
+    },
+    {
+      "name": "Mistr kuchař",
+      "en": "Master Chef",
+      "category": "Jídlo",
+      "pack": null
+    },
+    {
+      "name": "Špičkový barman",
+      "en": "Master Mixologist",
+      "category": "Jídlo",
+      "pack": null
+    },
+    {
+      "name": "Pohádkově bohatý",
+      "en": "Fabulously Wealthy",
+      "category": "Bohatství",
+      "pack": null
+    },
+    {
+      "name": "Zámecký pán",
+      "en": "Mansion Baron",
+      "category": "Bohatství",
+      "pack": null
+    },
+    {
+      "name": "Renesanční Simík",
+      "en": "Renaissance Sim",
+      "category": "Znalosti",
+      "pack": null
+    },
+    {
+      "name": "Mozek šprta",
+      "en": "Nerd Brain",
+      "category": "Znalosti",
+      "pack": null
+    },
+    {
+      "name": "Počítačový expert",
+      "en": "Computer Whiz",
+      "category": "Znalosti",
+      "pack": null
+    },
+    {
+      "name": "Akademik",
+      "en": "Academic",
+      "category": "Znalosti",
+      "pack": "Discover University"
+    },
+    {
+      "name": "Mistr upír",
+      "en": "Master Vampire",
+      "category": "Znalosti",
+      "pack": "Vampires"
+    },
+    {
+      "name": "Dobrý upír",
+      "en": "Good Vampire",
+      "category": "Znalosti",
+      "pack": "Vampires"
+    },
+    {
+      "name": "Kouzla a čáry",
+      "en": "Spellcraft & Sorcery",
+      "category": "Znalosti",
+      "pack": "Realm of Magic"
+    },
+    {
+      "name": "Dodavatel lektvarů",
+      "en": "Purveyor of Potions",
+      "category": "Znalosti",
+      "pack": "Realm of Magic"
+    },
+    {
+      "name": "Sériový romantik",
+      "en": "Serial Romantic",
+      "category": "Láska",
+      "pack": null
+    },
+    {
+      "name": "Spřízněná duše",
+      "en": "Soulmate",
+      "category": "Láska",
+      "pack": null
+    },
+    {
+      "name": "Nezávislý botanik",
+      "en": "Freelance Botanist",
+      "category": "Příroda",
+      "pack": null
+    },
+    {
+      "name": "Kurátor",
+      "en": "The Curator",
+      "category": "Příroda",
+      "pack": null
+    },
+    {
+      "name": "Eso rybaření",
+      "en": "Angling Ace",
+      "category": "Příroda",
+      "pack": null
+    },
+    {
+      "name": "Milovník přírody",
+      "en": "Outdoor Enthusiast",
+      "category": "Příroda",
+      "pack": "Outdoor Retreat"
+    },
+    {
+      "name": "Eko inovátor",
+      "en": "Eco Innovator",
+      "category": "Příroda",
+      "pack": "Eco Lifestyle"
+    },
+    {
+      "name": "Hvězda vtipů",
+      "en": "Joke Star",
+      "category": "Popularita",
+      "pack": null
+    },
+    {
+      "name": "Pařmen",
+      "en": "Party Animal",
+      "category": "Popularita",
+      "pack": null
+    },
+    {
+      "name": "Přítel světa",
+      "en": "Friend of the World",
+      "category": "Popularita",
+      "pack": null
+    },
+    {
+      "name": "Vůdce smečky",
+      "en": "Leader of the Pack",
+      "category": "Popularita",
+      "pack": "Get Together"
+    },
+    {
+      "name": "Městský domorodec",
+      "en": "City Native",
+      "category": "Místo",
+      "pack": "City Living"
+    },
+    {
+      "name": "Život na pláži",
+      "en": "Beach Life",
+      "category": "Místo",
+      "pack": "Island Living"
+    },
+    {
+      "name": "Záhada ve StrangerVille",
+      "en": "Strangerville Mystery",
+      "category": "Místo",
+      "pack": "StrangerVille"
+    },
+    {
+      "name": "Venkovský opatrovník",
+      "en": "Country Caretaker",
+      "category": "Místo",
+      "pack": "Cottage Living"
+    },
+    {
+      "name": "Turista na hoře Komorebi",
+      "en": "Mt. Komorebi Sightseer",
+      "category": "Místo",
+      "pack": "Snowy Escape"
+    },
+    {
+      "name": "Průzkumník džungle",
+      "en": "Jungle Explorer",
+      "category": "Místo",
+      "pack": "Jungle Adventure"
+    },
+    {
+      "name": "Zenový guru",
+      "en": "Zen Guru",
+      "category": "Wellness",
+      "pack": "Spa Day"
+    },
+    {
+      "name": "Světoznámá celebrita",
+      "en": "World-Famous Celebrity",
+      "category": "Sláva",
+      "pack": "Get Famous"
+    },
+    {
+      "name": "Mistr herectví",
+      "en": "Master Actor",
+      "category": "Sláva",
+      "pack": "Get Famous"
+    },
+    {
+      "name": "Přítel zvířat",
+      "en": "Friend of the Animals",
+      "category": "Zvířata",
+      "pack": "Cats & Dogs"
+    },
+    {
+      "name": "Šampion v jízdě na koni",
+      "en": "Championship Rider",
+      "category": "Zvířata",
+      "pack": "Horse Ranch"
     }
   ],
   "traits": [
@@ -30,6 +618,7 @@
       "name": "Aktivní",
       "en": "Active",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Lenoch"
       ]
@@ -38,6 +627,7 @@
       "name": "Lenoch",
       "en": "Lazy",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Aktivní",
         "Ambiciózní"
@@ -47,6 +637,7 @@
       "name": "Čistotný",
       "en": "Neat",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Nepořádný"
       ]
@@ -55,6 +646,7 @@
       "name": "Nepořádný",
       "en": "Slob",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Čistotný"
       ]
@@ -63,6 +655,7 @@
       "name": "Veselý",
       "en": "Cheerful",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Náladový"
       ]
@@ -71,6 +664,7 @@
       "name": "Náladový",
       "en": "Gloomy",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Veselý"
       ]
@@ -79,6 +673,7 @@
       "name": "Dobrosrdečný",
       "en": "Good",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Zlý",
         "Zlomyslný"
@@ -88,6 +683,7 @@
       "name": "Zlý",
       "en": "Evil",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Dobrosrdečný"
       ]
@@ -96,6 +692,7 @@
       "name": "Zlomyslný",
       "en": "Mean",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Dobrosrdečný"
       ]
@@ -104,6 +701,7 @@
       "name": "Společenský",
       "en": "Outgoing",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Samotář"
       ]
@@ -112,6 +710,7 @@
       "name": "Samotář",
       "en": "Loner",
       "pack": null,
+      "childOk": true,
       "conflicts": [
         "Společenský"
       ]
@@ -120,44 +719,14 @@
       "name": "Materialista",
       "en": "Materialistic",
       "pack": null,
-      "conflicts": [
-        "Skromný"
-      ]
-    },
-    {
-      "name": "Skromný",
-      "en": "Frugal",
-      "pack": null,
-      "conflicts": [
-        "Materialista"
-      ]
-    },
-    {
-      "name": "Milovník psů",
-      "en": "Dog Lover",
-      "pack": "Cats & Dogs",
-      "conflicts": [
-        "Nesnáší psy"
-      ]
-    },
-    {
-      "name": "Nesnáší psy",
-      "en": "Hates Dogs",
-      "pack": "Cats & Dogs",
-      "conflicts": [
-        "Milovník psů"
-      ]
-    },
-    {
-      "name": "Milovník koček",
-      "en": "Cat Lover",
-      "pack": "Cats & Dogs",
+      "childOk": false,
       "conflicts": []
     },
     {
       "name": "Rodinný typ",
       "en": "Family-Oriented",
       "pack": null,
+      "childOk": false,
       "conflicts": [
         "Nesnáší děti"
       ]
@@ -166,6 +735,7 @@
       "name": "Nesnáší děti",
       "en": "Hates Children",
       "pack": null,
+      "childOk": false,
       "conflicts": [
         "Rodinný typ"
       ]
@@ -174,24 +744,28 @@
       "name": "Kreativní",
       "en": "Creative",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Génius",
       "en": "Genius",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Šašek",
       "en": "Goofball",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Romantik",
       "en": "Romantic",
       "pack": null,
+      "childOk": false,
       "conflicts": [
         "Nekoketní"
       ]
@@ -199,7 +773,8 @@
     {
       "name": "Nekoketní",
       "en": "Unflirty",
-      "pack": null,
+      "pack": "City Living",
+      "childOk": false,
       "conflicts": [
         "Romantik"
       ]
@@ -208,120 +783,149 @@
       "name": "Sebejistý",
       "en": "Self-Assured",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Milovník umění",
       "en": "Art Lover",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Knihomol",
       "en": "Bookworm",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Milovník hudby",
       "en": "Music Lover",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Jedlík",
       "en": "Glutton",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Gurmán",
       "en": "Foodie",
       "pack": null,
-      "conflicts": []
+      "childOk": false,
+      "conflicts": [
+        "Jedlík"
+      ]
     },
     {
       "name": "Perfekcionista",
       "en": "Perfectionist",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Snob",
       "en": "Snob",
       "pack": null,
+      "childOk": false,
       "conflicts": []
     },
     {
       "name": "Prchlivý",
       "en": "Hot-Headed",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Dětinský",
       "en": "Childish",
       "pack": null,
-      "conflicts": []
+      "childOk": false,
+      "conflicts": [
+        "Zlý",
+        "Snob"
+      ]
     },
     {
       "name": "Nemotorný",
       "en": "Clumsy",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Geek",
       "en": "Geek",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Háklivý",
       "en": "Squeamish",
-      "pack": null,
+      "pack": "Outdoor Retreat",
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Žárlivý",
       "en": "Jealous",
       "pack": null,
+      "childOk": false,
       "conflicts": []
     },
     {
       "name": "Kleptoman",
       "en": "Kleptomaniac",
       "pack": null,
-      "conflicts": []
+      "childOk": true,
+      "conflicts": [
+        "Dobrosrdečný"
+      ]
     },
     {
       "name": "Nerozhodný",
       "en": "Noncommittal",
       "pack": null,
+      "childOk": false,
       "conflicts": []
     },
     {
       "name": "Vegetarián",
       "en": "Vegetarian",
-      "pack": null,
+      "pack": "City Living",
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Miluje přírodu",
       "en": "Loves Outdoors",
       "pack": null,
-      "conflicts": []
+      "childOk": true,
+      "conflicts": [
+        "Háklivý"
+      ]
     },
     {
       "name": "Podivín",
       "en": "Erratic",
       "pack": null,
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Ambiciózní",
       "en": "Ambitious",
       "pack": null,
+      "childOk": false,
       "conflicts": [
         "Lenoch"
       ]
@@ -330,418 +934,238 @@
       "name": "Bro",
       "en": "Bro",
       "pack": null,
+      "childOk": false,
+      "conflicts": []
+    },
+    {
+      "name": "Milovník psů",
+      "en": "Dog Lover",
+      "pack": "Cats & Dogs",
+      "childOk": true,
+      "conflicts": []
+    },
+    {
+      "name": "Milovník koček",
+      "en": "Cat Lover",
+      "pack": "Cats & Dogs",
+      "childOk": true,
       "conflicts": []
     },
     {
       "name": "Zasvěcený",
       "en": "Insider",
       "pack": "Get Together",
+      "childOk": false,
       "conflicts": []
     },
     {
       "name": "Taneční mašina",
       "en": "Dance Machine",
       "pack": "Get Together",
+      "childOk": false,
+      "conflicts": [
+        "Lenoch"
+      ]
+    },
+    {
+      "name": "Sebestředný",
+      "en": "Self-Absorbed",
+      "pack": "Parenthood",
+      "childOk": false,
       "conflicts": []
     },
     {
       "name": "Paranoidní",
       "en": "Paranoid",
       "pack": "StrangerVille",
+      "childOk": false,
       "conflicts": []
     },
     {
-      "name": "Sebestředný",
-      "en": "Self-Absorbed",
-      "pack": "Parenthood",
+      "name": "Dítě ostrovů",
+      "en": "Child of the Islands",
+      "pack": "Island Living",
+      "childOk": true,
       "conflicts": []
-    }
-  ],
-  "aspirations": [
-    {
-      "name": "Painter Extraordinaire",
-      "category": "Kreativita",
-      "pack": null
-    },
-    {
-      "name": "Musical Genius",
-      "category": "Kreativita",
-      "pack": null
-    },
-    {
-      "name": "Bestselling Author",
-      "category": "Kreativita",
-      "pack": null
-    },
-    {
-      "name": "Master Maker",
-      "category": "Kreativita",
-      "pack": "Eco Lifestyle"
-    },
-    {
-      "name": "Bodybuilder",
-      "category": "Sport",
-      "pack": null
-    },
-    {
-      "name": "Extreme Sports Enthusiast",
-      "category": "Sport",
-      "pack": "Snowy Escape"
-    },
-    {
-      "name": "Public Enemy",
-      "category": "Zločin",
-      "pack": null
-    },
-    {
-      "name": "Chief of Mischief",
-      "category": "Zločin",
-      "pack": null
-    },
-    {
-      "name": "Successful Lineage",
-      "category": "Rodina",
-      "pack": null
-    },
-    {
-      "name": "Big Happy Family",
-      "category": "Rodina",
-      "pack": null
-    },
-    {
-      "name": "Super Parent",
-      "category": "Rodina",
-      "pack": "Parenthood"
-    },
-    {
-      "name": "Master Chef",
-      "category": "Jídlo",
-      "pack": null
-    },
-    {
-      "name": "Master Mixologist",
-      "category": "Jídlo",
-      "pack": null
-    },
-    {
-      "name": "Fabulously Wealthy",
-      "category": "Bohatství",
-      "pack": null
-    },
-    {
-      "name": "Mansion Baron",
-      "category": "Bohatství",
-      "pack": null
-    },
-    {
-      "name": "Renaissance Sim",
-      "category": "Znalosti",
-      "pack": null
-    },
-    {
-      "name": "Nerd Brain",
-      "category": "Znalosti",
-      "pack": null
-    },
-    {
-      "name": "Computer Whiz",
-      "category": "Znalosti",
-      "pack": null
-    },
-    {
-      "name": "Academic",
-      "category": "Znalosti",
-      "pack": "Discover University"
-    },
-    {
-      "name": "Master Vampire",
-      "category": "Znalosti",
-      "pack": "Vampires"
-    },
-    {
-      "name": "Good Vampire",
-      "category": "Znalosti",
-      "pack": "Vampires"
-    },
-    {
-      "name": "Spellcraft & Sorcery",
-      "category": "Znalosti",
-      "pack": "Realm of Magic"
-    },
-    {
-      "name": "Purveyor of Potions",
-      "category": "Znalosti",
-      "pack": "Realm of Magic"
-    },
-    {
-      "name": "Serial Romantic",
-      "category": "Láska",
-      "pack": null
-    },
-    {
-      "name": "Soulmate",
-      "category": "Láska",
-      "pack": null
-    },
-    {
-      "name": "Freelance Botanist",
-      "category": "Příroda",
-      "pack": null
-    },
-    {
-      "name": "The Curator",
-      "category": "Příroda",
-      "pack": null
-    },
-    {
-      "name": "Angling Ace",
-      "category": "Příroda",
-      "pack": null
-    },
-    {
-      "name": "Outdoor Enthusiast",
-      "category": "Příroda",
-      "pack": "Outdoor Retreat"
     },
     {
-      "name": "Eco Innovator",
-      "category": "Příroda",
-      "pack": "Eco Lifestyle"
+      "name": "Dítě oceánu",
+      "en": "Child of the Ocean",
+      "pack": "Island Living",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "Joke Star",
-      "category": "Popularita",
-      "pack": null
+      "name": "Freegan",
+      "en": "Freegan",
+      "pack": "Eco Lifestyle",
+      "childOk": false,
+      "conflicts": [
+        "Materialista",
+        "Snob"
+      ]
     },
     {
-      "name": "Party Animal",
-      "category": "Popularita",
-      "pack": null
+      "name": "Milovník ekologie",
+      "en": "Green Fiend",
+      "pack": "Eco Lifestyle",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "Friend of the World",
-      "category": "Popularita",
-      "pack": null
+      "name": "Stoupenec recyklace",
+      "en": "Recycle Disciple",
+      "pack": "Eco Lifestyle",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "Leader of the Pack",
-      "category": "Popularita",
-      "pack": "Get Together"
+      "name": "Dobrodružný",
+      "en": "Adventurous",
+      "pack": "Snowy Escape",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "City Native",
-      "category": "Místo",
-      "pack": "City Living"
+      "name": "Řádný",
+      "en": "Proper",
+      "pack": "Snowy Escape",
+      "childOk": false,
+      "conflicts": [
+        "Zlomyslný",
+        "Nepořádný"
+      ]
     },
     {
-      "name": "Beach Life",
-      "category": "Místo",
-      "pack": "Island Living"
+      "name": "Alergický na laktózu",
+      "en": "Lactose Intolerant",
+      "pack": "Cottage Living",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "Strangerville Mystery",
-      "category": "Místo",
-      "pack": "StrangerVille"
+      "name": "Milovník zvířat",
+      "en": "Animal Enthusiast",
+      "pack": "Cottage Living",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "Country Caretaker",
-      "category": "Místo",
-      "pack": "Cottage Living"
+      "name": "Hnát se za úspěchem",
+      "en": "Overachiever",
+      "pack": "High School Years",
+      "childOk": false,
+      "conflicts": [
+        "Lenoch"
+      ]
     },
     {
-      "name": "Mt. Komorebi Sightseer",
-      "category": "Místo",
-      "pack": "Snowy Escape"
+      "name": "Pařmen",
+      "en": "Party Animal",
+      "pack": "High School Years",
+      "childOk": false,
+      "conflicts": []
     },
     {
-      "name": "Jungle Explorer",
-      "category": "Místo",
-      "pack": "Jungle Adventure"
+      "name": "Společensky neobratný",
+      "en": "Socially Awkward",
+      "pack": "High School Years",
+      "childOk": false,
+      "conflicts": [
+        "Společenský"
+      ]
     },
     {
-      "name": "Zen Guru",
-      "category": "Wellness",
-      "pack": "Spa Day"
+      "name": "Věrný",
+      "en": "Loyal",
+      "pack": "Growing Together",
+      "childOk": false,
+      "conflicts": [
+        "Nerozhodný"
+      ]
     },
     {
-      "name": "World-Famous Celebrity",
-      "category": "Sláva",
-      "pack": "Get Famous"
+      "name": "Milovník koní",
+      "en": "Horse Lover",
+      "pack": "Horse Ranch",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "Master Actor",
-      "category": "Sláva",
-      "pack": "Get Famous"
+      "name": "Rančer",
+      "en": "Rancher",
+      "pack": "Horse Ranch",
+      "childOk": false,
+      "conflicts": []
     },
     {
-      "name": "Friend of the Animals",
-      "category": "Zvířata",
-      "pack": "Cats & Dogs"
+      "name": "Zvědavý",
+      "en": "Nosy",
+      "pack": "For Rent",
+      "childOk": false,
+      "conflicts": []
     },
-    {
-      "name": "Championship Rider",
-      "category": "Zvířata",
-      "pack": "Horse Ranch"
-    }
-  ],
-  "careers": [
-    {
-      "name": "Astronaut",
-      "pack": null
-    },
-    {
-      "name": "Athlete",
-      "pack": null
-    },
-    {
-      "name": "Business",
-      "pack": null
-    },
-    {
-      "name": "Criminal",
-      "pack": null
-    },
-    {
-      "name": "Culinary",
-      "pack": null
-    },
-    {
-      "name": "Entertainer",
-      "pack": null
-    },
-    {
-      "name": "Painter",
-      "pack": null
-    },
-    {
-      "name": "Secret Agent",
-      "pack": null
-    },
-    {
-      "name": "Tech Guru",
-      "pack": null
-    },
-    {
-      "name": "Writer",
-      "pack": null
-    },
-    {
-      "name": "Detective",
-      "pack": "Get to Work"
-    },
-    {
-      "name": "Doctor",
-      "pack": "Get to Work"
-    },
-    {
-      "name": "Scientist",
-      "pack": "Get to Work"
-    },
-    {
-      "name": "Critic",
-      "pack": "City Living"
-    },
-    {
-      "name": "Politician",
-      "pack": "City Living"
-    },
-    {
-      "name": "Social Media",
-      "pack": "City Living"
-    },
-    {
-      "name": "Style Influencer",
-      "pack": "City Living"
-    },
-    {
-      "name": "Actor",
-      "pack": "Get Famous"
-    },
-    {
-      "name": "Gardener",
-      "pack": "Seasons"
-    },
-    {
-      "name": "Military",
-      "pack": "StrangerVille"
-    },
-    {
-      "name": "Conservationist",
-      "pack": "Island Living"
-    },
-    {
-      "name": "Education",
-      "pack": "Discover University"
-    },
-    {
-      "name": "Engineer",
-      "pack": "Discover University"
-    },
-    {
-      "name": "Law",
-      "pack": "Discover University"
-    },
-    {
-      "name": "Civil Designer",
-      "pack": "Eco Lifestyle"
-    },
-    {
-      "name": "Salaryperson",
-      "pack": "Snowy Escape"
-    },
-    {
-      "name": "Interior Decorator",
-      "pack": "Dream Home Decorator"
-    },
-    {
-      "name": "Romance Consultant",
-      "pack": "Lovestruck"
-    },
-    {
-      "name": "Undertaker",
-      "pack": "Life and Death"
-    }
-  ],
-  "occults": [
     {
-      "name": "Člověk",
-      "weight": 60,
-      "pack": null
+      "name": "Trapný",
+      "en": "Cringe",
+      "pack": "For Rent",
+      "childOk": false,
+      "conflicts": []
     },
     {
-      "name": "Upír",
-      "weight": 6,
-      "pack": "Vampires"
+      "name": "Velkorysý",
+      "en": "Generous",
+      "pack": "For Rent",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "Mimozemšťan",
-      "weight": 6,
-      "pack": "Get to Work"
+      "name": "Dítě vesnice",
+      "en": "Child of the Village",
+      "pack": "For Rent",
+      "childOk": true,
+      "conflicts": []
     },
     {
-      "name": "Čarodějnice",
-      "weight": 6,
-      "pack": "Realm of Magic"
+      "name": "Opatrný v lásce",
+      "en": "Romantically Reserved",
+      "pack": "Lovestruck",
+      "childOk": false,
+      "conflicts": [
+        "Romantik"
+      ]
     },
     {
-      "name": "Vlkodlak",
-      "weight": 6,
-      "pack": "Werewolves"
+      "name": "Poblázněný láskou",
+      "en": "Love-Struck",
+      "pack": "Lovestruck",
+      "childOk": false,
+      "conflicts": [
+        "Nekoketní"
+      ]
     },
     {
-      "name": "Mořská panna",
-      "weight": 6,
-      "pack": "Island Living"
+      "name": "Ponurý",
+      "en": "Macabre",
+      "pack": "Life and Death",
+      "childOk": true,
+      "conflicts": [
+        "Veselý"
+      ]
     },
     {
-      "name": "Duch",
-      "weight": 5,
-      "pack": null
+      "name": "Pronásledovaný smrtí",
+      "en": "Chased by Death",
+      "pack": "Life and Death",
+      "childOk": false,
+      "conflicts": []
     },
     {
-      "name": "Víla",
-      "weight": 5,
-      "pack": "Enchanted By Nature"
+      "name": "Skeptický",
+      "en": "Skeptical",
+      "pack": "Life and Death",
+      "childOk": false,
+      "conflicts": []
     }
   ],
   "bonuses": {
@@ -764,14 +1188,16 @@
       "Rock",
       "Alternativa",
       "Elektronika",
-      "Klasika",
+      "Klasická hudba",
       "Jazz",
       "Country",
       "Hip hop",
       "Latino",
       "Retro",
       "Metal",
-      "Filmová hudba"
+      "Filmová hudba",
+      "Dětská hudba",
+      "Strašidelná hudba"
     ],
     "food": [
       "Grilované maso",
@@ -785,7 +1211,9 @@
       "Snídaně",
       "Rybí filé",
       "Curry",
-      "Zmrzlina"
+      "Zmrzlina",
+      "Burgery",
+      "Tacos"
     ]
   }
 }
