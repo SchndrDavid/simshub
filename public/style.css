@@ -847,8 +847,473 @@ main {
 }
 .item-level { font-variant-numeric: tabular-nums; font-size: .82rem; color: var(--muted); font-weight: 700; }
 .item-state { color: var(--green); font-weight: 800; }
-.item-bar { grid-column: 1 / -1; height: 4px; border-radius: 999px; background: var(--surface-3); overflow: hidden; margin-top: 4px; }
-.item-bar-fill { display: block; height: 100%; background: var(--accent); }
+/* ----------------------------------------------------------- language switch */
+
+.lang-switch {
+  display: inline-flex;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  gap: 2px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  border-radius: calc(var(--radius-sm) - 2px);
+  padding: 3px 8px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+.lang-btn:hover {
+  color: var(--text);
+}
+
+.lang-btn.active {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ------------------------------------------------------------------ simsmix */
+
+.simsmix-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  border-left: 4px solid var(--accent);
+}
+
+.simsmix-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.simsmix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1024px) {
+  .simsmix-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .simsmix-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.simsmix-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.simsmix-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.simsmix-card .card-title {
+  font-size: 1.05rem;
+}
+
+.simsmix-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.lock-btn, .lock-btn-mini {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: .85rem;
+  padding: 3px 7px;
+  color: var(--muted);
+  transition: all .15s ease;
+  line-height: 1;
+}
+
+.lock-btn:hover, .lock-btn-mini:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.lock-btn.locked, .lock-btn-mini.locked {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.simsmix-segmented {
+  display: flex;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--border);
+}
+
+.segmented-opt {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.segmented-opt input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmented-opt span {
+  display: block;
+  padding: 5px 8px;
+  border-radius: calc(var(--radius-sm) - 2px);
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all .15s ease;
+}
+
+.segmented-opt input:checked + span {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.simsmix-result-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+}
+
+.simsmix-res-label {
+  font-size: .82rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.simsmix-res-badge {
+  font-size: .95rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.gender-badge.male {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.gender-badge.female {
+  background: #fce7f3;
+  color: #db2777;
+}
+
+.simsmix-values-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.simsmix-val-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.simsmix-val-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.simsmix-val-name {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.simsmix-val-select {
+  font-size: .75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.simsmix-val-out-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.simsmix-val-badge {
+  font-size: .85rem;
+  font-weight: 650;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.simsmix-val-pos {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.simsmix-val-neg {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.simsmix-val-neu {
+  background: var(--surface-3);
+  color: var(--muted);
+}
+
+.simsmix-item-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.simsmix-item-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.simsmix-item-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.simsmix-item-stage {
+  font-size: .74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+}
+
+.simsmix-item-value {
+  font-size: .92rem;
+  font-weight: 650;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.simsmix-item-sub {
+  font-size: .78rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.simsmix-item-pack {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .72rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.simsmix-heredity-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.simsmix-parent-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.simsmix-parent-title {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.simsmix-parent-selects {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.simsmix-parent-selects select {
+  font-size: .8rem;
+  padding: 5px 8px;
+}
+
+/* ------------------------------------------------------------- random packs */
+
+.randompacks-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(400px, 1.6fr);
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .randompacks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rp-roller-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rp-tables-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rp-search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rp-categories-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rp-cat-section {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rp-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rp-cat-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rp-cat-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rp-pack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.rp-pack-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+  transition: all .15s ease;
+}
+
+.rp-pack-item:hover {
+  border-color: var(--accent);
+}
+
+.rp-pack-item input[type="checkbox"] {
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.rp-pack-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex: 0 0 24px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.15));
+}
+
+.rp-pack-texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rp-pack-title {
+  font-size: .82rem;
+  font-weight: 650;
+  line-height: 1.25;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rp-pack-subtitle {
+  font-size: .72rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* ------------------------------------------------------------------ footer */
 

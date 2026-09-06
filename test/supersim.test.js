@@ -98,7 +98,9 @@ function filterVisibleItems({ section, search, age, hideDone, progressMap, owned
     if (needle) {
       const matchName = item.name && item.name.toLowerCase().includes(needle);
       const matchEn = item.en && item.en.toLowerCase().includes(needle);
-      if (!matchName && !matchEn) return false;
+      const matchRu = item.ru && item.ru.toLowerCase().includes(needle);
+      const matchCs = item.cs && item.cs.toLowerCase().includes(needle);
+      if (!matchName && !matchEn && !matchRu && !matchCs) return false;
     }
     if (age) {
       if (age === 'toddler') {
@@ -158,9 +160,14 @@ test('age filter logic accurately segregates ages', () => {
   assert.ok(!adultCareers.some((c) => c.age === 'teen'), 'Adult filter must exclude teen part-time jobs');
 });
 
-test('bilingual search matches Czech and English terms', () => {
+test('trilingual search matches Russian, Czech, and English terms', () => {
   const data = JSON.parse(fs.readFileSync(supersimPath, 'utf8'));
   const skillsSection = data.sections.find((s) => s.id === 'skills');
+
+  // Search by Russian name
+  const russianMatches = filterVisibleItems({ section: skillsSection, search: 'кулинария' });
+  assert.ok(russianMatches.length >= 1);
+  assert.ok(russianMatches.some((s) => s.en === 'Cooking'));
 
   // Search by Czech name
   const czechMatches = filterVisibleItems({ section: skillsSection, search: 'vaření' });
@@ -171,6 +178,11 @@ test('bilingual search matches Czech and English terms', () => {
   const englishMatches = filterVisibleItems({ section: skillsSection, search: 'cooking' });
   assert.ok(englishMatches.length >= 1);
   assert.ok(englishMatches.some((s) => s.en === 'Cooking'));
+
+  // Search by Russian name for Potty
+  const pottyRu = filterVisibleItems({ section: skillsSection, search: 'горшок' });
+  assert.equal(pottyRu.length, 1);
+  assert.equal(pottyRu[0].en, 'Potty');
 
   // Search by Czech name for Potty
   const pottyCzech = filterVisibleItems({ section: skillsSection, search: 'nočník' });

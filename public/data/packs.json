@@ -5,672 +5,768 @@
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/get-to-work.png",
-      "nameCs": "Hurá do práce!"
+      "nameCs": "Hurá do práce!",
+      "nameRu": "На работу!"
     },
     {
       "name": "Get Together",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/get-together.png",
-      "nameCs": "Společná zábava"
+      "nameCs": "Společná zábava",
+      "nameRu": "Веселимся вместе!"
     },
     {
       "name": "City Living",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/city-living.png",
-      "nameCs": "Život ve městě"
+      "nameCs": "Život ve městě",
+      "nameRu": "Жизнь в городе"
     },
     {
       "name": "Cats & Dogs",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/cats-dogs.png",
-      "nameCs": "Psi a kočky"
+      "nameCs": "Psi a kočky",
+      "nameRu": "Кошки и собаки"
     },
     {
       "name": "Seasons",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/seasons.png",
-      "nameCs": "Roční období"
+      "nameCs": "Roční období",
+      "nameRu": "Времена года"
     },
     {
       "name": "Get Famous",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/get-famous.png",
-      "nameCs": "Cesta ke slávě"
+      "nameCs": "Cesta ke slávě",
+      "nameRu": "Путь к славе"
     },
     {
       "name": "Island Living",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/island-living.png",
-      "nameCs": "Život na ostrově"
+      "nameCs": "Život na ostrově",
+      "nameRu": "Жизнь на острове"
     },
     {
       "name": "Discover University",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/discover-university.png",
-      "nameCs": "Hurá na vysokou"
+      "nameCs": "Hurá na vysokou",
+      "nameRu": "В университете"
     },
     {
       "name": "Eco Lifestyle",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/eco-lifestyle.png",
-      "nameCs": "Ekobydlení"
+      "nameCs": "Ekobydlení",
+      "nameRu": "Экологичная жизнь"
     },
     {
       "name": "Snowy Escape",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/snowy-escape.png",
-      "nameCs": "Život na horách"
+      "nameCs": "Život na horách",
+      "nameRu": "Снежные просторы"
     },
     {
       "name": "Cottage Living",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/cottage-living.png",
-      "nameCs": "Život na venkově"
+      "nameCs": "Život na venkově",
+      "nameRu": "Загородная жизнь"
     },
     {
       "name": "High School Years",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/high-school-years.png",
-      "nameCs": "Střední škola"
+      "nameCs": "Střední škola",
+      "nameRu": "Старшая школа"
     },
     {
       "name": "Growing Together",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/growing-together.png",
-      "nameCs": "Rodinný život"
+      "nameCs": "Rodinný život",
+      "nameRu": "Жизненный путь"
     },
     {
       "name": "Horse Ranch",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/horse-ranch.png",
-      "nameCs": "Koňský ranč"
+      "nameCs": "Koňský ranč",
+      "nameRu": "Конное ранчо"
     },
     {
       "name": "For Rent",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/for-rent.png",
-      "nameCs": "Nájemní bydlení"
+      "nameCs": "Nájemní bydlení",
+      "nameRu": "Сдается!"
     },
     {
       "name": "Lovestruck",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/lovestruck.png",
-      "nameCs": "Láska volá"
+      "nameCs": "Láska volá",
+      "nameRu": "Стрелы купидона"
     },
     {
       "name": "Life and Death",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/life-and-death.png",
-      "nameCs": "Život a smrt"
+      "nameCs": "Život a smrt",
+      "nameRu": "Жизнь и смерть"
     },
     {
       "name": "Businesses & Hobbies",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/businesses-hobbies.png",
-      "nameCs": "Záliby a živnosti"
+      "nameCs": "Záliby a živnosti",
+      "nameRu": "Любимое дело"
     },
     {
       "name": "Enchanted By Nature",
       "category": "expansion",
       "subtype": null,
       "icon": "icons/packs/enchanted-by-nature.svg",
-      "nameCs": "Kouzlo přírody"
+      "nameCs": "Kouzlo přírody",
+      "nameRu": "Волшебство природы"
     },
     {
       "name": "Outdoor Retreat",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/outdoor-retreat.png",
-      "nameCs": "Únik do přírody"
+      "nameCs": "Únik do přírody",
+      "nameRu": "В поход!"
     },
     {
       "name": "Spa Day",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/spa-day.png",
-      "nameCs": "Návštěva v lázních"
+      "nameCs": "Návštěva v lázních",
+      "nameRu": "День спа"
     },
     {
       "name": "Dine Out",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/dine-out.png",
-      "nameCs": "Jdeme se najíst"
+      "nameCs": "Jdeme se najíst",
+      "nameRu": "В ресторане"
     },
     {
       "name": "Vampires",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/vampires.png",
-      "nameCs": "Upíři"
+      "nameCs": "Upíři",
+      "nameRu": "Вампиры"
     },
     {
       "name": "Parenthood",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/parenthood.png",
-      "nameCs": "Rodičovství"
+      "nameCs": "Rodičovství",
+      "nameRu": "Родители"
     },
     {
       "name": "Jungle Adventure",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/jungle-adventure.png",
-      "nameCs": "Dobrodružství v džungli"
+      "nameCs": "Dobrodružství v džungli",
+      "nameRu": "Приключения в джунглях"
     },
     {
       "name": "StrangerVille",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/strangerville.png",
-      "nameCs": "StrangerVille"
+      "nameCs": "StrangerVille",
+      "nameRu": "Стрейнджервиль"
     },
     {
       "name": "Realm of Magic",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/realm-of-magic.png",
-      "nameCs": "Říše kouzel"
+      "nameCs": "Říše kouzel",
+      "nameRu": "Мир магии"
     },
     {
       "name": "Star Wars: Journey to Batuu",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/star-wars-journey-to-batuu.png",
-      "nameCs": "Star Wars™: Výprava na Batuu"
+      "nameCs": "Star Wars™: Výprava na Batuu",
+      "nameRu": "Star Wars™: Путешествие на Батуу"
     },
     {
       "name": "Dream Home Decorator",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/dream-home-decorator.png",
-      "nameCs": "Interiér snů"
+      "nameCs": "Interiér snů",
+      "nameRu": "Интерьер мечты"
     },
     {
       "name": "My Wedding Stories",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/my-wedding-stories.png",
-      "nameCs": "Svatební příběhy"
+      "nameCs": "Svatební příběhy",
+      "nameRu": "Свадебные истории"
     },
     {
       "name": "Werewolves",
       "category": "gamepack",
       "subtype": null,
       "icon": "icons/packs/werewolves.png",
-      "nameCs": "Vlkodlaci"
+      "nameCs": "Vlkodlaci",
+      "nameRu": "Оборотни"
     },
     {
       "name": "Luxury Party Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/luxury-party-stuff.png",
-      "nameCs": "Přepychový večírek"
+      "nameCs": "Přepychový večírek",
+      "nameRu": "Роскошная вечеринка Каталог"
     },
     {
       "name": "Perfect Patio Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/perfect-patio-stuff.png",
-      "nameCs": "Perfektní patio"
+      "nameCs": "Perfektní patio",
+      "nameRu": "Внутренний дворик – Каталог"
     },
     {
       "name": "Cool Kitchen Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/cool-kitchen-stuff.png",
-      "nameCs": "Báječná kuchyně"
+      "nameCs": "Báječná kuchyně",
+      "nameRu": "Классная кухня — Каталог"
     },
     {
       "name": "Spooky Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/spooky-stuff.png",
-      "nameCs": "Strašidelné věcičky"
+      "nameCs": "Strašidelné věcičky",
+      "nameRu": "Жуткие вещи — Каталог"
     },
     {
       "name": "Movie Hangout Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/movie-hangout-stuff.png",
-      "nameCs": "Domácí kino"
+      "nameCs": "Domácí kino",
+      "nameRu": "Домашний кинотеатр – Каталог"
     },
     {
       "name": "Romantic Garden Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/romantic-garden-stuff.png",
-      "nameCs": "Romantická zahrada"
+      "nameCs": "Romantická zahrada",
+      "nameRu": "Романтический сад — Каталог"
     },
     {
       "name": "Kids Room Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/kids-room-stuff.svg",
-      "nameCs": "Dětský pokoj"
+      "nameCs": "Dětský pokoj",
+      "nameRu": "Детская комната — Каталог"
     },
     {
       "name": "Backyard Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/backyard-stuff.png",
-      "nameCs": "Zahrada za domem"
+      "nameCs": "Zahrada za domem",
+      "nameRu": "На заднем дворе — Каталог"
     },
     {
       "name": "Vintage Glamour Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/vintage-glamour-stuff.png",
-      "nameCs": "Staré časy"
+      "nameCs": "Staré časy",
+      "nameRu": "Гламурный винтаж — Каталог"
     },
     {
       "name": "Bowling Night Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/bowling-night-stuff.png",
-      "nameCs": "Bowlingový večer"
+      "nameCs": "Bowlingový večer",
+      "nameRu": "Вечер боулинга — Каталог"
     },
     {
       "name": "Fitness Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/fitness-stuff.png",
-      "nameCs": "Fitness"
+      "nameCs": "Fitness",
+      "nameRu": "Фитнес — Каталог"
     },
     {
       "name": "Toddler Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/toddler-stuff.png",
-      "nameCs": "Batolata"
+      "nameCs": "Batolata",
+      "nameRu": "Детские вещи — Каталог"
     },
     {
       "name": "Laundry Day Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/laundry-day-stuff.png",
-      "nameCs": "Pereme"
+      "nameCs": "Pereme",
+      "nameRu": "День стирки — Каталог"
     },
     {
       "name": "My First Pet Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/my-first-pet-stuff.png",
-      "nameCs": "Můj první mazlíček"
+      "nameCs": "Můj první mazlíček",
+      "nameRu": "Мой первый питомец — Каталог"
     },
     {
       "name": "Moschino Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/moschino-stuff.png",
-      "nameCs": "Moschino"
+      "nameCs": "Moschino",
+      "nameRu": "Moschino — Каталог"
     },
     {
       "name": "Tiny Living Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/tiny-living-stuff.png",
-      "nameCs": "Minibydlení"
+      "nameCs": "Minibydlení",
+      "nameRu": "Компактная жизнь Каталог"
     },
     {
       "name": "Nifty Knitting Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/nifty-knitting-stuff.png",
-      "nameCs": "Parádní pletení"
+      "nameCs": "Parádní pletení",
+      "nameRu": "Нарядные нитки Каталог"
     },
     {
       "name": "Paranormal Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/paranormal-stuff.png",
-      "nameCs": "Paranormálno"
+      "nameCs": "Paranormálno",
+      "nameRu": "Паранормальное Каталог"
     },
     {
       "name": "Home Chef Hustle Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/home-chef-hustle-stuff.png",
-      "nameCs": "Domácí vaření"
+      "nameCs": "Domácí vaření",
+      "nameRu": "Кулинарные страсти Каталог"
     },
     {
       "name": "Crystal Creations Stuff",
       "category": "stuffpack",
       "subtype": null,
       "icon": "icons/packs/crystal-creations-stuff.png",
-      "nameCs": "Krásy křišťálu"
+      "nameCs": "Krásy křišťálu",
+      "nameRu": "Сияние самоцветов Каталог"
     },
     {
       "name": "Throwback Fit Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/throwback-fit-kit.png",
-      "nameCs": "Retro styl"
+      "nameCs": "Retro styl",
+      "nameRu": "Наряды из прошлого — Комплект"
     },
     {
       "name": "Country Kitchen Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/country-kitchen-kit.png",
-      "nameCs": "Venkovská kuchyně"
+      "nameCs": "Venkovská kuchyně",
+      "nameRu": "Сельская кухня — Комплект"
     },
     {
       "name": "Bust the Dust Kit",
       "category": "kit",
       "subtype": "other",
       "icon": "icons/packs/bust-the-dust-kit.png",
-      "nameCs": "Velký úklid"
+      "nameCs": "Velký úklid",
+      "nameRu": "Ни пылинки — Комплект"
     },
     {
       "name": "Courtyard Oasis Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/courtyard-oasis-kit.png",
-      "nameCs": "Zahradní oáza"
+      "nameCs": "Zahradní oáza",
+      "nameRu": "Личный оазис — Комплект"
     },
     {
       "name": "Fashion Street Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/fashion-street-kit.png",
-      "nameCs": "Pouliční móda"
+      "nameCs": "Pouliční móda",
+      "nameRu": "Фэшн-Стрит — Комплект"
     },
     {
       "name": "Industrial Loft Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/industrial-loft-kit.png",
-      "nameCs": "Industriální bydlení"
+      "nameCs": "Industriální bydlení",
+      "nameRu": "Лофт Комплект"
     },
     {
       "name": "Incheon Arrivals Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/incheon-arrivals-kit.png",
-      "nameCs": "Přilétavá móda"
+      "nameCs": "Přilétavá móda",
+      "nameRu": "Стиль Инчхона — Комплект"
     },
     {
       "name": "Modern Menswear Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/modern-menswear-kit.png",
-      "nameCs": "Moderní pánská móda"
+      "nameCs": "Moderní pánská móda",
+      "nameRu": "Мужская мода — Комплект"
     },
     {
       "name": "Blooming Rooms Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/blooming-rooms-kit.png",
-      "nameCs": "Rozkvetlé bydlení"
+      "nameCs": "Rozkvetlé bydlení",
+      "nameRu": "Комнатные растения — Комплект"
     },
     {
       "name": "Carnaval Streetwear Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/carnaval-streetwear-kit.png",
-      "nameCs": "Styl karnevalu"
+      "nameCs": "Styl karnevalu",
+      "nameRu": "Карнавал — Комплект"
     },
     {
       "name": "Decor to the Max Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/decor-to-the-max-kit.png",
-      "nameCs": "Čím víc, tím líp"
+      "nameCs": "Čím víc, tím líp",
+      "nameRu": "Максимализм в интерьере Комплект"
     },
     {
       "name": "Moonlight Chic Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/moonlight-chic-kit.png",
-      "nameCs": "Romanticky šik"
+      "nameCs": "Romanticky šik",
+      "nameRu": "Полуночный шик — Комплект"
     },
     {
       "name": "Little Campers Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/little-campers-kit.png",
-      "nameCs": "Malí táborníci"
+      "nameCs": "Malí táborníci",
+      "nameRu": "Комплект \"The Sims™ 4 Маленькие туристы\""
     },
     {
       "name": "First Fits Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/first-fits-kit.png",
-      "nameCs": "Dětská móda"
+      "nameCs": "Dětská móda",
+      "nameRu": "Первые наряды — Комплект"
     },
     {
       "name": "Desert Luxe Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/desert-luxe-kit.png",
-      "nameCs": "Pouštní luxus"
+      "nameCs": "Pouštní luxus",
+      "nameRu": "Роскоши пустыни — Комплект"
     },
     {
       "name": "Pastel Pop Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/pastel-pop-kit.png",
-      "nameCs": "Pastelová paráda"
+      "nameCs": "Pastelová paráda",
+      "nameRu": "Пастельные тона — Комплект"
     },
     {
       "name": "Everyday Clutter Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/everyday-clutter-kit.png",
-      "nameCs": "Každodenní potřebnosti"
+      "nameCs": "Každodenní potřebnosti",
+      "nameRu": "Мелочи для дома — Комплект"
     },
     {
       "name": "Simtimates Collection Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/simtimates-collection-kit.png",
-      "nameCs": "Simtimnosti"
+      "nameCs": "Simtimnosti",
+      "nameRu": "Симтимная мода — Комплект"
     },
     {
       "name": "Bathroom Clutter Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/bathroom-clutter-kit.png",
-      "nameCs": "Koupelnové potřebnosti"
+      "nameCs": "Koupelnové potřebnosti",
+      "nameRu": "Ванные принадлежности — Комплект"
     },
     {
       "name": "Greenhouse Haven Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/greenhouse-haven-kit.png",
-      "nameCs": "Suprový skleník"
+      "nameCs": "Suprový skleník",
+      "nameRu": "Комплект \"The Sims™ 4 Теплица мечты\""
     },
     {
       "name": "Basement Treasures Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/basement-treasures-kit.png",
-      "nameCs": "Poklady ze sklepa"
+      "nameCs": "Poklady ze sklepa",
+      "nameRu": "Комплект \"The Sims™ 4 Сокровища из подвала\""
     },
     {
       "name": "Grunge Revival Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/grunge-revival-kit.png",
-      "nameCs": "Návrat grunge"
+      "nameCs": "Návrat grunge",
+      "nameRu": "Возвращение гранжа — Комплект"
     },
     {
       "name": "Book Nook Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/book-nook-kit.png",
-      "nameCs": "Čtecí koutek"
+      "nameCs": "Čtecí koutek",
+      "nameRu": "Книжный уголок — Комплект"
     },
     {
       "name": "Poolside Splash Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/poolside-splash-kit.png",
-      "nameCs": "Bazénové dovádění"
+      "nameCs": "Bazénové dovádění",
+      "nameRu": "Отдых у бассейна — Комплект"
     },
     {
       "name": "Modern Luxe Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/modern-luxe-kit.png",
-      "nameCs": "Moderní luxus"
+      "nameCs": "Moderní luxus",
+      "nameRu": "Современная роскошь — Комплект"
     },
     {
       "name": "Castle Estate Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/castle-estate-kit.png",
-      "nameCs": "Zámecké bydlení"
+      "nameCs": "Zámecké bydlení",
+      "nameRu": "Комплект «The Sims™ 4 Личный замок»"
     },
     {
       "name": "Goth Galore Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/goth-galore-kit.png",
-      "nameCs": "Grandiózní gotika"
+      "nameCs": "Grandiózní gotika",
+      "nameRu": "Комплект «The Sims™ 4 Грандиозная готика»"
     },
     {
       "name": "Urban Homage Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/urban-homage-kit.png",
-      "nameCs": "Móda z města"
+      "nameCs": "Móda z města",
+      "nameRu": "Модная ностальгия — Комплект"
     },
     {
       "name": "Party Essentials Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/party-essentials-kit.png",
-      "nameCs": "Nejlepší večírek"
+      "nameCs": "Nejlepší večírek",
+      "nameRu": "Все для праздника — Комплект"
     },
     {
       "name": "Riviera Retreat Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/riviera-retreat-kit.png",
-      "nameCs": "Na riviéře"
+      "nameCs": "Na riviéře",
+      "nameRu": "Вилла на Ривьере — Комплект"
     },
     {
       "name": "Cozy Bistro Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/cozy-bistro-kit.png",
-      "nameCs": "Příjemné posezení"
+      "nameCs": "Příjemné posezení",
+      "nameRu": "Уютное кафе — Комплект"
     },
     {
       "name": "Artist Studio Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/artist-studio-kit.png",
-      "nameCs": "Domácí ateliér"
+      "nameCs": "Domácí ateliér",
+      "nameRu": "Художественная мастерская — Комплект"
     },
     {
       "name": "Storybook Nursery Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/storybook-nursery-kit.png",
-      "nameCs": "Pohádkový pokojíček"
+      "nameCs": "Pohádkový pokojíček",
+      "nameRu": "Детская из сказки — Комплект"
     },
     {
       "name": "Sweet Slumber Party Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/sweet-slumber-party-kit.svg",
-      "nameCs": "Pyžamová párty"
+      "nameCs": "Pyžamová párty",
+      "nameRu": "Пижамная вечеринка — Комплект"
     },
     {
       "name": "Cozy Kitsch Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/cozy-kitsch-kit.svg",
-      "nameCs": "Kýčové pohodlí"
+      "nameCs": "Kýčové pohodlí",
+      "nameRu": "Капелька китча — Комплект"
     },
     {
       "name": "Comfy Gamer Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/comfy-gamer-kit.png",
-      "nameCs": "Pohodové hraní"
+      "nameCs": "Pohodové hraní",
+      "nameRu": "Геймерское счастье — Комплект"
     },
     {
       "name": "Secret Sanctuary Kit",
       "category": "kit",
       "subtype": "other",
       "icon": "icons/packs/secret-sanctuary-kit.png",
-      "nameCs": "Tajná komnata"
+      "nameCs": "Tajná komnata",
+      "nameRu": "Будуар Беллы — Комплект"
     },
     {
       "name": "Casanova Cave Kit",
       "category": "kit",
       "subtype": "other",
       "icon": "icons/packs/casanova-cave-kit.png",
-      "nameCs": "Návštěva u Casanovy"
+      "nameCs": "Návštěva u Casanovy",
+      "nameRu": "Дома у донжуана — Комплект"
     },
     {
       "name": "Refined Living Room Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/refined-living-room-kit.svg",
-      "nameCs": "Vyladěný obývák"
+      "nameCs": "Vyladěný obývák",
+      "nameRu": "Изысканная гостиная — Комплект"
     },
     {
       "name": "Business Chic Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/business-chic-kit.svg",
-      "nameCs": "Profesionální elegance"
+      "nameCs": "Profesionální elegance",
+      "nameRu": "Профессионализм во всем — Комплект"
     },
     {
       "name": "Sleek Bathroom Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/sleek-bathroom-kit.svg",
-      "nameCs": "Vkusné koupelny"
+      "nameCs": "Vkusné koupelny",
+      "nameRu": "Модная ванная — Комплект"
     },
     {
       "name": "Sweet Allure Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/sweet-allure-kit.svg",
-      "nameCs": "Sladké vábení"
+      "nameCs": "Sladké vábení",
+      "nameRu": "Романтичное настроение — Комплект"
     },
     {
       "name": "Restoration Workshop Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/restoration-workshop-kit.png",
-      "nameCs": "Kutilská dílna"
+      "nameCs": "Kutilská dílna",
+      "nameRu": "Ремонт своими руками — Комплект"
     },
     {
       "name": "Golden Years Kit",
       "category": "kit",
       "subtype": "cas",
       "icon": "icons/packs/golden-years-kit.png",
-      "nameCs": "Zlatý podzim života"
+      "nameCs": "Zlatý podzim života",
+      "nameRu": "Золотые годы — Комплект"
     },
     {
       "name": "Kitchen Clutter Kit",
       "category": "kit",
       "subtype": "build",
       "icon": "icons/packs/kitchen-clutter-kit.png",
-      "nameCs": "Drobnosti do kuchyně"
+      "nameCs": "Drobnosti do kuchyně",
+      "nameRu": "Кухонная утварь — Комплект"
     }
   ]
 }

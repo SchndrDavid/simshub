@@ -17,7 +17,336 @@ const BASE = (() => {
 const SCHEMA_VERSION = 1;
 const SAVE_DEBOUNCE_MS = 1000;
 const POLL_INTERVAL_MS = 30000;
-const HISTORY_LIMIT = 20;
+/* ----------------------------------------------------------- localization */
+
+const I18N = {
+  ru: {
+    app_title: 'Sims Hub',
+    tab_simsmix: 'Генератор',
+    tab_supersim: 'Суперсим',
+    tab_randompacks: 'Случайные наборы',
+    tab_wheel: 'Колесо',
+    tab_random: 'Число',
+    tab_packs: 'Наборы',
+    tab_simgen: 'Сим',
+    saved: 'Сохранено',
+    saving: 'Сохранение…',
+    error: 'Ошибка сохранения',
+    offline: 'Офлайн – сохраню позже',
+    conflict: 'Профиль был изменен на другом устройстве.',
+    reload: 'Перезагрузить',
+    retry: 'Повторить',
+    simsmix_gen_all: '🎲 Сгенерировать всё',
+    simsmix_copy_all: '📋 Скопировать персонажа',
+    simsmix_reset_all: 'Сбросить',
+    simsmix_gender_title: 'Пол',
+    simsmix_opt_random: 'Случайно',
+    simsmix_opt_male: 'Мальчик',
+    simsmix_opt_female: 'Девочка',
+    simsmix_gender_result: 'Результат:',
+    simsmix_gen_gender: '🎲 Сгенерировать пол',
+    simsmix_values_title: 'Достоинства характера',
+    simsmix_values_hint: 'Набор достоинств из игрового набора «Родительство».',
+    simsmix_gen_values: '🎲 Сгенерировать достоинства',
+    simsmix_val_pos: 'Положительное (+)',
+    simsmix_val_neg: 'Отрицательное (−)',
+    simsmix_val_neu: 'Нейтрально (без черты)',
+    simsmix_val_rnd: 'Случайно (?)',
+    simsmix_aspirations_title: 'Жизненные цели',
+    simsmix_gen_aspirations: '🎲 Сгенерировать цели',
+    stage_infant: 'Младенец',
+    stage_toddler: 'Малыш',
+    stage_child: 'Детство',
+    stage_teen: 'Подросток',
+    stage_adult: 'Взрослая жизнь',
+    simsmix_careers_title: 'Карьера',
+    simsmix_career_teen_label: 'Подростковая подработка',
+    simsmix_career_adult_label: 'Взрослая карьера',
+    simsmix_include_branches: 'Включая специализацию',
+    simsmix_gen_careers: '🎲 Сгенерировать карьеру',
+    simsmix_traits_title: 'Черты характера',
+    simsmix_trait_child_label: '1-я черта (Детство)',
+    simsmix_trait_teen_label: '2-я черта (Подросток)',
+    simsmix_trait_adult_label: '3-я черта (Взрослый)',
+    simsmix_gen_traits: '🎲 Сгенерировать черты',
+    simsmix_heredity_title: 'Наследование от родителей',
+    simsmix_heredity_enable: 'Учитывать черты родителей',
+    simsmix_heredity_hint: 'Черты родителей получают повышенный шанс выпадения при взрослении ребенка.',
+    simsmix_father_title: 'Черты отца',
+    simsmix_mother_title: 'Черты матери',
+    simsmix_no_trait: '— Без черты —',
+    rp_title: 'Случайный выбор наборов (Random Packs)',
+    rp_subtitle: 'Генератор случайных DLC в стиле James Turner с весами категорий и фильтром по имеющимся дополнениям.',
+    rp_count_label: 'Количество наборов (1–20)',
+    rp_each_cat: 'Гарантировать хотя бы один из каждой активной категории',
+    rp_weights_title: 'Веса категорий',
+    rp_roll_btn: '🎲 Выбрать наборы',
+    rp_copy_btn: '📋 Скопировать',
+    rp_installed_title: 'Используемые наборы',
+    rp_installed_hint: 'Отметьте наборы, которые будут участвовать в жеребьевке. Настройки сохраняются в профиле.',
+    rp_select_all: 'Выбрать все',
+    rp_deselect_all: 'Снять все',
+    rp_search_placeholder: 'Поиск набора…',
+    supersim_summary_title: 'Общий прогресс',
+    supersim_search_placeholder: 'Поиск задачи…',
+    age_all: 'Все возрасты',
+    supersim_hide_done: 'Скрыть выполненные',
+    supersim_reset_all: 'Сбросить всё',
+    supersim_reset_section: 'Сбросить',
+    supersim_hint: 'Клик: +1 уровень. Правый клик или долгое нажатие: −1 уровень.',
+    category_expansion: 'Дополнения',
+    category_gamepack: 'Игровые наборы',
+    category_stuffpack: 'Каталоги',
+    category_kit: 'Комплекты',
+    copied_toast: 'Скопировано в буфер обмена.',
+    copy_failed_toast: 'Не удалось скопировать.',
+    profile_manage: 'Управление профилями',
+    profile_new: 'Новый профиль',
+    profile_rename: 'Переименовать',
+    profile_export: 'Экспорт JSON',
+    profile_import: 'Импорт JSON',
+    profile_delete: 'Удалить профиль',
+    profile_close: 'Закрыть',
+    footer_disclaimer: 'Неофициальный фанатский инструмент для The Sims 4. Не связан с EA или Maxis.',
+  },
+  cs: {
+    app_title: 'Sims Hub',
+    tab_simsmix: 'Generátor',
+    tab_supersim: 'Super Sim',
+    tab_randompacks: 'Náhodné balíčky',
+    tab_wheel: 'Kolo',
+    tab_random: 'Číslo',
+    tab_packs: 'Packy',
+    tab_simgen: 'Simík',
+    saved: 'Uloženo',
+    saving: 'Ukládám…',
+    error: 'Nepodařilo se uložit',
+    offline: 'Offline – uložím později',
+    conflict: 'Profil mezitím někdo změnil na jiném zařízení.',
+    reload: 'Načíst znovu',
+    retry: 'Zkusit znovu',
+    simsmix_gen_all: '🎲 Generovat vše',
+    simsmix_copy_all: '📋 Kopírovat Simíka',
+    simsmix_reset_all: 'Vynulovat',
+    simsmix_gender_title: 'Pohlaví',
+    simsmix_opt_random: 'Náhodné',
+    simsmix_opt_male: 'Chlapec',
+    simsmix_opt_female: 'Dívka',
+    simsmix_gender_result: 'Výsledek:',
+    simsmix_gen_gender: '🎲 Generovat pohlaví',
+    simsmix_values_title: 'Vlastnosti výchovy',
+    simsmix_values_hint: 'Výchovné hodnoty z herního balíčku Rodičovství.',
+    simsmix_gen_values: '🎲 Generovat hodnoty',
+    simsmix_val_pos: 'Kladná (+)',
+    simsmix_val_neg: 'Záporná (−)',
+    simsmix_val_neu: 'Neutrální (bez)',
+    simsmix_val_rnd: 'Náhodně (?)',
+    simsmix_aspirations_title: 'Aspirace',
+    simsmix_gen_aspirations: '🎲 Generovat aspirace',
+    stage_infant: 'Kojenec',
+    stage_toddler: 'Batole',
+    stage_child: 'Dětství',
+    stage_teen: 'Teenager',
+    stage_adult: 'Dospělost',
+    simsmix_careers_title: 'Kariéra',
+    simsmix_career_teen_label: 'Brigáda teenagera',
+    simsmix_career_adult_label: 'Kariéra dospělého',
+    simsmix_include_branches: 'Včetně specializace',
+    simsmix_gen_careers: '🎲 Generovat kariéru',
+    simsmix_traits_title: 'Vlastnosti',
+    simsmix_trait_child_label: '1. vlastnost (Dítě)',
+    simsmix_trait_teen_label: '2. vlastnost (Teen)',
+    simsmix_trait_adult_label: '3. vlastnost (Dospělý)',
+    simsmix_gen_traits: '🎲 Generovat vlastnosti',
+    simsmix_heredity_title: 'Dědičnost po rodičích',
+    simsmix_heredity_enable: 'Zohlednit vlastnosti rodičů',
+    simsmix_heredity_hint: 'Vlastnosti rodičů mají vyšší šanci na zdědění při dospívání dítěte.',
+    simsmix_father_title: 'Vlastnosti otce',
+    simsmix_mother_title: 'Vlastnosti matky',
+    simsmix_no_trait: '— Bez vlastnosti —',
+    rp_title: 'Náhodný výběr balíčků (Random Packs)',
+    rp_subtitle: 'Generátor DLC ve stylu Jamese Turnera s váhami kategorií a filtrem podle vlastněných balíčků.',
+    rp_count_label: 'Počet balíčků (1–20)',
+    rp_each_cat: 'Alespoň jeden z každé aktivní kategorie',
+    rp_weights_title: 'Váhy kategorií',
+    rp_roll_btn: '🎲 Losovat balíčky',
+    rp_copy_btn: '📋 Kopírovat',
+    rp_installed_title: 'Používané balíčky',
+    rp_installed_hint: 'Zaškrtni balíčky, které se mají účastnit losování. Nastavení se ukládá do profilu.',
+    rp_select_all: 'Vybrat vše',
+    rp_deselect_all: 'Zrušit vše',
+    rp_search_placeholder: 'Hledat balíček…',
+    supersim_summary_title: 'Celkový postup',
+    supersim_search_placeholder: 'Hledat položku…',
+    age_all: 'Všechny věky',
+    supersim_hide_done: 'Skrýt hotové',
+    supersim_reset_all: 'Vynulovat vše',
+    supersim_reset_section: 'Vynulovat',
+    supersim_hint: 'Klik přidá úroveň, pravý klik nebo dlouhé podržení ji ubere.',
+    category_expansion: 'Rozšíření',
+    category_gamepack: 'Herní balíčky',
+    category_stuffpack: 'Kolekce',
+    category_kit: 'Výbava (Kity)',
+    copied_toast: 'Zkopírováno do schránky.',
+    copy_failed_toast: 'Kopírování se nepovedlo.',
+    profile_manage: 'Správa profilů',
+    profile_new: 'Nový profil',
+    profile_rename: 'Přejmenovat',
+    profile_export: 'Exportovat JSON',
+    profile_import: 'Importovat JSON',
+    profile_delete: 'Smazat profil',
+    profile_close: 'Zavřít',
+    footer_disclaimer: 'Neoficiální fanouškovský nástroj pro The Sims 4. Není nijak spojený s EA ani Maxis.',
+  },
+  en: {
+    app_title: 'Sims Hub',
+    tab_simsmix: 'Generator',
+    tab_supersim: 'Super Sim',
+    tab_randompacks: 'Random Packs',
+    tab_wheel: 'Wheel',
+    tab_random: 'RNG',
+    tab_packs: 'Packs',
+    tab_simgen: 'Sim',
+    saved: 'Saved',
+    saving: 'Saving…',
+    error: 'Save failed',
+    offline: 'Offline – saving later',
+    conflict: 'Profile was modified on another device.',
+    reload: 'Reload',
+    retry: 'Retry',
+    simsmix_gen_all: '🎲 Generate All',
+    simsmix_copy_all: '📋 Copy Sim',
+    simsmix_reset_all: 'Reset',
+    simsmix_gender_title: 'Gender',
+    simsmix_opt_random: 'Random',
+    simsmix_opt_male: 'Boy',
+    simsmix_opt_female: 'Girl',
+    simsmix_gender_result: 'Result:',
+    simsmix_gen_gender: '🎲 Generate Gender',
+    simsmix_values_title: 'Character Values',
+    simsmix_values_hint: 'Character values from the Parenthood game pack.',
+    simsmix_gen_values: '🎲 Generate Values',
+    simsmix_val_pos: 'Positive (+)',
+    simsmix_val_neg: 'Negative (−)',
+    simsmix_val_neu: 'Neutral (none)',
+    simsmix_val_rnd: 'Random (?)',
+    simsmix_aspirations_title: 'Aspirations',
+    simsmix_gen_aspirations: '🎲 Generate Aspirations',
+    stage_infant: 'Infant',
+    stage_toddler: 'Toddler',
+    stage_child: 'Childhood',
+    stage_teen: 'Teen',
+    stage_adult: 'Adult',
+    simsmix_careers_title: 'Careers',
+    simsmix_career_teen_label: 'Teen Part-Time Job',
+    simsmix_career_adult_label: 'Adult Career',
+    simsmix_include_branches: 'Include career branch',
+    simsmix_gen_careers: '🎲 Generate Career',
+    simsmix_traits_title: 'Personality Traits',
+    simsmix_trait_child_label: 'Trait 1 (Child)',
+    simsmix_trait_teen_label: 'Trait 2 (Teen)',
+    simsmix_trait_adult_label: 'Trait 3 (Adult)',
+    simsmix_gen_traits: '🎲 Generate Traits',
+    simsmix_heredity_title: 'Parent Heredity',
+    simsmix_heredity_enable: 'Inherit traits from parents',
+    simsmix_heredity_hint: 'Parents traits have a significantly higher chance to be passed down.',
+    simsmix_father_title: 'Father Traits',
+    simsmix_mother_title: 'Mother Traits',
+    simsmix_no_trait: '— No Trait —',
+    rp_title: 'Random Pack Generator',
+    rp_subtitle: 'James Turner style DLC randomizer with category weights and owned pack filters.',
+    rp_count_label: 'Number of packs (1–20)',
+    rp_each_cat: 'Guarantee at least one from each active category',
+    rp_weights_title: 'Category Weights',
+    rp_roll_btn: '🎲 Roll Packs',
+    rp_copy_btn: '📋 Copy',
+    rp_installed_title: 'Active Packs',
+    rp_installed_hint: 'Check the packs you want to include in rolls. Stored per profile.',
+    rp_select_all: 'Select All',
+    rp_deselect_all: 'Deselect All',
+    rp_search_placeholder: 'Search pack…',
+    supersim_summary_title: 'Total Progress',
+    supersim_search_placeholder: 'Search items…',
+    age_all: 'All ages',
+    supersim_hide_done: 'Hide completed',
+    supersim_reset_all: 'Reset all',
+    supersim_reset_section: 'Reset',
+    supersim_hint: 'Left-click: +1 level. Right-click or long press: −1 level.',
+    category_expansion: 'Expansion Packs',
+    category_gamepack: 'Game Packs',
+    category_stuffpack: 'Stuff Packs',
+    category_kit: 'Kits',
+    copied_toast: 'Copied to clipboard.',
+    copy_failed_toast: 'Failed to copy.',
+    profile_manage: 'Manage Profiles',
+    profile_new: 'New Profile',
+    profile_rename: 'Rename',
+    profile_export: 'Export JSON',
+    profile_import: 'Import JSON',
+    profile_delete: 'Delete Profile',
+    profile_close: 'Close',
+    footer_disclaimer: 'Unofficial fan tool for The Sims 4. Not affiliated with EA or Maxis.',
+  }
+};
+
+let currentLang = (() => {
+  try {
+    const saved = localStorage.getItem('simshub:lang');
+    if (saved && ['ru', 'cs', 'en'].includes(saved)) return saved;
+  } catch { /* ignore */ }
+  return 'ru'; // Default to Russian for girlfriend
+})();
+
+function getLanguage() {
+  return currentLang;
+}
+
+function t(key, fallback = '') {
+  const dict = I18N[currentLang] || I18N.ru;
+  return dict[key] !== undefined ? dict[key] : (I18N.ru[key] !== undefined ? I18N.ru[key] : fallback);
+}
+
+function applyLanguage(lang) {
+  if (!['ru', 'cs', 'en'].includes(lang)) lang = 'ru';
+  currentLang = lang;
+  try { localStorage.setItem('simshub:lang', lang); } catch { /* ignore */ }
+  document.documentElement.lang = lang;
+
+  $$('.lang-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  $$('[data-i18n]').forEach((el) => {
+    const key = el.dataset.i18n;
+    const translation = t(key);
+    if (translation) {
+      if (el.tagName === 'INPUT' && el.placeholder) {
+        el.placeholder = translation;
+      } else {
+        el.textContent = translation;
+      }
+    }
+  });
+
+  const ssSearch = $('#supersim-search');
+  if (ssSearch) ssSearch.placeholder = t('supersim_search_placeholder');
+  const rpSearch = $('#rp-search');
+  if (rpSearch) rpSearch.placeholder = t('rp_search_placeholder');
+
+  document.title = t('app_title', 'Sims Hub');
+
+  if (typeof Simsmix !== 'undefined' && Simsmix.refreshIfActive) Simsmix.refreshIfActive();
+  if (typeof RandomPacks !== 'undefined' && RandomPacks.refreshIfActive) RandomPacks.refreshIfActive();
+  if (typeof Supersim !== 'undefined' && Supersim.refreshIfActive) Supersim.refreshIfActive();
+}
+
+function initLanguageSwitcher() {
+  $$('.lang-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      applyLanguage(btn.dataset.lang);
+    });
+  });
+}
 
 /* ------------------------------------------------------------------ helpers */
 
@@ -139,7 +468,7 @@ function toast(message, kind = 'info') {
 async function copyText(text) {
   try {
     await navigator.clipboard.writeText(text);
-    toast('Zkopírováno do schránky.', 'ok');
+    toast(t('copied_toast', 'Zkopírováno do schránky.'), 'ok');
   } catch {
     // Clipboard API needs a secure context; fall back to a manual selection.
     const area = h('textarea', { value: text, class: 'copy-fallback' });
@@ -147,7 +476,7 @@ async function copyText(text) {
     area.select();
     const ok = document.execCommand && document.execCommand('copy');
     area.remove();
-    toast(ok ? 'Zkopírováno do schránky.' : 'Kopírování se nepovedlo.', ok ? 'ok' : 'error');
+    toast(ok ? t('copied_toast', 'Zkopírováno do schránky.') : t('copy_failed_toast', 'Kopírování se nepovedlo.'), ok ? 'ok' : 'error');
   }
 }
 
@@ -283,7 +612,15 @@ function defaultState() {
     wheel: { text: 'Pizza\nSushi\nPalačinky x3\nBurgery', removeWinner: false, sound: false, lists: [], history: [] },
     random: { min: 1, max: 100, count: 1, unique: false, sort: false, history: [] },
     simgen: { enabled: null, locks: {}, current: null, saved: [] },
-    packs: { owned: {}, count: 3, eachCategory: false, weights: {}, results: [] },
+    simsmix: {
+      locks: {},
+      genderOpt: 'random',
+      valuesOpts: {},
+      careerBranches: true,
+      heredity: { enabled: false, father: ['', '', ''], mother: ['', '', ''] },
+      current: null
+    },
+    packs: { owned: {}, count: 3, eachCategory: false, weights: { expansion: 30, gamepack: 30, stuffpack: 15, kit: 8 }, results: [] },
     supersim: { progress: {}, collapsed: {}, hideDone: false, age: '' },
   };
 }
@@ -294,7 +631,7 @@ function migrateState(raw) {
   const base = defaultState();
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return base;
   const merged = { ...base, ...raw, schemaVersion: SCHEMA_VERSION };
-  for (const key of ['wheel', 'random', 'simgen', 'packs', 'supersim']) {
+  for (const key of ['wheel', 'random', 'simgen', 'simsmix', 'packs', 'supersim']) {
     merged[key] = { ...base[key], ...(raw[key] && typeof raw[key] === 'object' ? raw[key] : {}) };
   }
   if (!Array.isArray(merged.wheel.lists)) merged.wheel.lists = [];
@@ -338,10 +675,10 @@ const Store = {
     const retry = $('#save-retry');
     el.dataset.state = status;
     el.textContent = {
-      saving: 'Ukládám…',
-      saved: 'Uloženo',
-      error: 'Nepodařilo se uložit',
-      offline: 'Offline – uložím později',
+      saving: t('saving', 'Ukládám…'),
+      saved: t('saved', 'Uloženo'),
+      error: t('error', 'Nepodařilo se uložit'),
+      offline: t('offline', 'Offline – uložím později'),
     }[status] || status;
     if (detail) el.title = detail; else el.removeAttribute('title');
     retry.hidden = status !== 'error' && status !== 'offline';
@@ -562,8 +899,8 @@ async function importProfileFlow() {
 
 async function manageProfilesFlow() {
   const actions = h('div', { class: 'dialog-actions-list' },
-    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(createProfileFlow) }, 'Nový profil'),
-    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(renameProfileFlow) }, 'Přejmenovat'),
+    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(createProfileFlow) }, t('profile_new', 'Nový profil')),
+    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(renameProfileFlow) }, t('profile_rename', 'Přejmenovat')),
     h('button', {
       class: 'ghost-btn',
       type: 'button',
@@ -571,9 +908,9 @@ async function manageProfilesFlow() {
         window.location.href = `${BASE}/api/profiles/${Store.currentId}/export`;
         closeDialog();
       },
-    }, 'Exportovat JSON'),
-    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(importProfileFlow) }, 'Importovat JSON'),
-    h('button', { class: 'ghost-btn danger', type: 'button', onclick: () => finish(deleteProfileFlow) }, 'Smazat profil'),
+    }, t('profile_export', 'Exportovat JSON')),
+    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(importProfileFlow) }, t('profile_import', 'Importovat JSON')),
+    h('button', { class: 'ghost-btn danger', type: 'button', onclick: () => finish(deleteProfileFlow) }, t('profile_delete', 'Smazat profil')),
   );
 
   function closeDialog() {
@@ -588,7 +925,7 @@ async function manageProfilesFlow() {
     setTimeout(action, 0);
   }
 
-  await openDialog({ title: 'Profily', content: actions, okLabel: 'Zavřít', hideCancel: true });
+  await openDialog({ title: t('profile_manage', 'Profily'), content: actions, okLabel: t('profile_close', 'Zavřít'), hideCancel: true });
 }
 
 /* -------------------------------------------------------------------- theme */
@@ -679,6 +1016,24 @@ function packNameCsOf(packName) {
   return p && p.nameCs ? p.nameCs : packName;
 }
 
+function packNameOf(packName) {
+  if (!packName) return '';
+  const p = packRegistry.get(packName);
+  if (!p) return packName;
+  if (currentLang === 'ru' && p.nameRu) return p.nameRu;
+  if (currentLang === 'cs' && p.nameCs) return p.nameCs;
+  return p.name || packName;
+}
+
+function packSubNameOf(packName) {
+  if (!packName) return '';
+  const p = packRegistry.get(packName);
+  if (!p) return '';
+  const main = packNameOf(packName);
+  if (main !== p.name) return p.name;
+  return '';
+}
+
 /* --------------------------------------------------------------- tab router */
 
 const tabs = new Map();
@@ -690,7 +1045,9 @@ function registerTab(route, handlers) {
 
 function routeFromHash() {
   const raw = window.location.hash.replace(/^#\/?/, '').trim();
-  return tabs.has(raw) ? raw : 'wheel';
+  if (raw === 'simgen') return 'simsmix';
+  if (raw === 'packs') return 'randompacks';
+  return tabs.has(raw) ? raw : 'simsmix';
 }
 
 async function activateRoute(route) {
@@ -1578,10 +1935,10 @@ const RandomNumber = (() => {
    ========================================================================== */
 
 const PACK_CATEGORIES = [
-  { id: 'expansion', label: 'Rozšíření', short: 'EP' },
-  { id: 'gamepack', label: 'Herní balíčky', short: 'GP' },
-  { id: 'stuffpack', label: 'Balíčky předmětů', short: 'SP' },
-  { id: 'kit', label: 'Kity', short: 'Kit' },
+  { id: 'expansion', label: 'Дополнения', labelCs: 'Rozšíření', labelEn: 'Expansion Packs', short: 'EP' },
+  { id: 'gamepack', label: 'Игровые наборы', labelCs: 'Herní balíčky', labelEn: 'Game Packs', short: 'GP' },
+  { id: 'stuffpack', label: 'Каталоги', labelCs: 'Kolekce', labelEn: 'Stuff Packs', short: 'SP' },
+  { id: 'kit', label: 'Комплекты', labelCs: 'Výbava (Kity)', labelEn: 'Kits', short: 'Kit' },
 ];
 
 const KIT_SUBTYPES = [
@@ -1590,388 +1947,638 @@ const KIT_SUBTYPES = [
   { id: 'other', label: 'Ostatní kity' },
 ];
 
-const categoryLabel = (id) => (PACK_CATEGORIES.find((c) => c.id === id) || {}).label || id;
+const categoryLabel = (id) => {
+  const cat = PACK_CATEGORIES.find((c) => c.id === id);
+  if (!cat) return id;
+  if (currentLang === 'cs') return cat.labelCs;
+if (currentLang === 'en') return cat.labelEn;
+  return cat.label;
+};
 
 /* ==========================================================================
-   TAB 3 — Generátor simíka
+   TAB: SimsMix Generator (1:1 with simsmix.ru/generator/)
    ========================================================================== */
 
-const SimGen = (() => {
-  const FIELDS = [
-    { key: 'gender', label: 'Pohlaví', bonus: false },
-    { key: 'age', label: 'Věk', bonus: false },
-    { key: 'traits', label: 'Vlastnosti', bonus: false },
-    { key: 'aspiration', label: 'Aspirace', bonus: false },
-    { key: 'career', label: 'Kariéra', bonus: false },
-    { key: 'occult', label: 'Okultní typ', bonus: false },
-    { key: 'color', label: 'Oblíbená barva', bonus: true },
-    { key: 'music', label: 'Oblíbená hudba', bonus: true },
-    { key: 'food', label: 'Oblíbené jídlo', bonus: true },
-  ];
-
-  let data = null;
-
-  function defaults() {
-    const enabled = {};
-    for (const field of FIELDS) enabled[field.key] = !field.bonus;
-    return enabled;
-  }
+const Simsmix = (() => {
+  let doc = null;
+  let active = false;
 
   function ownedOnly(list) {
+    if (!list) return [];
     return list.filter((item) => !item.pack || isPackOwned(item.pack));
   }
 
-  function renderPackTag(packName) {
-    if (!packName) return null;
-    const icon = packIconOf(packName);
-    const pack = packRegistry.get(packName);
-    const label = pack && pack.nameCs ? pack.nameCs : packName;
-    const fullTitle = pack && pack.nameCs && pack.nameCs !== packName ? `${pack.nameCs} (${packName})` : packName;
-    return h('span', { class: 'item-pack-tag', title: fullTitle },
-      icon ? h('img', {
-        class: 'pack-icon-mini',
-        src: packIconUrl(icon),
-        alt: '',
-        loading: 'lazy',
-        onerror: (e) => { e.target.style.display = 'none'; },
-      }) : null,
-      h('span', { class: 'pack-tag-name' }, label));
+  function getLocalizedText(obj, field = 'name') {
+    if (!obj) return '';
+    if (typeof obj === 'string') return obj;
+    if (currentLang === 'ru' && (obj.ru || obj.nameRu)) return obj.ru || obj.nameRu;
+    if (currentLang === 'cs' && (obj.cs || obj.nameCs)) return obj.cs || obj.nameCs;
+    if (currentLang === 'en' && (obj.en || obj.nameEn)) return obj.en || obj.nameEn;
+    return obj.ru || obj.nameRu || obj[field] || obj.en || '';
   }
 
-  function drawTraitsFrom(pool, count = 3) {
-    const picked = [];
-    const blocked = new Set();
-    let candidates = pool.slice();
-    while (picked.length < count && candidates.length) {
-      const trait = pickOne(candidates);
-      picked.push(trait);
-      blocked.add(trait.name);
-      for (const conflict of trait.conflicts || []) blocked.add(conflict);
-      candidates = candidates.filter((item) => !blocked.has(item.name));
-    }
-    return picked;
+  function getLocalizedSub(obj) {
+    if (!obj || typeof obj === 'string') return '';
+    const main = getLocalizedText(obj);
+    const en = obj.en || obj.nameEn;
+    if (en && en !== main) return en;
+    return '';
   }
 
-  function generateField(key, current = {}) {
-    const age = current.age || 'Dospělý';
-    switch (key) {
-      case 'gender': return pickOne(data.genders);
-      case 'age': return pickOne(data.ages).label;
-      case 'traits': {
-        if (age === 'Batole') {
-          const pool = ownedOnly(data.toddler_traits || []);
-          const picked = pickOne(pool);
-          return picked ? [{ name: picked.name, en: picked.en, pack: picked.pack }] : [];
-        }
-        const count = age === 'Dítě' ? 1 : (age === 'Teenager' ? 2 : 3);
-        const isChild = age === 'Dítě';
-        const rawPool = ownedOnly(data.traits || []);
-        const pool = isChild ? rawPool.filter((t) => t.childOk) : rawPool;
-        return drawTraitsFrom(pool, count).map((t) => ({ name: t.name, en: t.en, pack: t.pack }));
-      }
-      case 'aspiration': {
-        if (age === 'Batole') return null;
-        const pool = age === 'Dítě'
-          ? ownedOnly(data.child_aspirations || [])
-          : ownedOnly(data.aspirations || []);
-        if (!pool.length) return null;
-        const item = pickOne(pool);
-        return { name: item.name, en: item.en, category: item.category, pack: item.pack };
-      }
-      case 'career': {
-        if (age === 'Batole' || age === 'Dítě') return null;
-        if (age === 'Teenager') {
-          const pool = ownedOnly(data.teen_careers || []);
-          if (!pool.length) return null;
-          const item = pickOne(pool);
-          return { name: item.name, en: item.en, pack: item.pack };
-        }
-        const pool = ownedOnly(data.careers || []);
-        if (!pool.length) return null;
-        const item = pickOne(pool);
-        return { name: item.name, en: item.en, pack: item.pack };
-      }
-      case 'occult': {
-        const list = ownedOnly(data.occults || []);
-        const item = weightedPick(list, (entry) => entry.weight);
-        return item ? { name: item.name, en: item.en, pack: item.pack } : null;
-      }
-      case 'color': return pickOne(data.bonuses.colors);
-      case 'music': return pickOne(data.bonuses.music);
-      case 'food': return pickOne(data.bonuses.food);
-      default: return null;
+  function ensureCurrent() {
+    if (!Store.state.simsmix) Store.state.simsmix = {};
+    if (!Store.state.simsmix.locks) Store.state.simsmix.locks = {};
+    if (!Store.state.simsmix.current) Store.state.simsmix.current = {};
+    if (!Store.state.simsmix.heredity) {
+      Store.state.simsmix.heredity = { enabled: false, father: ['', '', ''], mother: ['', '', ''] };
     }
   }
 
-  function generate() {
-    const state = Store.state.simgen;
-    const current = { ...(state.current || {}) };
-    if (state.enabled.age && (!state.locks.age || !current.age)) {
-      current.age = generateField('age', current);
-    }
-    if (state.enabled.gender && (!state.locks.gender || !current.gender)) {
-      current.gender = generateField('gender', current);
-    }
-    for (const field of FIELDS) {
-      if (!state.enabled[field.key]) {
-        delete current[field.key];
-        continue;
-      }
-      if (field.key === 'gender' || field.key === 'age') continue;
-      if (state.locks[field.key] && current[field.key] !== undefined && current[field.key] !== null) continue;
-      current[field.key] = generateField(field.key, current);
-    }
-    state.current = current;
+  function isLocked(key) {
+    ensureCurrent();
+    return Boolean(Store.state.simsmix.locks[key]);
+  }
+
+  function setLock(key, val) {
+    ensureCurrent();
+    Store.state.simsmix.locks[key] = Boolean(val);
     Store.touch();
-    renderResult();
+    updateLockUI(key);
   }
 
-  function valueToText(key, value) {
-    if (value === null || value === undefined) return '—';
-    if (key === 'traits') {
-      if (!Array.isArray(value)) return '—';
-      return value.map((t) => {
-        const en = t.en && t.en !== t.name ? ` (${t.en})` : '';
-        const pack = t.pack ? ` [${t.pack}]` : '';
-        return `${t.name}${en}${pack}`;
-      }).join(', ');
-    }
-    if (key === 'aspiration') {
-      if (typeof value === 'object') {
-        const en = value.en && value.en !== value.name ? ` (${value.en})` : '';
-        const pack = value.pack ? ` [${value.pack}]` : '';
-        return `${value.name}${en} — ${value.category}${pack}`;
-      }
-      return String(value);
-    }
-    if (key === 'career' || key === 'occult') {
-      if (typeof value === 'object') {
-        const en = value.en && value.en !== value.name ? ` (${value.en})` : '';
-        const pack = value.pack ? ` [${value.pack}]` : '';
-        return `${value.name}${en}${pack}`;
-      }
-      return String(value);
-    }
-    return String(value);
+  function toggleLock(key) {
+    setLock(key, !isLocked(key));
   }
 
-  function asText(current) {
-    return FIELDS
-      .filter((field) => current && current[field.key] !== undefined)
-      .map((field) => `${field.label}: ${valueToText(field.key, current[field.key])}`)
-      .join('\n');
+  function updateLockUI(key) {
+    const btn = $(`#simsmix-lock-${key}`);
+    if (!btn) return;
+    const locked = isLocked(key);
+    btn.textContent = locked ? '🔒' : '🔓';
+    btn.classList.toggle('locked', locked);
+    btn.title = locked ? 'Разблокировать' : 'Заблокировать';
   }
 
-  function renderFieldNode(key, value, current) {
-    if (value === null || value === undefined) {
-      let note = '—';
-      if (key === 'career') {
-        note = (current.age === 'Batole' ? '— (batolata nepracují)' : (current.age === 'Dítě' ? '— (děti nepracují)' : '—'));
-      } else if (key === 'aspiration' && current.age === 'Batole') {
-        note = '— (batolata nemají aspirace)';
-      }
-      return h('span', { class: 'muted' }, note);
-    }
-
-    if (key === 'traits' && Array.isArray(value)) {
-      if (!value.length) return h('span', { class: 'muted' }, '—');
-      return h('div', { class: 'sim-traits-list' },
-        value.map((t) => h('div', { class: 'sim-trait-chip' },
-          h('span', { class: 'trait-name' }, t.name),
-          t.en && t.en !== t.name ? h('span', { class: 'trait-en' }, `(${t.en})`) : null,
-          t.pack ? renderPackTag(t.pack) : h('span', { class: 'item-pack-tag base-tag' }, 'Základní hra'))));
-    }
-
-    if (typeof value === 'object' && value !== null) {
-      let mainText = value.name;
-      if (key === 'aspiration' && value.category) {
-        mainText = `${value.name} — ${value.category}`;
-      }
-      return h('div', { class: 'sim-val-wrap' },
-        h('span', { class: 'sim-main-val' }, mainText),
-        value.en && value.en !== value.name ? h('span', { class: 'sim-sub-val' }, `(${value.en})`) : null,
-        value.pack ? renderPackTag(value.pack) : h('span', { class: 'item-pack-tag base-tag' }, 'Základní hra'));
-    }
-
-    return h('span', { class: 'sim-value' }, String(value));
+  function updateAllLocksUI() {
+    const keys = [
+      'gender', 'values', 'asp-child', 'asp-teen', 'asp-adult', 'aspirations',
+      'career-teen', 'career-adult', 'careers',
+      'trait-infant', 'trait-toddler', 'trait-1', 'trait-2', 'trait-3', 'traits'
+    ];
+    for (const k of keys) updateLockUI(k);
   }
 
-  function renderResult() {
-    const box = $('#simgen-result');
-    clearNode(box);
-    const current = Store.state.simgen.current;
-    if (!current || !Object.keys(current).length) {
-      box.append(h('p', { class: 'muted' }, 'Klikni na Generovat.'));
+  function rollGender(force = false) {
+    ensureCurrent();
+    if (!doc || !doc.sexes) return;
+    if (!force && isLocked('gender') && Store.state.simsmix.current.gender) return;
+
+    const checkedRadio = $('input[name="sm-gender"]:checked');
+    const selectedOpt = checkedRadio ? checkedRadio.value : (Store.state.simsmix.genderOpt || 'random');
+    let chosen;
+    if (selectedOpt === 'male') chosen = doc.sexes.find((s) => s.id === 'male');
+    else if (selectedOpt === 'female') chosen = doc.sexes.find((s) => s.id === 'female');
+    else chosen = pickOne(doc.sexes);
+
+    Store.state.simsmix.current.gender = chosen;
+    Store.touch();
+    renderGender();
+  }
+
+  function rollValues(force = false) {
+    ensureCurrent();
+    if (!doc || !doc.character_values) return;
+    const currentVals = Store.state.simsmix.current.values || {};
+    const lockAll = isLocked('values');
+    const newVals = { ...currentVals };
+
+    for (const val of doc.character_values) {
+      if (!force && (lockAll || isLocked(`val-${val.id}`)) && currentVals[val.id]) continue;
+      const select = $(`#sm-val-select-${val.id}`);
+      const choice = select ? select.value : ((Store.state.simsmix.valuesOpts && Store.state.simsmix.valuesOpts[val.id]) || 'random');
+      const states = ['positive', 'negative', 'neutral'];
+      const chosenState = (choice === 'random' || !states.includes(choice)) ? pickOne(states) : choice;
+      newVals[val.id] = {
+        id: val.id,
+        state: chosenState,
+        nameRu: val.nameRu,
+        nameCs: val.nameCs,
+        nameEn: val.nameEn,
+        text: val[chosenState],
+      };
+    }
+
+    Store.state.simsmix.current.values = newVals;
+    Store.touch();
+    renderValues();
+  }
+
+  function rollAspirations(force = false) {
+    ensureCurrent();
+    if (!doc) return;
+    const lockAll = isLocked('aspirations');
+    const curr = Store.state.simsmix.current;
+
+    if (force || (!lockAll && !isLocked('asp-child'))) {
+      const pool = ownedOnly(doc.child_aspirations);
+      if (pool.length) curr.aspChild = pickOne(pool);
+    }
+    if (force || (!lockAll && !isLocked('asp-teen'))) {
+      const pool = ownedOnly(doc.teen_aspirations);
+      if (pool.length) curr.aspTeen = pickOne(pool);
+    }
+    if (force || (!lockAll && !isLocked('asp-adult'))) {
+      const pool = ownedOnly(doc.adult_aspirations);
+      if (pool.length) curr.aspAdult = pickOne(pool);
+    }
+
+    Store.touch();
+    renderAspirations();
+  }
+
+  function rollCareers(force = false) {
+    ensureCurrent();
+    if (!doc) return;
+    const lockAll = isLocked('careers');
+    const curr = Store.state.simsmix.current;
+
+    if (force || (!lockAll && !isLocked('career-teen'))) {
+      const pool = ownedOnly(doc.teen_careers);
+      if (pool.length) curr.careerTeen = pickOne(pool);
+    }
+    if (force || (!lockAll && !isLocked('career-adult'))) {
+      const pool = ownedOnly(doc.adult_careers);
+      if (pool.length) {
+        const pickedCareer = pickOne(pool);
+        const branchCheck = $('#simsmix-career-branches');
+        const includeBranches = branchCheck ? branchCheck.checked : Store.state.simsmix.careerBranches;
+        let chosenBranch = null;
+        if (includeBranches && Array.isArray(pickedCareer.branches) && pickedCareer.branches.length > 0) {
+          chosenBranch = pickOne(pickedCareer.branches);
+        }
+        curr.careerAdult = {
+          ...pickedCareer,
+          chosenBranch,
+        };
+      }
+    }
+
+    Store.touch();
+    renderCareers();
+  }
+
+  function rollTraits(force = false) {
+    ensureCurrent();
+    if (!doc) return;
+    const lockAll = isLocked('traits');
+    const curr = Store.state.simsmix.current;
+
+    if (force || (!lockAll && !isLocked('trait-infant'))) {
+      const pool = ownedOnly(doc.infant_traits);
+      if (pool.length) curr.traitInfant = pickOne(pool);
+    }
+
+    if (force || (!lockAll && !isLocked('trait-toddler'))) {
+      const pool = doc.toddler_traits;
+      if (pool && pool.length) curr.traitToddler = pickOne(pool);
+    }
+
+    const pool = ownedOnly(doc.traits);
+    if (!pool.length) return;
+
+    const heredityCheck = $('#simsmix-heredity-enable');
+    const heredityEnabled = heredityCheck ? heredityCheck.checked : Store.state.simsmix.heredity.enabled;
+    const parentTraits = [];
+    if (heredityEnabled) {
+      for (let i = 1; i <= 3; i++) {
+        const f = $(`#simsmix-father-${i}`);
+        if (f && f.value) parentTraits.push(f.value);
+        const m = $(`#simsmix-mother-${i}`);
+        if (m && m.value) parentTraits.push(m.value);
+      }
+    }
+
+    function pickNextTrait(childOnly, excludeNames) {
+      const candidates = pool.filter((t) => !excludeNames.includes(t.en) && (!childOnly || t.childOk));
+      if (!candidates.length) return pool[0];
+
+      if (parentTraits.length > 0) {
+        const parentMatches = candidates.filter((t) => parentTraits.includes(t.en));
+        if (parentMatches.length > 0 && Math.random() < 0.6) {
+          return pickOne(parentMatches);
+        }
+      }
+      return pickOne(candidates);
+    }
+
+    const exclude = [];
+    if (!force && (lockAll || isLocked('trait-1')) && curr.trait1) {
+      exclude.push(curr.trait1.en);
+    } else {
+      curr.trait1 = pickNextTrait(true, exclude);
+      if (curr.trait1) exclude.push(curr.trait1.en);
+    }
+
+    if (!force && (lockAll || isLocked('trait-2')) && curr.trait2) {
+      exclude.push(curr.trait2.en);
+    } else {
+      curr.trait2 = pickNextTrait(false, exclude);
+      if (curr.trait2) exclude.push(curr.trait2.en);
+    }
+
+    if (!force && (lockAll || isLocked('trait-3')) && curr.trait3) {
+      exclude.push(curr.trait3.en);
+    } else {
+      curr.trait3 = pickNextTrait(false, exclude);
+    }
+
+    Store.touch();
+    renderTraits();
+  }
+
+  function rollAll() {
+    rollGender();
+    rollValues();
+    rollAspirations();
+    rollCareers();
+    rollTraits();
+  }
+
+  function renderGender() {
+    ensureCurrent();
+    const curr = Store.state.simsmix.current.gender;
+    const out = $('#simsmix-out-gender');
+    if (!out) return;
+    if (!curr) {
+      out.textContent = '—';
+      out.className = 'simsmix-res-badge';
       return;
     }
-    for (const field of FIELDS) {
-      if (current[field.key] === undefined) continue;
-      box.append(h('div', { class: 'sim-row' },
-        h('span', { class: 'sim-key' }, field.label),
-        renderFieldNode(field.key, current[field.key], current)));
-    }
+    const label = getLocalizedText(curr);
+    out.textContent = label;
+    out.className = `simsmix-res-badge gender-badge ${curr.id}`;
   }
 
-  function renderOptions() {
-    const box = $('#simgen-options');
-    clearNode(box);
-    const state = Store.state.simgen;
-    for (const field of FIELDS) {
-      const enabled = h('input', {
-        type: 'checkbox',
-        checked: Boolean(state.enabled[field.key]),
-        onchange: (event) => {
-          state.enabled[field.key] = event.target.checked;
+  function renderValues() {
+    ensureCurrent();
+    const container = $('#simsmix-values-list');
+    if (!container || !doc || !doc.character_values) return;
+    clearNode(container);
+
+    const currVals = Store.state.simsmix.current.values || {};
+    for (const val of doc.character_values) {
+      const curr = currVals[val.id];
+      const valState = curr ? curr.state : 'neutral';
+      const stateBadgeClass = valState === 'positive' ? 'simsmix-val-pos' : (valState === 'negative' ? 'simsmix-val-neg' : 'simsmix-val-neu');
+      const stateText = curr && curr.text ? getLocalizedText(curr.text) : '—';
+      const currentChoice = (Store.state.simsmix.valuesOpts && Store.state.simsmix.valuesOpts[val.id]) || 'random';
+
+      const select = h('select', {
+        id: `sm-val-select-${val.id}`,
+        class: 'simsmix-val-select',
+        onchange: (e) => {
+          if (!Store.state.simsmix.valuesOpts) Store.state.simsmix.valuesOpts = {};
+          Store.state.simsmix.valuesOpts[val.id] = e.target.value;
           Store.touch();
-        },
-      });
-      const locked = Boolean(state.locks[field.key]);
-      const lock = h('button', {
+        }
+      },
+        h('option', { value: 'random', selected: currentChoice === 'random' }, t('simsmix_val_rnd')),
+        h('option', { value: 'positive', selected: currentChoice === 'positive' }, t('simsmix_val_pos')),
+        h('option', { value: 'negative', selected: currentChoice === 'negative' }, t('simsmix_val_neg')),
+        h('option', { value: 'neutral', selected: currentChoice === 'neutral' }, t('simsmix_val_neu'))
+      );
+
+      const lockKey = `val-${val.id}`;
+      const locked = isLocked(lockKey);
+      const lockBtn = h('button', {
         type: 'button',
-        class: `icon-btn lock${locked ? ' locked' : ''}`,
-        'aria-pressed': locked ? 'true' : 'false',
-        'aria-label': `${locked ? 'Odemknout' : 'Zamknout'} – ${field.label}`,
-        title: locked ? 'Zamčeno – hodnota se nemění' : 'Odemčeno',
+        class: `lock-btn-mini${locked ? ' locked' : ''}`,
+        title: locked ? 'Разблокировать' : 'Заблокировать',
         onclick: () => {
-          state.locks[field.key] = !state.locks[field.key];
-          Store.touch();
-          renderOptions();
-        },
+          toggleLock(lockKey);
+          renderValues();
+        }
       }, locked ? '🔒' : '🔓');
 
-      box.append(h('div', { class: 'opt-row' },
-        h('label', { class: 'check grow' }, enabled, field.label, field.bonus ? h('span', { class: 'pill tiny' }, 'bonus') : null),
-        lock));
+      const row = h('div', { class: 'simsmix-val-row' },
+        h('div', { class: 'simsmix-val-header' },
+          h('span', { class: 'simsmix-val-name' }, getLocalizedText(val, 'nameRu')),
+          h('div', { style: 'display:flex;align-items:center;gap:6px;' }, select, lockBtn)
+        ),
+        h('div', { class: 'simsmix-val-out-row' },
+          h('span', { class: `simsmix-val-badge ${stateBadgeClass}` }, stateText)
+        )
+      );
+
+      container.append(row);
     }
   }
 
-  function renderSaved() {
-    const list = $('#simgen-saved');
-    clearNode(list);
-    const saved = Store.state.simgen.saved;
-    if (!saved.length) {
-      list.append(h('li', { class: 'muted' }, 'Zatím nikdo uložený.'));
+  function renderItemRow(containerId, item, options = {}) {
+    const box = $(containerId);
+    if (!box) return;
+    clearNode(box);
+    if (!item) {
+      box.textContent = '—';
       return;
     }
-    saved.forEach((entry, index) => {
-      list.append(h('li', {},
-        h('span', { class: 'grow' }, entry.name),
-        h('button', {
-          class: 'ghost-btn small', type: 'button',
-          onclick: () => {
-            Store.state.simgen.current = entry.sim;
-            Store.touch();
-            renderResult();
-          },
-        }, 'Načíst'),
-        h('button', {
-          class: 'ghost-btn small', type: 'button',
-          onclick: () => copyText(`${entry.name}\n${asText(entry.sim)}`),
-        }, 'Kopírovat'),
-        h('button', {
-          class: 'ghost-btn small danger', type: 'button', 'aria-label': `Smazat ${entry.name}`,
-          onclick: async () => {
-            const ok = await confirmDialog('Smazat simíka', `Opravdu smazat „${entry.name}“?`, 'Smazat');
-            if (!ok) return;
-            Store.state.simgen.saved.splice(index, 1);
-            Store.touch();
-            renderSaved();
-          },
-        }, '✕')));
-    });
+    const title = getLocalizedText(item);
+    const sub = getLocalizedSub(item);
+    const elements = [h('div', { class: 'simsmix-item-title-row' },
+      h('span', {}, title),
+      sub ? h('span', { class: 'simsmix-item-sub' }, ` (${sub})`) : null
+    )];
+
+    if (options.branch) {
+      const branchTitle = getLocalizedText(options.branch);
+      const branchSub = getLocalizedSub(options.branch);
+      elements.push(h('div', { class: 'simsmix-career-branch-row', style: 'font-size:.82rem;color:var(--accent);margin-top:2px;' },
+        `↳ ${branchTitle}${branchSub ? ' (' + branchSub + ')' : ''}`
+      ));
+    }
+
+    if (item.pack) {
+      elements.push(h('div', { class: 'simsmix-item-pack' },
+        packIconOf(item.pack) ? h('img', {
+          class: 'pack-icon-mini',
+          src: packIconUrl(packIconOf(item.pack)),
+          alt: '',
+          onerror: (e) => { e.target.style.display = 'none'; }
+        }) : null,
+        h('span', {}, packNameOf(item.pack))
+      ));
+    }
+
+    for (const el of elements) box.append(el);
+  }
+
+  function renderAspirations() {
+    ensureCurrent();
+    const curr = Store.state.simsmix.current;
+    renderItemRow('#simsmix-out-asp-child', curr.aspChild);
+    renderItemRow('#simsmix-out-asp-teen', curr.aspTeen);
+    renderItemRow('#simsmix-out-asp-adult', curr.aspAdult);
+  }
+
+  function renderCareers() {
+    ensureCurrent();
+    const curr = Store.state.simsmix.current;
+    renderItemRow('#simsmix-out-career-teen', curr.careerTeen);
+    renderItemRow('#simsmix-out-career-adult', curr.careerAdult, { branch: curr.careerAdult && curr.careerAdult.chosenBranch });
+  }
+
+  function renderTraits() {
+    ensureCurrent();
+    const curr = Store.state.simsmix.current;
+    renderItemRow('#simsmix-out-trait-infant', curr.traitInfant);
+    renderItemRow('#simsmix-out-trait-toddler', curr.traitToddler);
+    renderItemRow('#simsmix-out-trait-1', curr.trait1);
+    renderItemRow('#simsmix-out-trait-2', curr.trait2);
+    renderItemRow('#simsmix-out-trait-3', curr.trait3);
+  }
+
+  function renderHereditySelects() {
+    if (!doc || !doc.traits) return;
+    const traits = doc.traits.slice().sort((a, b) => getLocalizedText(a).localeCompare(getLocalizedText(b)));
+    const emptyLabel = t('simsmix_no_trait', '— Без черты —');
+
+    for (let i = 1; i <= 3; i++) {
+      const fSel = $(`#simsmix-father-${i}`);
+      const mSel = $(`#simsmix-mother-${i}`);
+      const fVal = (Store.state.simsmix.heredity.father && Store.state.simsmix.heredity.father[i - 1]) || '';
+      const mVal = (Store.state.simsmix.heredity.mother && Store.state.simsmix.heredity.mother[i - 1]) || '';
+
+      if (fSel) {
+        clearNode(fSel);
+        fSel.append(h('option', { value: '' }, emptyLabel));
+        for (const t of traits) {
+          fSel.append(h('option', { value: t.en, selected: t.en === fVal }, getLocalizedText(t)));
+        }
+      }
+      if (mSel) {
+        clearNode(mSel);
+        mSel.append(h('option', { value: '' }, emptyLabel));
+        for (const t of traits) {
+          mSel.append(h('option', { value: t.en, selected: t.en === mVal }, getLocalizedText(t)));
+        }
+      }
+    }
+  }
+
+  function copySummary() {
+    ensureCurrent();
+    const curr = Store.state.simsmix.current;
+    if (!curr || !curr.gender) {
+      toast(t('copy_failed_toast'), 'error');
+      return;
+    }
+
+    const lines = [];
+    lines.push(`🧬 SimsMix — ${t('tab_simsmix')}`);
+    lines.push(`━━━━━━━━━━━━━━━━━━━━━━━━`);
+    lines.push(`${t('simsmix_gender_title')}: ${getLocalizedText(curr.gender)}`);
+
+    if (curr.values) {
+      lines.push(`\n${t('simsmix_values_title')}:`);
+      for (const val of Object.values(curr.values)) {
+        lines.push(`• ${getLocalizedText(val, 'nameRu')}: ${getLocalizedText(val.text)} (${val.state === 'positive' ? '+' : (val.state === 'negative' ? '−' : '0')})`);
+      }
+    }
+
+    lines.push(`\n${t('simsmix_aspirations_title')}:`);
+    if (curr.aspChild) lines.push(`• ${t('stage_child')}: ${getLocalizedText(curr.aspChild)}`);
+    if (curr.aspTeen) lines.push(`• ${t('stage_teen')}: ${getLocalizedText(curr.aspTeen)}`);
+    if (curr.aspAdult) lines.push(`• ${t('stage_adult')}: ${getLocalizedText(curr.aspAdult)}`);
+
+    lines.push(`\n${t('simsmix_careers_title')}:`);
+    if (curr.careerTeen) lines.push(`• ${t('simsmix_career_teen_label')}: ${getLocalizedText(curr.careerTeen)}`);
+    if (curr.careerAdult) {
+      const branchText = curr.careerAdult.chosenBranch ? ` ↳ ${getLocalizedText(curr.careerAdult.chosenBranch)}` : '';
+      lines.push(`• ${t('simsmix_career_adult_label')}: ${getLocalizedText(curr.careerAdult)}${branchText}`);
+    }
+
+    lines.push(`\n${t('simsmix_traits_title')}:`);
+    if (curr.traitInfant) lines.push(`• ${t('stage_infant')}: ${getLocalizedText(curr.traitInfant)}`);
+    if (curr.traitToddler) lines.push(`• ${t('stage_toddler')}: ${getLocalizedText(curr.traitToddler)}`);
+    if (curr.trait1) lines.push(`• ${t('simsmix_trait_child_label')}: ${getLocalizedText(curr.trait1)}`);
+    if (curr.trait2) lines.push(`• ${t('simsmix_trait_teen_label')}: ${getLocalizedText(curr.trait2)}`);
+    if (curr.trait3) lines.push(`• ${t('simsmix_trait_adult_label')}: ${getLocalizedText(curr.trait3)}`);
+
+    copyText(lines.join('\n'));
   }
 
   function syncFromState() {
-    const state = Store.state.simgen;
-    if (!state.enabled || typeof state.enabled !== 'object') state.enabled = defaults();
-    for (const field of FIELDS) {
-      if (state.enabled[field.key] === undefined) state.enabled[field.key] = !field.bonus;
+    ensureCurrent();
+    const sm = Store.state.simsmix;
+    const r = $(`input[name="sm-gender"][value="${sm.genderOpt || 'random'}"]`);
+    if (r) r.checked = true;
+
+    const b = $('#simsmix-career-branches');
+    if (b) b.checked = Boolean(sm.careerBranches !== false);
+
+    const hCheck = $('#simsmix-heredity-enable');
+    if (hCheck) hCheck.checked = Boolean(sm.heredity.enabled);
+
+    const pi = $('#simsmix-pack-indicator');
+    if (pi && packRegistry.size > 0) {
+      const owned = Array.from(packRegistry.values()).filter((p) => isPackOwned(p.name)).length;
+      pi.textContent = `${owned} / ${packRegistry.size} DLC`;
     }
-    if (!state.locks || typeof state.locks !== 'object') state.locks = {};
-    if (data) {
-      renderOptions();
-      renderResult();
-      renderSaved();
-    }
+
+    updateAllLocksUI();
+    renderGender();
+    renderValues();
+    renderAspirations();
+    renderCareers();
+    renderTraits();
+    renderHereditySelects();
   }
 
   async function activate() {
-    if (data) { syncFromState(); return; }
-    try {
-      data = await loadData('simgen');
-      hideTabError('simgen-error');
+    active = true;
+    if (doc) {
       syncFromState();
+      return;
+    }
+    try {
+      const [smDoc] = await Promise.all([
+        loadData('simsmix'),
+        ensurePacksLoaded()
+      ]);
+      doc = smDoc;
+      hideTabError('simsmix-error');
+      syncFromState();
+
+      if (!Store.state.simsmix.current || !Store.state.simsmix.current.gender) {
+        rollAll();
+      }
     } catch (error) {
-      showTabError('simgen-error', `${error.message} Zkus stránku načíst znovu.`);
+      showTabError('simsmix-error', `${error.message} Zkus stránku načíst znovu.`);
     }
   }
 
   function init() {
-    $('#simgen-go').addEventListener('click', () => {
-      if (!data) return;
-      generate();
-    });
-    $('#simgen-unlock').addEventListener('click', () => {
-      Store.state.simgen.locks = {};
+    $('#simsmix-gen-all').addEventListener('click', () => rollAll());
+    $('#simsmix-copy-all').addEventListener('click', () => copySummary());
+    $('#simsmix-reset-all').addEventListener('click', async () => {
+      Store.state.simsmix.current = {};
+      Store.state.simsmix.locks = {};
       Store.touch();
-      renderOptions();
+      updateAllLocksUI();
+      rollAll();
     });
-    $('#simgen-copy').addEventListener('click', () => {
-      const current = Store.state.simgen.current;
-      if (!current) return toast('Nejdřív vygeneruj simíka.', 'warn');
-      copyText(asText(current));
+
+    $('#simsmix-gen-gender').addEventListener('click', () => rollGender(true));
+    $('#simsmix-gen-values').addEventListener('click', () => rollValues(true));
+    $('#simsmix-gen-aspirations').addEventListener('click', () => rollAspirations(true));
+    $('#simsmix-gen-careers').addEventListener('click', () => rollCareers(true));
+    $('#simsmix-gen-traits').addEventListener('click', () => rollTraits(true));
+
+    $('#simsmix-lock-gender').addEventListener('click', () => toggleLock('gender'));
+    $('#simsmix-lock-values').addEventListener('click', () => toggleLock('values'));
+    $('#simsmix-lock-aspirations').addEventListener('click', () => toggleLock('aspirations'));
+    $('#simsmix-lock-careers').addEventListener('click', () => toggleLock('careers'));
+    $('#simsmix-lock-traits').addEventListener('click', () => toggleLock('traits'));
+
+    $('#simsmix-lock-asp-child').addEventListener('click', () => toggleLock('asp-child'));
+    $('#simsmix-lock-asp-teen').addEventListener('click', () => toggleLock('asp-teen'));
+    $('#simsmix-lock-asp-adult').addEventListener('click', () => toggleLock('asp-adult'));
+    $('#simsmix-lock-career-teen').addEventListener('click', () => toggleLock('career-teen'));
+    $('#simsmix-lock-career-adult').addEventListener('click', () => toggleLock('career-adult'));
+    $('#simsmix-lock-trait-infant').addEventListener('click', () => toggleLock('trait-infant'));
+    $('#simsmix-lock-trait-toddler').addEventListener('click', () => toggleLock('trait-toddler'));
+    $('#simsmix-lock-trait-1').addEventListener('click', () => toggleLock('trait-1'));
+    $('#simsmix-lock-trait-2').addEventListener('click', () => toggleLock('trait-2'));
+    $('#simsmix-lock-trait-3').addEventListener('click', () => toggleLock('trait-3'));
+
+    $$('input[name="sm-gender"]').forEach((radio) => {
+      radio.addEventListener('change', (e) => {
+        Store.state.simsmix.genderOpt = e.target.value;
+        Store.touch();
+      });
     });
-    $('#simgen-save').addEventListener('click', async () => {
-      const current = Store.state.simgen.current;
-      if (!current || !Object.keys(current).length) return toast('Nejdřív vygeneruj simíka.', 'warn');
-      const name = await promptDialog('Uložit simíka', 'Jméno');
-      if (!name) return;
-      Store.state.simgen.saved.unshift({ name, sim: current, at: new Date().toISOString() });
+
+    $('#simsmix-career-branches').addEventListener('change', (e) => {
+      Store.state.simsmix.careerBranches = e.target.checked;
       Store.touch();
-      renderSaved();
-      toast('Simík uložený.', 'ok');
     });
+
+    $('#simsmix-heredity-enable').addEventListener('change', (e) => {
+      Store.state.simsmix.heredity.enabled = e.target.checked;
+      Store.touch();
+    });
+
+    for (let i = 1; i <= 3; i++) {
+      $(`#simsmix-father-${i}`).addEventListener('change', (e) => {
+        if (!Store.state.simsmix.heredity.father) Store.state.simsmix.heredity.father = ['', '', ''];
+        Store.state.simsmix.heredity.father[i - 1] = e.target.value;
+        Store.touch();
+      });
+      $(`#simsmix-mother-${i}`).addEventListener('change', (e) => {
+        if (!Store.state.simsmix.heredity.mother) Store.state.simsmix.heredity.mother = ['', '', ''];
+        Store.state.simsmix.heredity.mother[i - 1] = e.target.value;
+        Store.touch();
+      });
+    }
+
+    registerTab('simsmix', { activate });
     registerTab('simgen', { activate });
   }
 
-  return { init, syncFromState: () => { if (data) syncFromState(); } };
+  return {
+    init,
+    syncFromState: () => { if (doc) syncFromState(); },
+    refreshIfActive: () => {
+      if (active && doc) {
+        renderGender();
+        renderValues();
+        renderAspirations();
+        renderCareers();
+        renderTraits();
+        renderHereditySelects();
+      }
+    }
+  };
 })();
 
 /* ==========================================================================
-   TAB 4 — Náhodné packy
+   TAB: Random Packs Generator (James Turner 1:1 style)
    ========================================================================== */
 
-const Packs = (() => {
+const RandomPacks = (() => {
   let packs = null;
-  let lastResults = [];
+  let active = false;
   let search = '';
 
   const weightOf = (categoryId) => {
     const weights = Store.state.packs.weights || {};
-    return weights[categoryId] === undefined ? 1 : Number(weights[categoryId]);
+    const defaultWeights = { expansion: 30, gamepack: 30, stuffpack: 15, kit: 8 };
+    return weights[categoryId] !== undefined ? Number(weights[categoryId]) : (defaultWeights[categoryId] || 1);
   };
 
   function ownedPacks() {
+    if (!packs) return [];
     return packs.filter((pack) => isPackOwned(pack.name));
   }
 
   function setMessage(message, kind = 'hint') {
-    const node = $('#packs-message');
+    const node = $('#rp-message');
+    if (!node) return;
     node.textContent = message || '';
     node.className = kind === 'error' ? 'error-text' : 'hint';
   }
 
   function drawPacks() {
     const state = Store.state.packs;
-    const count = clamp(Math.trunc(Number(state.count) || 1), 1, 20);
+    const count = clamp(Math.trunc(Number(state.count) || 3), 1, 20);
     const pool = ownedPacks().filter((pack) => weightOf(pack.category) > 0);
 
     if (!pool.length) {
-      setMessage('Žádný aktivní pack. Zaškrtni aspoň jeden vlastněný pack s nenulovou váhou.', 'error');
+      setMessage('Нет активных наборов. Отметьте хотя бы один набор с ненулевым весом категории.', 'error');
       return null;
     }
     if (pool.length <= count) {
-      setMessage(`K dispozici je jen ${pool.length} aktivních packů, takže je vypisuju všechny.`);
+      setMessage(`Доступно только ${pool.length} наборов, отображаются все.`);
       return shuffled(pool);
     }
 
@@ -1988,14 +2595,13 @@ const Packs = (() => {
       return true;
     };
 
-    // "At least one per category" is ignored when it cannot fit in the count.
     if (state.eachCategory && count >= activeCategories.length) {
       for (const category of activeCategories) {
         take(remaining.filter((pack) => pack.category === category));
       }
       setMessage('');
     } else if (state.eachCategory) {
-      setMessage(`Počet (${count}) je menší než počet aktivních kategorií (${activeCategories.length}), volbu „aspoň jeden z každé kategorie“ ignoruju.`);
+      setMessage(`Количество (${count}) меньше числа активных категорий (${activeCategories.length}), опция гарантии категории пропущена.`);
     } else {
       setMessage('');
     }
@@ -2007,12 +2613,17 @@ const Packs = (() => {
   }
 
   function renderResults() {
-    const box = $('#packs-results');
+    const box = $('#rp-results');
+    if (!box) return;
     clearNode(box);
-    if (!lastResults.length) return;
-    for (const item of lastResults) {
-      const pack = (packs && packs.find((p) => p.name === item.name)) || item;
-      const title = pack.nameCs || pack.name;
+    const results = Store.state.packs.results || [];
+    if (!results.length) return;
+
+    for (const item of results) {
+      const pack = (packs && packs.find((p) => p.name === item.name || p.name === item)) || item;
+      const title = packNameOf(pack.name);
+      const subtitle = packSubNameOf(pack.name);
+
       box.append(h('div', { class: 'pack-card' },
         pack.icon ? h('img', {
           class: 'pack-card-icon',
@@ -2024,19 +2635,23 @@ const Packs = (() => {
         h('div', { class: 'pack-card-info' },
           h('span', { class: `badge badge-${pack.category}` }, categoryLabel(pack.category)),
           h('span', { class: 'pack-name' }, title),
-          pack.nameCs && pack.nameCs !== pack.name ? h('span', { class: 'pack-sub-name' }, pack.name) : null)));
+          subtitle ? h('span', { class: 'pack-sub-name' }, subtitle) : null
+        )
+      ));
     }
   }
 
   function renderWeights() {
-    const box = $('#packs-weights');
+    const box = $('#rp-weights');
+    if (!box) return;
     clearNode(box);
+
     for (const category of PACK_CATEGORIES) {
       const value = weightOf(category.id);
       const output = h('output', { class: 'weight-value' }, String(value));
       const slider = h('input', {
-        type: 'range', min: '0', max: '5', step: '1', value: String(value),
-        'aria-label': `Váha kategorie ${category.label}`,
+        type: 'range', min: '0', max: '50', step: '1', value: String(value),
+        'aria-label': `Вес ${categoryLabel(category.id)}`,
         oninput: (event) => {
           output.textContent = event.target.value;
           if (!Store.state.packs.weights) Store.state.packs.weights = {};
@@ -2045,165 +2660,252 @@ const Packs = (() => {
         },
       });
       box.append(h('div', { class: 'weight-row' },
-        h('span', { class: 'weight-label' }, category.label),
+        h('span', { class: 'weight-label' }, categoryLabel(category.id)),
         slider,
-        output));
+        output
+      ));
     }
   }
 
-  function updateOwnedCount() {
-    const owned = ownedPacks().length;
-    $('#packs-owned-count').textContent = `${owned} / ${packs.length} vlastněných`;
-  }
+  function renderCategoriesTables() {
+    const container = $('#rp-categories-container');
+    if (!container || !packs) return;
+    clearNode(container);
 
-  function setOwned(names, owned) {
-    const map = Store.state.packs.owned || (Store.state.packs.owned = {});
-    for (const name of names) map[name] = owned;
-    Store.touch();
-    renderOwned();
-    if (Supersim.refreshIfActive) Supersim.refreshIfActive();
-  }
+    const needle = search.trim().toLowerCase();
+    let totalActive = 0;
 
-  function renderOwned() {
-    const box = $('#packs-owned');
-    clearNode(box);
-
-    const query = search.trim().toLowerCase();
-
-    const groups = [];
     for (const category of PACK_CATEGORIES) {
-      if (category.id === 'kit') {
-        for (const subtype of KIT_SUBTYPES) {
-          groups.push({
-            label: subtype.label,
-            items: packs.filter((pack) => pack.category === 'kit' && pack.subtype === subtype.id),
-          });
-        }
-      } else {
-        groups.push({ label: category.label, items: packs.filter((pack) => pack.category === category.id) });
-      }
-    }
+      const catPacks = packs.filter((p) => p.category === category.id);
+      const visiblePacks = catPacks.filter((p) => {
+        if (!needle) return true;
+        const nameRu = (p.nameRu || '').toLowerCase();
+        const nameCs = (p.nameCs || '').toLowerCase();
+        const nameEn = (p.name || '').toLowerCase();
+        return nameRu.includes(needle) || nameCs.includes(needle) || nameEn.includes(needle);
+      });
 
-    for (const group of groups) {
-      const visible = query
-        ? group.items.filter((pack) =>
-            pack.name.toLowerCase().includes(query) ||
-            (pack.nameCs && pack.nameCs.toLowerCase().includes(query)))
-        : group.items;
-      if (!visible.length) continue;
-      const names = group.items.map((pack) => pack.name);
-      const ownedInGroup = names.filter((name) => isPackOwned(name)).length;
-      box.append(h('div', { class: 'owned-group' },
-        h('div', { class: 'owned-head' },
-          h('h3', {}, group.label),
-          h('span', { class: 'pill tiny' }, `${ownedInGroup}/${names.length}`),
-          h('button', { class: 'ghost-btn small', type: 'button', onclick: () => setOwned(names, true) }, 'Vše'),
-          h('button', { class: 'ghost-btn small', type: 'button', onclick: () => setOwned(names, false) }, 'Nic')),
-        h('div', { class: 'owned-items' }, visible.map((pack) => h('label', { class: 'check pack-check' },
-          h('input', {
-            type: 'checkbox',
-            checked: isPackOwned(pack.name),
-            onchange: (event) => {
-              const map = Store.state.packs.owned || (Store.state.packs.owned = {});
-              map[pack.name] = event.target.checked;
-              Store.touch();
-              updateOwnedCount();
-              const head = event.target.closest('.owned-group').querySelector('.pill');
-              const count = group.items.filter((item) => isPackOwned(item.name)).length;
-              head.textContent = `${count}/${group.items.length}`;
-              if (Supersim.refreshIfActive) Supersim.refreshIfActive();
-            },
-          }),
+      const ownedInCat = catPacks.filter((p) => isPackOwned(p.name)).length;
+      totalActive += ownedInCat;
+
+      const catSection = h('div', { class: 'rp-cat-section' },
+        h('div', { class: 'rp-cat-header' },
+          h('div', { class: 'rp-cat-title-wrap' },
+            h('span', { class: `badge badge-${category.id}` }, categoryLabel(category.id)),
+            h('span', { class: 'pill' }, `${ownedInCat} / ${catPacks.length}`)
+          ),
+          h('div', { class: 'rp-cat-actions' },
+            h('button', {
+              type: 'button',
+              class: 'ghost-btn small',
+              onclick: () => {
+                for (const p of catPacks) Store.state.packs.owned[p.name] = true;
+                Store.touch();
+                renderCategoriesTables();
+                if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+              }
+            }, t('rp_select_all')),
+            h('button', {
+              type: 'button',
+              class: 'ghost-btn small',
+              onclick: () => {
+                for (const p of catPacks) Store.state.packs.owned[p.name] = false;
+                Store.touch();
+                renderCategoriesTables();
+                if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+              }
+            }, t('rp_deselect_all'))
+          )
+        )
+      );
+
+      const grid = h('div', { class: 'rp-pack-grid' });
+      for (const pack of visiblePacks) {
+        const owned = isPackOwned(pack.name);
+        const checkbox = h('input', {
+          type: 'checkbox',
+          checked: owned,
+          onchange: (e) => {
+            Store.state.packs.owned[pack.name] = e.target.checked;
+            Store.touch();
+            renderCategoriesTables();
+            if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+          }
+        });
+
+        const card = h('label', { class: 'rp-pack-item' },
+          checkbox,
           pack.icon ? h('img', {
-            class: 'pack-icon',
+            class: 'rp-pack-icon',
             src: packIconUrl(pack.icon),
             alt: '',
             loading: 'lazy',
-            onerror: (e) => { e.target.style.display = 'none'; },
+            onerror: (e) => { e.target.style.display = 'none'; }
           }) : null,
-          h('span', { class: 'pack-name-text' },
-            pack.nameCs && pack.nameCs !== pack.name
-              ? [h('strong', { class: 'pack-cs-title' }, pack.nameCs), ' ', h('span', { class: 'pack-en-sub' }, `(${pack.name})`)]
-              : pack.name))))));
+          h('div', { class: 'rp-pack-texts' },
+            h('span', { class: 'rp-pack-title', title: packNameOf(pack.name) }, packNameOf(pack.name)),
+            packSubNameOf(pack.name) ? h('span', { class: 'rp-pack-subtitle' }, packSubNameOf(pack.name)) : null
+          )
+        );
+        grid.append(card);
+      }
+
+      catSection.append(grid);
+      container.append(catSection);
     }
-    updateOwnedCount();
+
+    const totalPill = $('#rp-total-owned');
+    if (totalPill) totalPill.textContent = `${totalActive} / ${packs.length}`;
   }
 
   function syncFromState() {
     if (!packs) return;
     const state = Store.state.packs;
-    if (!state.weights || typeof state.weights !== 'object') state.weights = {};
-    for (const category of PACK_CATEGORIES) {
-      if (state.weights[category.id] === undefined) state.weights[category.id] = 1;
+    if (!state.weights || typeof state.weights !== 'object') {
+      state.weights = { expansion: 30, gamepack: 30, stuffpack: 15, kit: 8 };
     }
-    $('#packs-count').value = clamp(Math.trunc(Number(state.count) || 3), 1, 20);
-    $('#packs-each-cat').checked = Boolean(state.eachCategory);
-    lastResults = Array.isArray(state.results) ? state.results : [];
+    const countInput = $('#rp-count');
+    if (countInput) countInput.value = state.count || 3;
+    const eachCat = $('#rp-each-cat');
+    if (eachCat) eachCat.checked = Boolean(state.eachCategory);
+
     renderWeights();
-    renderOwned();
     renderResults();
-    setMessage('');
+    renderCategoriesTables();
   }
 
   async function activate() {
-    if (packs) { syncFromState(); return; }
+    active = true;
+    if (packs) {
+      syncFromState();
+      return;
+    }
     try {
       const doc = await loadData('packs');
       packs = doc.packs;
-      for (const p of packs) packRegistry.set(p.name, p);
-      hideTabError('packs-error');
+      hideTabError('randompacks-error');
       syncFromState();
     } catch (error) {
-      showTabError('packs-error', `${error.message} Zkus stránku načíst znovu.`);
+      showTabError('randompacks-error', `${error.message} Zkus načíst stránku znovu.`);
     }
   }
 
   function init() {
-    $('#packs-go').addEventListener('click', () => {
-      if (!packs) return;
-      const result = drawPacks();
-      if (!result) { lastResults = []; renderResults(); return; }
-      lastResults = result;
-      Store.state.packs.results = result;
-      Store.touch();
-      renderResults();
-    });
-    $('#packs-copy').addEventListener('click', () => {
-      if (!lastResults.length) return toast('Není co kopírovat.', 'warn');
-      copyText(lastResults.map((pack) => `${pack.name} (${categoryLabel(pack.category)})`).join('\n'));
-    });
-    $('#packs-count').addEventListener('change', (event) => {
-      const value = clamp(Math.trunc(Number(event.target.value) || 1), 1, 20);
-      event.target.value = value;
-      Store.state.packs.count = value;
+    $('#rp-count').addEventListener('input', (event) => {
+      Store.state.packs.count = clamp(Math.trunc(Number(event.target.value) || 1), 1, 20);
       Store.touch();
     });
-    $('#packs-each-cat').addEventListener('change', (event) => {
+
+    $('#rp-each-cat').addEventListener('change', (event) => {
       Store.state.packs.eachCategory = event.target.checked;
       Store.touch();
     });
-    const searchInput = $('#packs-search');
-    if (searchInput) {
-      searchInput.addEventListener('input', (event) => {
-        search = event.target.value;
-        renderOwned();
+
+    $('#rp-go').addEventListener('click', () => {
+      const results = drawPacks();
+      if (!results) return;
+      Store.state.packs.results = results;
+      Store.touch();
+      renderResults();
+    });
+
+    $('#rp-copy').addEventListener('click', () => {
+      const results = Store.state.packs.results || [];
+      if (!results.length) return toast(t('copy_failed_toast'), 'error');
+      const lines = results.map((pack) => {
+        const title = packNameOf(pack.name);
+        const sub = packSubNameOf(pack.name);
+        return `• [${categoryLabel(pack.category)}] ${title}${sub ? ' (' + sub + ')' : ''}`;
       });
-    }
-    for (const button of $$('[data-packs-all]')) {
-      button.addEventListener('click', () => {
-        if (!packs) return;
-        setOwned(packs.map((pack) => pack.name), button.dataset.packsAll === '1');
-      });
-    }
+      copyText(lines.join('\n'));
+    });
+
+    $('#rp-search').addEventListener('input', (event) => {
+      search = event.target.value;
+      renderCategoriesTables();
+    });
+
+    $('#rp-all-on').addEventListener('click', () => {
+      if (!packs) return;
+      for (const p of packs) Store.state.packs.owned[p.name] = true;
+      Store.touch();
+      renderCategoriesTables();
+      if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+    });
+
+    $('#rp-all-off').addEventListener('click', () => {
+      if (!packs) return;
+      for (const p of packs) Store.state.packs.owned[p.name] = false;
+      Store.touch();
+      renderCategoriesTables();
+      if (Supersim && Supersim.refreshIfActive) Supersim.refreshIfActive();
+    });
+
+    registerTab('randompacks', { activate });
     registerTab('packs', { activate });
   }
 
-  return { init, syncFromState: () => { if (packs) syncFromState(); } };
+  return {
+    init,
+    syncFromState: () => { if (packs) syncFromState(); },
+    refreshIfActive: () => {
+      if (active && packs) {
+        renderWeights();
+        renderResults();
+        renderCategoriesTables();
+      }
+    }
+  };
 })();
 
 /* ==========================================================================
    TAB 5 — Super Sim tracker
    ========================================================================== */
+
+const SUPERSIM_CATEGORIES = {
+  'Kreativita': { ru: 'Творчество', cs: 'Kreativita', en: 'Creativity' },
+  'Atletika': { ru: 'Спорт', cs: 'Atletika', en: 'Athletic' },
+  'Nepravost': { ru: 'Дурной нрав', cs: 'Nepravost', en: 'Deviance' },
+  'Rodina': { ru: 'Семья', cs: 'Rodina', en: 'Family' },
+  'Jídlo': { ru: 'Еда', cs: 'Jídlo', en: 'Food' },
+  'Bohatství': { ru: 'Состояние', cs: 'Bohatství', en: 'Fortune' },
+  'Vědomosti': { ru: 'Знания', cs: 'Vědomosti', en: 'Knowledge' },
+  'Láska': { ru: 'Любовь', cs: 'Láska', en: 'Love' },
+  'Příroda': { ru: 'Природа', cs: 'Příroda', en: 'Nature' },
+  'Popularita': { ru: 'Популярность', cs: 'Popularita', en: 'Popularity' },
+  'Umístění a kultura': { ru: 'Место и культура', cs: 'Umístění a kultura', en: 'Location & Culture' },
+  'Vlkodlaci': { ru: 'Оборотни', cs: 'Vlkodlaci', en: 'Werewolves' },
+  'Teenagerské': { ru: 'Подростковые', cs: 'Teenagerské', en: 'Teen' },
+  'Dětské': { ru: 'Детские', cs: 'Dětské', en: 'Child' },
+  'Dospělé dovednosti': { ru: 'Взрослые навыки', cs: 'Dospělé dovednosti', en: 'Adult Skills' },
+  'Dětské dovednosti': { ru: 'Детские навыки', cs: 'Dětské dovednosti', en: 'Child Skills' },
+  'Batolecí dovednosti': { ru: 'Навыки малышей', cs: 'Batolecí dovednosti', en: 'Toddler Skills' },
+  'Dospělé kariéry': { ru: 'Взрослые карьеры', cs: 'Dospělé kariéry', en: 'Adult Careers' },
+  'Brigády (Teenager)': { ru: 'Подработки (подросток)', cs: 'Brigády (Teenager)', en: 'Part-time Jobs (Teen)' },
+  'Hodnost': { ru: 'Ранг', cs: 'Hodnost', en: 'Rank' },
+  'Praktická magie': { ru: 'Практическая магия', cs: 'Praktická magie', en: 'Practical Magic' },
+  'Škodolibá magie': { ru: 'Проказливая магия', cs: 'Škodolibá magie', en: 'Mischief Magic' },
+  'Nezkrotná magie': { ru: 'Неукротимая магия', cs: 'Nezkrotná magie', en: 'Untamed Magic' },
+  'Lektvary': { ru: 'Зелья', cs: 'Lektvary', en: 'Potions' },
+  'Batolecí milníky': { ru: 'Рубежи малышей', cs: 'Batolecí milníky', en: 'Toddler Milestones' },
+  'Dětské milníky': { ru: 'Детские рубежи', cs: 'Dětské milníky', en: 'Child Milestones' },
+  'Teenagerské milníky': { ru: 'Подростковые рубежи', cs: 'Teenagerské milníky', en: 'Teen Milestones' },
+  'Dospělé milníky': { ru: 'Взрослые рубежи', cs: 'Dospělé milníky', en: 'Adult Milestones' },
+};
+
+const SUPERSIM_SECTION_EN = {
+  aspirations: 'Aspirations',
+  reward_traits: 'Reward Traits',
+  skills: 'Skills',
+  careers: 'Careers',
+  degrees: 'University Degrees',
+  vampire_powers: 'Vampire Powers',
+  spellcaster: 'Spellcaster Abilities',
+  fame_perks: 'Fame Perks',
+  werewolf_abilities: 'Werewolf Abilities',
+  ghost_mastery: 'Ghost Mastery',
+  milestones: 'Milestones',
+};
 
 const Supersim = (() => {
   let doc = null;
@@ -2214,6 +2916,38 @@ const Supersim = (() => {
   const sectionPills = new Map();
 
   const keyOf = (sectionId, item) => `${sectionId}::${item.name}`;
+
+  function sectionLabelOf(section) {
+    if (currentLang === 'ru') return section.labelRu || section.label;
+    if (currentLang === 'en') return section.labelEn || SUPERSIM_SECTION_EN[section.id] || section.label;
+    return section.label;
+  }
+
+  function sectionNoteOf(section) {
+    if (currentLang === 'ru') return section.noteRu || section.note;
+    if (currentLang === 'en') return section.noteEn || section.note;
+    return section.note;
+  }
+
+  function categoryTitleOf(cat) {
+    if (!cat) return '';
+    const item = SUPERSIM_CATEGORIES[cat];
+    if (!item) return cat;
+    return item[currentLang] || item.ru || cat;
+  }
+
+  function itemTitleOf(item) {
+    if (currentLang === 'ru') return item.ru || item.name;
+    if (currentLang === 'en') return item.en || item.name;
+    return item.cs || item.name;
+  }
+
+  function itemSubOf(item) {
+    const title = itemTitleOf(item);
+    if (currentLang === 'en') return '';
+    if (item.en && item.en !== title) return ` (${item.en})`;
+    return '';
+  }
 
   function progressOf(sectionId, item) {
     const value = Store.state.supersim.progress[keyOf(sectionId, item)];
@@ -2238,7 +2972,9 @@ const Supersim = (() => {
       if (needle) {
         const matchName = item.name && item.name.toLowerCase().includes(needle);
         const matchEn = item.en && item.en.toLowerCase().includes(needle);
-        if (!matchName && !matchEn) return false;
+        const matchRu = item.ru && item.ru.toLowerCase().includes(needle);
+        const matchCs = item.cs && item.cs.toLowerCase().includes(needle);
+        if (!matchName && !matchEn && !matchRu && !matchCs) return false;
       }
       if (state.age) {
         if (state.age === 'toddler') {
@@ -2303,9 +3039,27 @@ const Supersim = (() => {
     const value = progressOf(section.id, item);
     const done = value >= item.levels;
     const change = (delta) => applyChange(section, item, button, delta);
-    const labelText = item.levels === 1
-      ? `${item.name}${item.en ? ' (' + item.en + ')' : ''} – ${done ? 'hotovo' : 'nehotovo'}`
-      : `${item.name}${item.en ? ' (' + item.en + ')' : ''} – úroveň ${value} z ${item.levels}`;
+    const title = itemTitleOf(item);
+    const sub = itemSubOf(item);
+
+    let stateDesc = '';
+    if (item.levels === 1) {
+      if (currentLang === 'ru') stateDesc = done ? 'выполнено' : 'не выполнено';
+      else if (currentLang === 'en') stateDesc = done ? 'completed' : 'incomplete';
+      else stateDesc = done ? 'hotovo' : 'nehotovo';
+    } else {
+      if (currentLang === 'ru') stateDesc = `уровень ${value} из ${item.levels}`;
+      else if (currentLang === 'en') stateDesc = `level ${value} of ${item.levels}`;
+      else stateDesc = `úroveň ${value} z ${item.levels}`;
+    }
+    const labelText = `${title}${sub} – ${stateDesc}`;
+
+    let costBadge = null;
+    if (item.cost) {
+      const formatted = item.cost.toLocaleString(currentLang === 'ru' ? 'ru-RU' : (currentLang === 'en' ? 'en-US' : 'cs-CZ'));
+      const unit = currentLang === 'ru' ? 'б.' : (currentLang === 'en' ? 'pts' : 'b.');
+      costBadge = h('span', { class: 'item-cost-badge' }, `${formatted} ${unit}`);
+    }
 
     const button = h('button', {
       type: 'button',
@@ -2342,9 +3096,9 @@ const Supersim = (() => {
       },
     },
     h('span', { class: 'item-name' },
-      h('span', { class: 'item-title' }, item.name),
-      item.en && item.en !== item.name ? h('span', { class: 'item-en-sub' }, ` (${item.en})`) : null,
-      item.cost ? h('span', { class: 'item-cost-badge' }, `${item.cost.toLocaleString('cs-CZ')} b.`) : null,
+      h('span', { class: 'item-title' }, title),
+      sub ? h('span', { class: 'item-en-sub' }, sub) : null,
+      costBadge,
     ),
     item.pack ? h('span', { class: 'item-pack' },
       packIconOf(item.pack) ? h('img', {
@@ -2354,7 +3108,7 @@ const Supersim = (() => {
         loading: 'lazy',
         onerror: (e) => { e.target.style.display = 'none'; },
       }) : null,
-      h('span', {}, packNameCsOf(item.pack) || item.pack)) : null,
+      h('span', {}, packNameOf(item.pack) || item.pack)) : null,
     item.levels === 1
       ? h('span', { class: 'item-state' }, done ? '✓' : '')
       : h('span', { class: 'item-level' }, `${value}/${item.levels}`));
@@ -2374,6 +3128,10 @@ const Supersim = (() => {
     const pill = h('span', { class: 'pill' }, `${stats.done}/${stats.total} · ${stats.percent} %`);
     sectionPills.set(section.id, pill);
 
+    const sLabel = sectionLabelOf(section);
+    const sNote = sectionNoteOf(section);
+    const resetText = t('supersim_reset_section');
+
     const header = h('div', { class: 'section-head' },
       h('button', {
         type: 'button',
@@ -2385,30 +3143,36 @@ const Supersim = (() => {
           Store.touch();
           render();
         },
-      }, h('span', { class: 'chevron', 'aria-hidden': 'true' }, collapsed ? '▸' : '▾'), section.label),
+      }, h('span', { class: 'chevron', 'aria-hidden': 'true' }, collapsed ? '▸' : '▾'), sLabel),
       pill,
       h('button', {
         type: 'button',
         class: 'ghost-btn small danger',
         onclick: async () => {
-          const ok = await confirmDialog('Vynulovat sekci', `Opravdu vynulovat postup v sekci „${section.label}“?`, 'Vynulovat');
+          const msg = currentLang === 'ru'
+            ? `Действительно сбросить прогресс в разделе «${sLabel}»?`
+            : (currentLang === 'en' ? `Really reset progress in "${sLabel}"?` : `Opravdu vynulovat postup v sekci „${sLabel}“?`);
+          const ok = await confirmDialog(resetText, msg, resetText);
           if (!ok) return;
           for (const item of section.items) delete Store.state.supersim.progress[keyOf(section.id, item)];
           Store.touch();
           render();
         },
-      }, 'Vynulovat'));
+      }, resetText));
 
     const body = h('div', { class: 'section-body', id: bodyId, hidden: collapsed });
 
     if (section.incomplete) {
-      body.append(h('p', { class: 'note' }, section.note || 'Seznam v této sekci zatím není kompletní.'));
-    } else if (section.note) {
-      body.append(h('p', { class: 'note' }, section.note));
+      body.append(h('p', { class: 'note' }, sNote || (currentLang === 'ru' ? 'Список в этом разделе пока не полон.' : (currentLang === 'en' ? 'The list in this section is not complete yet.' : 'Seznam v této sekci zatím není kompletní.'))));
+    } else if (sNote) {
+      body.append(h('p', { class: 'note' }, sNote));
     }
 
     if (!items.length) {
-      body.append(h('p', { class: 'muted' }, availableItems(section).length ? 'Filtrům nic neodpovídá.' : 'Zatím tu nejsou žádné položky.'));
+      const emptyMsg = availableItems(section).length
+        ? (currentLang === 'ru' ? 'Фильтрам ничего не соответствует.' : (currentLang === 'en' ? 'No items match the filters.' : 'Filtrům nic neodpovídá.'))
+        : (currentLang === 'ru' ? 'Здесь пока нет элементов.' : (currentLang === 'en' ? 'No items here yet.' : 'Zatím tu nejsou žádné položky.'));
+      body.append(h('p', { class: 'muted' }, emptyMsg));
     } else if (section.groupBy === 'category') {
       const groups = new Map();
       for (const item of items) {
@@ -2417,7 +3181,7 @@ const Supersim = (() => {
       }
       for (const [category, groupItems] of groups) {
         body.append(h('div', { class: 'group' },
-          h('h4', { class: 'group-title' }, category),
+          h('h4', { class: 'group-title' }, categoryTitleOf(category)),
           h('div', { class: 'items' }, groupItems.map((item) => itemControl(section, item)))));
       }
     } else {
@@ -2434,7 +3198,6 @@ const Supersim = (() => {
     sectionPills.clear();
     const state = Store.state.supersim;
     for (const section of doc.sections) {
-      // While searching or filtering by age, sections with no hit only add noise.
       if ((state.age || search.trim()) && !visibleItems(section).length) continue;
       box.append(renderSection(section));
     }
@@ -2464,7 +3227,7 @@ const Supersim = (() => {
       hideTabError('supersim-error');
       syncFromState();
     } catch (error) {
-      showTabError('supersim-error', `${error.message} Zkus stránku načíst znovu.`);
+      showTabError('supersim-error', `${error.message} ${currentLang === 'ru' ? 'Попробуйте перезагрузить страницу.' : (currentLang === 'en' ? 'Try reloading the page.' : 'Zkus stránku načíst znovu.')}`);
     }
   }
 
@@ -2484,12 +3247,16 @@ const Supersim = (() => {
       render();
     });
     $('#supersim-reset-all').addEventListener('click', async () => {
-      const ok = await confirmDialog('Vynulovat celý tracker', 'Opravdu smazat celý postup Super Sima? Tohle nejde vrátit.', 'Vynulovat vše');
+      const title = t('supersim_reset_all');
+      const msg = currentLang === 'ru'
+        ? 'Действительно сбросить весь прогресс Суперсима? Это действие нельзя отменить.'
+        : (currentLang === 'en' ? 'Really reset all Super Sim progress? This cannot be undone.' : 'Opravdu smazat celý postup Super Sima? Tohle nejde vrátit.');
+      const ok = await confirmDialog(title, msg, title);
       if (!ok) return;
       Store.state.supersim.progress = {};
       Store.touch();
       render();
-      toast('Postup vynulovaný.', 'ok');
+      toast(currentLang === 'ru' ? 'Прогресс сброшен.' : (currentLang === 'en' ? 'Progress reset.' : 'Postup vynulovaný.'), 'ok');
     });
     registerTab('supersim', { activate });
   }
@@ -2517,7 +3284,7 @@ function initProfileBar() {
   $('#conflict-reload').addEventListener('click', async () => {
     hideConflictBanner();
     await Store.selectProfile(Store.currentId, { force: true });
-    toast('Profil načtený znovu.', 'ok');
+    toast(currentLang === 'ru' ? 'Профиль перезагружен.' : (currentLang === 'en' ? 'Profile reloaded.' : 'Profil načtený znovu.'), 'ok');
   });
   $('#conflict-dismiss').addEventListener('click', hideConflictBanner);
 }
@@ -2525,27 +3292,33 @@ function initProfileBar() {
 async function boot() {
   ensurePacksLoaded();
   initTheme();
+  initLanguageSwitcher();
+  applyLanguage(currentLang);
   initTabs();
   initProfileBar();
 
+  Simsmix.init();
+  Supersim.init();
+  RandomPacks.init();
   Wheel.init();
   RandomNumber.init();
   SimGen.init();
   Packs.init();
-  Supersim.init();
 
   Store.onChange(() => {
+    Simsmix.syncFromState();
+    Supersim.syncFromState();
+    RandomPacks.syncFromState();
     Wheel.syncFromState();
     RandomNumber.syncFromState();
     SimGen.syncFromState();
     Packs.syncFromState();
-    Supersim.syncFromState();
   });
 
   try {
     await Store.loadProfiles();
   } catch (error) {
-    toast(`Profily se nepodařilo načíst: ${error.message}`, 'error');
+    toast(`${currentLang === 'ru' ? 'Не удалось загрузить профили' : 'Profily se nepodařilo načíst'}: ${error.message}`, 'error');
     Store.setStatus('offline', error.message);
   }
 
@@ -2580,3 +3353,4 @@ async function boot() {
 }
 
 boot();
+

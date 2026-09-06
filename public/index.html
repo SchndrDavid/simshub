@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="cs">
+<html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -19,40 +19,343 @@
     </div>
 
     <nav class="tabs" id="tabs" role="tablist" aria-label="Nástroje">
-      <button class="tab" role="tab" id="tab-wheel" aria-controls="panel-wheel" data-route="wheel" type="button">
-        <span class="tab-icon" aria-hidden="true">🎡</span><span class="tab-label">Kolo</span>
-      </button>
-      <button class="tab" role="tab" id="tab-random" aria-controls="panel-random" data-route="random" type="button">
-        <span class="tab-icon" aria-hidden="true">🎲</span><span class="tab-label">Číslo</span>
-      </button>
-      <button class="tab" role="tab" id="tab-simgen" aria-controls="panel-simgen" data-route="simgen" type="button">
-        <span class="tab-icon" aria-hidden="true">🧬</span><span class="tab-label">Simík</span>
-      </button>
-      <button class="tab" role="tab" id="tab-packs" aria-controls="panel-packs" data-route="packs" type="button">
-        <span class="tab-icon" aria-hidden="true">📦</span><span class="tab-label">Packy</span>
+      <button class="tab" role="tab" id="tab-simsmix" aria-controls="panel-simsmix" data-route="simsmix" type="button">
+        <span class="tab-icon" aria-hidden="true">🧬</span><span class="tab-label" data-i18n="tab_simsmix">Генератор</span>
       </button>
       <button class="tab" role="tab" id="tab-supersim" aria-controls="panel-supersim" data-route="supersim" type="button">
-        <span class="tab-icon" aria-hidden="true">🏆</span><span class="tab-label">Super Sim</span>
+        <span class="tab-icon" aria-hidden="true">🏆</span><span class="tab-label" data-i18n="tab_supersim">Суперсим</span>
+      </button>
+      <button class="tab" role="tab" id="tab-randompacks" aria-controls="panel-randompacks" data-route="randompacks" type="button">
+        <span class="tab-icon" aria-hidden="true">📦</span><span class="tab-label" data-i18n="tab_randompacks">Случайные наборы</span>
+      </button>
+      <button class="tab" role="tab" id="tab-wheel" aria-controls="panel-wheel" data-route="wheel" type="button">
+        <span class="tab-icon" aria-hidden="true">🎡</span><span class="tab-label" data-i18n="tab_wheel">Колесо</span>
+      </button>
+      <button class="tab" role="tab" id="tab-random" aria-controls="panel-random" data-route="random" type="button">
+        <span class="tab-icon" aria-hidden="true">🎲</span><span class="tab-label" data-i18n="tab_random">Число</span>
       </button>
     </nav>
 
     <div class="topbar-right">
+      <div class="lang-switch" id="lang-switch" role="group" aria-label="Язык / Jazyk / Language">
+        <button class="lang-btn active" data-lang="ru" type="button" title="Русский">RU</button>
+        <button class="lang-btn" data-lang="cs" type="button" title="Čeština">CS</button>
+        <button class="lang-btn" data-lang="en" type="button" title="English">EN</button>
+      </div>
       <select id="profile-select" class="profile-select" aria-label="Profil"></select>
       <button id="profile-manage" class="icon-btn" type="button" aria-label="Správa profilů" title="Správa profilů">⚙</button>
-      <span id="save-status" class="save-status" role="status" aria-live="polite" data-state="saved">Uloženo</span>
+      <span id="save-status" class="save-status" role="status" aria-live="polite" data-state="saved">Сохранено</span>
       <button id="save-retry" class="ghost-btn" type="button" hidden>Zkusit znovu</button>
       <button id="theme-toggle" class="icon-btn" type="button" aria-label="Přepnout světlý a tmavý režim" title="Světlý / tmavý režim">◐</button>
     </div>
   </div>
 
   <div id="conflict-banner" class="banner" hidden>
-    <span id="conflict-text">Profil mezitím někdo změnil na jiném zařízení.</span>
-    <button id="conflict-reload" class="ghost-btn" type="button">Načíst znovu</button>
+    <span id="conflict-text" data-i18n="conflict">Профиль был изменен на другом устройстве.</span>
+    <button id="conflict-reload" class="ghost-btn" type="button" data-i18n="reload">Перезагрузить</button>
     <button id="conflict-dismiss" class="icon-btn" type="button" aria-label="Skrýt upozornění">✕</button>
   </div>
 </header>
 
 <main id="main">
+
+  <!-- ========================================================== SIMSMIX -->
+  <section class="panel wide" id="panel-simsmix" role="tabpanel" aria-labelledby="tab-simsmix" tabindex="-1" hidden>
+    <div id="simsmix-error" class="card error-card" hidden></div>
+
+    <div class="card simsmix-toolbar">
+      <div class="simsmix-toolbar-left">
+        <button id="simsmix-gen-all" class="primary-btn big" type="button" data-i18n="simsmix_gen_all">🎲 Сгенерировать всё</button>
+        <button id="simsmix-copy-all" class="ghost-btn big" type="button" data-i18n="simsmix_copy_all">📋 Скопировать персонажа</button>
+        <button id="simsmix-reset-all" class="ghost-btn danger" type="button" data-i18n="simsmix_reset_all">Сбросить</button>
+      </div>
+      <div class="simsmix-toolbar-right">
+        <span class="pill" id="simsmix-pack-indicator"></span>
+      </div>
+    </div>
+
+    <div class="simsmix-grid">
+      <!-- COLUMN 1: Gender & Character Values -->
+      <div class="simsmix-col">
+        <!-- Gender Card -->
+        <div class="card simsmix-card">
+          <div class="card-header-row">
+            <h2 class="card-title" data-i18n="simsmix_gender_title">Пол</h2>
+            <button id="simsmix-lock-gender" class="lock-btn" type="button" title="Заблокировать значение">🔓</button>
+          </div>
+          <div class="simsmix-field">
+            <div class="simsmix-segmented" id="simsmix-gender-options">
+              <label class="segmented-opt"><input type="radio" name="sm-gender" value="random" checked><span data-i18n="simsmix_opt_random">Случайно</span></label>
+              <label class="segmented-opt"><input type="radio" name="sm-gender" value="male"><span data-i18n="simsmix_opt_male">Мальчик</span></label>
+              <label class="segmented-opt"><input type="radio" name="sm-gender" value="female"><span data-i18n="simsmix_opt_female">Девочка</span></label>
+            </div>
+          </div>
+          <div class="simsmix-result-box" id="simsmix-res-gender">
+            <span class="simsmix-res-label" data-i18n="simsmix_gender_result">Результат:</span>
+            <span class="simsmix-res-badge gender-badge" id="simsmix-out-gender">—</span>
+          </div>
+          <button id="simsmix-gen-gender" class="ghost-btn" type="button" data-i18n="simsmix_gen_gender">🎲 Сгенерировать пол</button>
+        </div>
+
+        <!-- Character Values Card -->
+        <div class="card simsmix-card">
+          <div class="card-header-row">
+            <h2 class="card-title" data-i18n="simsmix_values_title">Достоинства характера</h2>
+            <button id="simsmix-lock-values" class="lock-btn" type="button" title="Заблокировать все">🔓</button>
+          </div>
+          <p class="hint" data-i18n="simsmix_values_hint">Набор достоинств из игрового набора «Родительство».</p>
+          <div class="simsmix-values-list" id="simsmix-values-list"></div>
+          <div class="simsmix-card-actions">
+            <button id="simsmix-gen-values" class="ghost-btn" type="button" data-i18n="simsmix_gen_values">🎲 Сгенерировать достоинства</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMN 2: Aspirations & Careers -->
+      <div class="simsmix-col">
+        <!-- Aspirations Card -->
+        <div class="card simsmix-card">
+          <div class="card-header-row">
+            <h2 class="card-title" data-i18n="simsmix_aspirations_title">Жизненные цели</h2>
+            <button id="simsmix-lock-aspirations" class="lock-btn" type="button" title="Заблокировать все">🔓</button>
+          </div>
+          <div class="simsmix-item-rows">
+            <!-- Child aspiration -->
+            <div class="simsmix-item-row" id="row-asp-child">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="stage_child">Детство</span>
+                <button class="lock-btn-mini" id="simsmix-lock-asp-child" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-asp-child">—</div>
+            </div>
+            <!-- Teen aspiration -->
+            <div class="simsmix-item-row" id="row-asp-teen">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="stage_teen">Подросток</span>
+                <button class="lock-btn-mini" id="simsmix-lock-asp-teen" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-asp-teen">—</div>
+            </div>
+            <!-- Adult aspiration -->
+            <div class="simsmix-item-row" id="row-asp-adult">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="stage_adult">Взрослая жизнь</span>
+                <button class="lock-btn-mini" id="simsmix-lock-asp-adult" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-asp-adult">—</div>
+            </div>
+          </div>
+          <div class="simsmix-card-actions">
+            <button id="simsmix-gen-aspirations" class="ghost-btn" type="button" data-i18n="simsmix_gen_aspirations">🎲 Сгенерировать цели</button>
+          </div>
+        </div>
+
+        <!-- Careers Card -->
+        <div class="card simsmix-card">
+          <div class="card-header-row">
+            <h2 class="card-title" data-i18n="simsmix_careers_title">Карьера</h2>
+            <button id="simsmix-lock-careers" class="lock-btn" type="button" title="Заблокировать все">🔓</button>
+          </div>
+          <div class="simsmix-item-rows">
+            <!-- Teen career -->
+            <div class="simsmix-item-row" id="row-career-teen">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="simsmix_career_teen_label">Подростковая подработка</span>
+                <button class="lock-btn-mini" id="simsmix-lock-career-teen" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-career-teen">—</div>
+            </div>
+            <!-- Adult career -->
+            <div class="simsmix-item-row" id="row-career-adult">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="simsmix_career_adult_label">Взрослая карьера</span>
+                <button class="lock-btn-mini" id="simsmix-lock-career-adult" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-career-adult">—</div>
+            </div>
+          </div>
+          <label class="check simsmix-career-opt">
+            <input type="checkbox" id="simsmix-career-branches" checked>
+            <span data-i18n="simsmix_include_branches">Включая специализацию</span>
+          </label>
+          <div class="simsmix-card-actions">
+            <button id="simsmix-gen-careers" class="ghost-btn" type="button" data-i18n="simsmix_gen_careers">🎲 Сгенерировать карьеру</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMN 3: Traits & Heredity -->
+      <div class="simsmix-col">
+        <!-- Traits Card -->
+        <div class="card simsmix-card">
+          <div class="card-header-row">
+            <h2 class="card-title" data-i18n="simsmix_traits_title">Черты характера</h2>
+            <button id="simsmix-lock-traits" class="lock-btn" type="button" title="Заблокировать все">🔓</button>
+          </div>
+          <div class="simsmix-item-rows">
+            <!-- Infant trait -->
+            <div class="simsmix-item-row" id="row-trait-infant">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="stage_infant">Младенец</span>
+                <button class="lock-btn-mini" id="simsmix-lock-trait-infant" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-trait-infant">—</div>
+            </div>
+            <!-- Toddler trait -->
+            <div class="simsmix-item-row" id="row-trait-toddler">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="stage_toddler">Малыш</span>
+                <button class="lock-btn-mini" id="simsmix-lock-trait-toddler" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-trait-toddler">—</div>
+            </div>
+            <!-- Child 1st trait -->
+            <div class="simsmix-item-row" id="row-trait-1">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="simsmix_trait_child_label">1-я черта (Детство)</span>
+                <button class="lock-btn-mini" id="simsmix-lock-trait-1" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-trait-1">—</div>
+            </div>
+            <!-- Teen 2nd trait -->
+            <div class="simsmix-item-row" id="row-trait-2">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="simsmix_trait_teen_label">2-я черта (Подросток)</span>
+                <button class="lock-btn-mini" id="simsmix-lock-trait-2" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-trait-2">—</div>
+            </div>
+            <!-- Adult 3rd trait -->
+            <div class="simsmix-item-row" id="row-trait-3">
+              <div class="simsmix-item-meta">
+                <span class="simsmix-item-stage" data-i18n="simsmix_trait_adult_label">3-я черта (Взрослый)</span>
+                <button class="lock-btn-mini" id="simsmix-lock-trait-3" type="button">🔓</button>
+              </div>
+              <div class="simsmix-item-value" id="simsmix-out-trait-3">—</div>
+            </div>
+          </div>
+          <div class="simsmix-card-actions">
+            <button id="simsmix-gen-traits" class="ghost-btn" type="button" data-i18n="simsmix_gen_traits">🎲 Сгенерировать черты</button>
+          </div>
+        </div>
+
+        <!-- Heredity Card -->
+        <div class="card simsmix-card">
+          <div class="card-header-row">
+            <h2 class="card-title" data-i18n="simsmix_heredity_title">Наследование от родителей</h2>
+          </div>
+          <label class="check">
+            <input type="checkbox" id="simsmix-heredity-enable">
+            <strong data-i18n="simsmix_heredity_enable">Учитывать черты родителей</strong>
+          </label>
+          <p class="hint" data-i18n="simsmix_heredity_hint">Черты родителей получают повышенный шанс выпадения при взрослении ребенка.</p>
+          
+          <div id="simsmix-heredity-fields" class="simsmix-heredity-fields">
+            <div class="simsmix-parent-box">
+              <h4 class="simsmix-parent-title" data-i18n="simsmix_father_title">Черты отца</h4>
+              <div class="simsmix-parent-selects">
+                <select id="simsmix-father-1" class="grow" aria-label="Черта отца 1"></select>
+                <select id="simsmix-father-2" class="grow" aria-label="Черта отца 2"></select>
+                <select id="simsmix-father-3" class="grow" aria-label="Черта отца 3"></select>
+              </div>
+            </div>
+            <div class="simsmix-parent-box">
+              <h4 class="simsmix-parent-title" data-i18n="simsmix_mother_title">Черты матери</h4>
+              <div class="simsmix-parent-selects">
+                <select id="simsmix-mother-1" class="grow" aria-label="Черта матери 1"></select>
+                <select id="simsmix-mother-2" class="grow" aria-label="Черта матери 2"></select>
+                <select id="simsmix-mother-3" class="grow" aria-label="Черта матери 3"></select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= SUPERSIM -->
+  <section class="panel wide" id="panel-supersim" role="tabpanel" aria-labelledby="tab-supersim" tabindex="-1" hidden>
+    <div id="supersim-error" class="card error-card" hidden></div>
+
+    <div class="card sticky-tools">
+      <div class="summary">
+        <div class="summary-head">
+          <h2 class="card-title" data-i18n="supersim_summary_title">Celkový postup</h2>
+          <span id="supersim-summary-text" class="pill"></span>
+        </div>
+        <div class="bar"><div id="supersim-summary-bar" class="bar-fill"></div></div>
+      </div>
+
+      <div class="row tools">
+        <input type="search" id="supersim-search" class="grow" placeholder="Hledat položku…" aria-label="Hledat položku">
+        <select id="supersim-age" aria-label="Filtr podle věku">
+          <option value="" data-i18n="age_all">Všechny věky</option>
+          <option value="toddler" data-i18n="stage_toddler">Batole</option>
+          <option value="child" data-i18n="stage_child">Dítě</option>
+          <option value="teen" data-i18n="stage_teen">Teenager</option>
+          <option value="adult" data-i18n="stage_adult">Dospělý</option>
+        </select>
+        <label class="check"><input type="checkbox" id="supersim-hide-done"> <span data-i18n="supersim_hide_done">Skrýt hotové</span></label>
+        <button id="supersim-reset-all" class="ghost-btn danger" type="button" data-i18n="supersim_reset_all">Vynulovat vše</button>
+      </div>
+      <p class="hint" data-i18n="supersim_hint">Klik přidá úroveň, pravý klik nebo dlouhé podržení ji ubere.</p>
+    </div>
+
+    <div id="supersim-sections" class="sections"></div>
+  </section>
+
+  <!-- ======================================================= RANDOM PACKS -->
+  <section class="panel wide" id="panel-randompacks" role="tabpanel" aria-labelledby="tab-randompacks" tabindex="-1" hidden>
+    <div id="randompacks-error" class="card error-card" hidden></div>
+
+    <div class="panel-grid randompacks-grid">
+      <!-- Controls & Roller -->
+      <div class="card rp-roller-card">
+        <h2 class="card-title" data-i18n="rp_title">Случайный выбор наборов (Random Packs)</h2>
+        <p class="hint" data-i18n="rp_subtitle">Генератор случайных DLC в стиле James Turner с весами категорий и фильтром по имеющимся дополнениям.</p>
+
+        <div class="row">
+          <label class="field grow">
+            <span class="field-label" data-i18n="rp_count_label">Количество наборов (1–20)</span>
+            <input type="number" id="rp-count" value="3" min="1" max="20" step="1">
+          </label>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="rp-each-cat">
+          <span data-i18n="rp_each_cat">Гарантировать хотя бы один из каждой активной категории</span>
+        </label>
+
+        <h3 class="card-subtitle" data-i18n="rp_weights_title">Веса категорий</h3>
+        <div id="rp-weights" class="weights"></div>
+
+        <p id="rp-message" class="hint" role="status"></p>
+        <div class="row">
+          <button id="rp-go" class="primary-btn big" type="button" data-i18n="rp_roll_btn">🎲 Выбрать наборы</button>
+          <button id="rp-copy" class="ghost-btn" type="button" data-i18n="rp_copy_btn">📋 Скопировать</button>
+        </div>
+
+        <div id="rp-results" class="pack-results" aria-live="polite"></div>
+      </div>
+
+      <!-- Pack Selector Tables by Category -->
+      <div class="card rp-tables-card">
+        <div class="card-header-row">
+          <h2 class="card-title" data-i18n="rp_installed_title">Используемые наборы</h2>
+          <span id="rp-total-owned" class="pill"></span>
+        </div>
+        <p class="hint" data-i18n="rp_installed_hint">Отметьте наборы, которые будут участвовать в жеребьевке. Настройки сохраняются в профиле.</p>
+        
+        <div class="row rp-search-row">
+          <input type="search" id="rp-search" class="grow" placeholder="Поиск набора…" aria-label="Поиск набора">
+          <button class="ghost-btn" type="button" id="rp-all-on" data-i18n="rp_select_all">Выбрать все</button>
+          <button class="ghost-btn" type="button" id="rp-all-off" data-i18n="rp_deselect_all">Снять все</button>
+        </div>
+
+        <div id="rp-categories-container" class="rp-categories-container"></div>
+      </div>
+    </div>
+  </section>
 
   <!-- ============================================================ WHEEL -->
   <section class="panel" id="panel-wheel" role="tabpanel" aria-labelledby="tab-wheel" tabindex="-1" hidden>
@@ -171,104 +474,10 @@
     </div>
   </section>
 
-  <!-- =========================================================== SIMGEN -->
-  <section class="panel" id="panel-simgen" role="tabpanel" aria-labelledby="tab-simgen" tabindex="-1" hidden>
-    <div id="simgen-error" class="card error-card" hidden></div>
-    <div class="panel-grid simgen-grid">
-      <div class="card">
-        <h2 class="card-title">Co generovat</h2>
-        <div id="simgen-options" class="opt-list"></div>
-        <div class="row">
-          <button id="simgen-go" class="primary-btn big" type="button">Generovat</button>
-          <button id="simgen-unlock" class="ghost-btn" type="button">Odemknout vše</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2 class="card-title">Simík</h2>
-        <div id="simgen-result" class="sim-card" aria-live="polite"></div>
-        <div class="row">
-          <button id="simgen-copy" class="ghost-btn" type="button">Kopírovat jako text</button>
-          <button id="simgen-save" class="ghost-btn" type="button">Uložit simíka</button>
-        </div>
-
-        <h3 class="card-subtitle">Uložení simíci</h3>
-        <ul id="simgen-saved" class="saved-list"></ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ PACKS -->
-  <section class="panel" id="panel-packs" role="tabpanel" aria-labelledby="tab-packs" tabindex="-1" hidden>
-    <div id="packs-error" class="card error-card" hidden></div>
-    <div class="panel-grid packs-grid">
-      <div class="card">
-        <h2 class="card-title">Losování</h2>
-        <label class="field"><span class="field-label">Počet packů (1–20)</span>
-          <input type="number" id="packs-count" value="3" min="1" max="20" step="1"></label>
-        <label class="check"><input type="checkbox" id="packs-each-cat"> Alespoň jeden z každé kategorie</label>
-
-        <h3 class="card-subtitle">Váhy kategorií</h3>
-        <div id="packs-weights" class="weights"></div>
-
-        <p id="packs-message" class="hint" role="status"></p>
-        <div class="row">
-          <button id="packs-go" class="primary-btn big" type="button">Losovat</button>
-          <button id="packs-copy" class="ghost-btn" type="button">Kopírovat</button>
-        </div>
-
-        <div id="packs-results" class="pack-results" aria-live="polite"></div>
-      </div>
-
-      <div class="card">
-        <h2 class="card-title">Vlastněné packy</h2>
-        <p class="hint">Odškrtni packy, které nevlastníš. Filtr sdílí generátor simíka i Super Sim.</p>
-        <div class="row">
-          <input type="search" id="packs-search" class="grow" placeholder="Hledat pack…" aria-label="Hledat pack">
-          <button class="ghost-btn" type="button" data-packs-all="1">Vybrat vše</button>
-          <button class="ghost-btn" type="button" data-packs-all="0">Zrušit vše</button>
-          <span id="packs-owned-count" class="pill"></span>
-        </div>
-        <div id="packs-owned" class="owned-list"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================= SUPERSIM -->
-  <section class="panel wide" id="panel-supersim" role="tabpanel" aria-labelledby="tab-supersim" tabindex="-1" hidden>
-    <div id="supersim-error" class="card error-card" hidden></div>
-
-    <div class="card sticky-tools">
-      <div class="summary">
-        <div class="summary-head">
-          <h2 class="card-title">Celkový postup</h2>
-          <span id="supersim-summary-text" class="pill"></span>
-        </div>
-        <div class="bar"><div id="supersim-summary-bar" class="bar-fill"></div></div>
-      </div>
-
-      <div class="row tools">
-        <input type="search" id="supersim-search" class="grow" placeholder="Hledat položku…" aria-label="Hledat položku">
-        <select id="supersim-age" aria-label="Filtr podle věku">
-          <option value="">Všechny věky</option>
-          <option value="toddler">Batole</option>
-          <option value="child">Dítě</option>
-          <option value="teen">Teenager</option>
-          <option value="adult">Dospělý</option>
-        </select>
-        <label class="check"><input type="checkbox" id="supersim-hide-done"> Skrýt hotové</label>
-        <button id="supersim-reset-all" class="ghost-btn danger" type="button">Vynulovat vše</button>
-      </div>
-      <p class="hint">Klik přidá úroveň, pravý klik nebo dlouhé podržení ji ubere.</p>
-    </div>
-
-    <div id="supersim-sections" class="sections"></div>
-  </section>
-
 </main>
 
 <footer class="site-footer">
-  <p>Neoficiální fanouškovský nástroj pro The Sims 4. Není nijak spojený s EA ani Maxis a není jimi podporovaný.</p>
+  <p data-i18n="footer_disclaimer">Неофициальный фанатский инструмент для The Sims 4. Не связан с EA или Maxis.</p>
 </footer>
 
 <div id="toasts" class="toasts" aria-live="polite"></div>
@@ -278,7 +487,7 @@
     <h2 id="dialog-title" class="dialog-title"></h2>
     <div id="dialog-body" class="dialog-body"></div>
     <div class="dialog-actions">
-      <button id="dialog-cancel" class="ghost-btn" type="button">Zrušit</button>
+      <button id="dialog-cancel" class="ghost-btn" type="button">Отмена</button>
       <button id="dialog-ok" class="primary-btn" type="submit">OK</button>
     </div>
   </form>
