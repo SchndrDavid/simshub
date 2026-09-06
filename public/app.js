@@ -27,7 +27,7 @@ const I18N = {
     tab_supersim: 'Суперсим',
     tab_randompacks: 'Случайные наборы',
     tab_wheel: 'Колесо',
-    tab_random: 'Число',
+    tab_random: 'RNG (Число)',
     tab_packs: 'Наборы',
     tab_simgen: 'Сим',
     saved: 'Сохранено',
@@ -221,7 +221,7 @@ const I18N = {
     tab_supersim: 'Super Sim',
     tab_randompacks: 'Náhodné balíčky',
     tab_wheel: 'Kolo',
-    tab_random: 'Číslo',
+    tab_random: 'RNG / Číslo',
     tab_packs: 'Packy',
     tab_simgen: 'Simík',
     saved: 'Uloženo',
@@ -866,12 +866,12 @@ async function confirmDialog(title, message, okLabel = 'Potvrdit') {
   return result.confirmed;
 }
 
-async function promptDialog(title, label, value = '', okLabel = 'Uložit') {
+async function promptDialog(title, label, value = '', okLabel = null) {
   const input = h('input', { type: 'text', name: 'value', value, maxLength: 80, required: true });
   const result = await openDialog({
     title,
     content: h('label', { class: 'field' }, h('span', { class: 'field-label' }, label), input),
-    okLabel,
+    okLabel: okLabel || t('dialog_ok', 'OK'),
   });
   if (!result.confirmed) return null;
   const text = String(result.form.get('value') || '').trim();
@@ -879,7 +879,7 @@ async function promptDialog(title, label, value = '', okLabel = 'Uložit') {
 }
 
 async function infoDialog(title, message) {
-  await openDialog({ title, content: h('p', { class: 'dialog-text' }, message), okLabel: 'Zavřít', hideCancel: true });
+  await openDialog({ title, content: h('p', { class: 'dialog-text' }, message), okLabel: t('dialog_cancel', 'Zavřít'), hideCancel: true });
 }
 
 /* ---------------------------------------------------------------------- api */
@@ -911,24 +911,27 @@ async function api(path, options = {}) {
 /* Purely a fallback so the app keeps working while the server is unreachable.
    The server stays the authority as soon as it answers again. */
 const localCache = {
-  key: (id) => `simshub:cache:${id}`,
-  read(id) {
+  key: 'simshub:state',
+  read() {
     try {
-      const raw = localStorage.getItem(this.key(id));
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
+      const raw = localStorage.getItem(this.key);
+      if (raw) return JSON.parse(raw);
+    } catch { /* ignore */ }
+    return this.readLegacy();
   },
-  write(id, payload) {
-    try { localStorage.setItem(this.key(id), JSON.stringify(payload)); } catch { /* quota */ }
-  },
-  readProfiles() {
+  readLegacy() {
     try {
-      const raw = localStorage.getItem('simshub:profiles');
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
+      for (const k of ['simshub:cache:1', 'simshub:cache:default']) {
+        const raw = localStorage.getItem(k);
+        if (raw) return JSON.parse(raw);
+      }
+    } catch { /* ignore */ }
+    return null;
   },
-  writeProfiles(list) {
-    try { localStorage.setItem('simshub:profiles', JSON.stringify(list)); } catch { /* quota */ }
+  write(payload) {
+    try {
+      localStorage.setItem(this.key, JSON.stringify(payload));
+    } catch { /* quota */ }
   },
 };
 
@@ -953,7 +956,7 @@ function defaultState() {
   };
 }
 
-/* Fills in anything a stored blob predates, so an old profile never crashes a
+/* Fills in anything a stored blob predates, so an old state never crashes a
    newer build. schemaVersion is what future migrations will branch on. */
 function migrateState(raw) {
   const base = defaultState();
@@ -973,8 +976,6 @@ function migrateState(raw) {
 /* -------------------------------------------------------------------- store */
 
 const Store = {
-  profiles: [],
-  currentId: null,
   state: defaultState(),
   serverUpdatedAt: null,
   dirty: false,
@@ -993,7 +994,7 @@ const Store = {
     this.dirty = true;
     this.version += 1;
     this.setStatus('saving');
-    localCache.write(this.currentId, { data: this.state, updated_at: this.serverUpdatedAt, dirty: true });
+    localCache.write({ data: this.state, updated_at: this.serverUpdatedAt, dirty: true });
     clearTimeout(this.saveTimer);
     this.saveTimer = setTimeout(() => this.flush(), SAVE_DEBOUNCE_MS);
   },
@@ -1001,6 +1002,7 @@ const Store = {
   setStatus(status, detail = '') {
     const el = $('#save-status');
     const retry = $('#save-retry');
+    if (!el) return;
     el.dataset.state = status;
     el.textContent = {
       saving: t('saving', 'Ukládám…'),
@@ -1009,11 +1011,11 @@ const Store = {
       offline: t('offline', 'Offline – uložím později'),
     }[status] || status;
     if (detail) el.title = detail; else el.removeAttribute('title');
-    retry.hidden = status !== 'error' && status !== 'offline';
+    if (retry) retry.hidden = status !== 'error' && status !== 'offline';
   },
 
   async flush() {
-    if (!this.dirty || this.saving || this.currentId === null) return;
+    if (!this.dirty || this.saving) return;
     clearTimeout(this.retryTimer);
     this.saving = true;
     this.setStatus('saving');
@@ -1021,15 +1023,13 @@ const Store = {
     // are not in it; the version counter is what tells them apart afterwards.
     const body = JSON.stringify({ data: this.state });
     const sentVersion = this.version;
-    const sentProfile = this.currentId;
     try {
-      const saved = await api(`/api/profiles/${sentProfile}`, { method: 'PATCH', body });
-      if (this.currentId !== sentProfile) { this.saving = false; return; }
+      const saved = await api('/api/state', { method: 'PATCH', body });
       this.serverUpdatedAt = saved.updated_at;
       this.retryDelay = 2000;
       this.dirty = this.version !== sentVersion;
       this.saving = false;
-      localCache.write(this.currentId, { data: this.state, updated_at: saved.updated_at, dirty: this.dirty });
+      localCache.write({ data: this.state, updated_at: saved.updated_at, dirty: this.dirty });
       if (this.dirty) {
         this.flush();
       } else {
@@ -1045,206 +1045,46 @@ const Store = {
     }
   },
 
-  async loadProfiles() {
+  async loadState() {
     try {
-      this.profiles = await api('/api/profiles');
-      localCache.writeProfiles(this.profiles);
-    } catch (error) {
-      const cached = localCache.readProfiles();
-      if (!cached || !cached.length) throw error;
-      this.profiles = cached;
-      this.setStatus('offline', error.message);
-    }
-    renderProfileSelect();
-  },
-
-  async selectProfile(id, { force = false } = {}) {
-    if (!force && id === this.currentId) return;
-    if (this.dirty) await this.flush();
-    this.currentId = id;
-    try { localStorage.setItem('simshub:lastProfile', String(id)); } catch { /* ignore */ }
-
-    try {
-      const profile = await api(`/api/profiles/${id}`);
-      this.serverUpdatedAt = profile.updated_at;
-      this.state = migrateState(profile.data);
+      const resp = await api('/api/state');
+      this.serverUpdatedAt = resp.updated_at;
+      this.state = migrateState(resp.data);
       this.dirty = false;
-      localCache.write(id, { data: this.state, updated_at: profile.updated_at, dirty: false });
-      hideConflictBanner();
+      localCache.write({ data: this.state, updated_at: resp.updated_at, dirty: false });
       this.setStatus('saved');
     } catch (error) {
-      const cached = localCache.read(id);
-      if (cached) {
+      const cached = localCache.read();
+      if (cached && cached.data) {
         this.state = migrateState(cached.data);
-        this.serverUpdatedAt = cached.updated_at;
+        this.serverUpdatedAt = cached.updated_at || null;
         this.setStatus('offline', error.message);
-        toast(currentLang === 'ru' ? 'Сервер недоступен, работаем с сохраненной версией.' : (currentLang === 'en' ? 'Server unavailable, working with cached version.' : 'Server není dostupný, pracuješ s poslední známou verzí.'), 'warn');
       } else {
         this.state = defaultState();
         this.serverUpdatedAt = null;
         this.setStatus('offline', error.message);
-        toast(currentLang === 'ru' ? 'Сервер недоступен, пустой профиль.' : (currentLang === 'en' ? 'Server unavailable, starting empty.' : 'Server není dostupný, začínáš s prázdným profilem.'), 'warn');
       }
     }
-    renderProfileSelect();
     this.emit();
   },
 
-  /* Cheap poll: the list endpoint carries updated_at for every profile. */
+  /* Background poll: keeps PC, phone, and tablet seamlessly synchronized without manual refreshing or conflict popups */
   async pollForRemoteChange() {
-    if (this.currentId === null || this.saving) return;
+    if (this.saving) return;
     try {
-      const list = await api('/api/profiles');
-      this.profiles = list;
-      localCache.writeProfiles(list);
-      renderProfileSelect();
-      const mine = list.find((p) => p.id === this.currentId);
-      if (mine && this.serverUpdatedAt && mine.updated_at !== this.serverUpdatedAt) {
-        if (this.dirty) {
-          showConflictBanner(mine.updated_at);
-        } else {
-          // If the user has no unsaved local changes, smoothly sync latest state from server
-          this.serverUpdatedAt = mine.updated_at;
-          const full = await api(`/api/profiles/${this.currentId}`);
-          this.state = migrateState(full.data);
-          localCache.write(this.currentId, { data: this.state, updated_at: full.updated_at, dirty: false });
-          hideConflictBanner();
+      const resp = await api('/api/state');
+      if (resp && resp.updated_at && resp.updated_at !== this.serverUpdatedAt) {
+        if (!this.dirty) {
+          // If no local unsaved edits, silently update state so Sasha sees changes immediately
+          this.serverUpdatedAt = resp.updated_at;
+          this.state = migrateState(resp.data);
+          localCache.write({ data: this.state, updated_at: resp.updated_at, dirty: false });
           this.emit();
         }
       }
-    } catch { /* offline polls are not worth reporting */ }
+    } catch { /* offline polls are silent */ }
   },
 };
-
-/* --------------------------------------------------------- conflict banner */
-
-function showConflictBanner(updatedAt) {
-  const banner = $('#conflict-banner');
-  if (!banner) return;
-  const warning = Store.dirty
-    ? (currentLang === 'ru' ? ' Несохраненные изменения будут потеряны.' : (currentLang === 'en' ? ' Unsaved changes will be lost.' : ' Tvoje neuložené změny se načtením zahodí.'))
-    : '';
-  const prefix = currentLang === 'ru'
-    ? `Профиль был изменен (${formatTime(updatedAt)}).`
-    : (currentLang === 'en' ? `Profile was modified (${formatTime(updatedAt)}).` : `Profil mezitím někdo změnil (${formatTime(updatedAt)}).`);
-  $('#conflict-text').textContent = `${prefix}${warning}`;
-  banner.hidden = false;
-  banner.style.display = 'flex';
-}
-
-function hideConflictBanner() {
-  const banner = $('#conflict-banner');
-  if (!banner) return;
-  banner.hidden = true;
-  banner.style.display = 'none';
-}
-
-/* ------------------------------------------------------------- profile bar */
-
-function renderProfileSelect() {
-  const select = $('#profile-select');
-  clearNode(select);
-  for (const profile of Store.profiles) {
-    select.append(h('option', { value: String(profile.id), selected: profile.id === Store.currentId }, profile.name));
-  }
-}
-
-async function createProfileFlow() {
-  const name = await promptDialog(t('profile_new', 'Nový profil'), t('profile_name_prompt', 'Název profilu'), '', t('profile_create_btn', 'Vytvořit'));
-  if (!name) return;
-  try {
-    const profile = await api('/api/profiles', { method: 'POST', body: JSON.stringify({ name }) });
-    await Store.loadProfiles();
-    await Store.selectProfile(profile.id, { force: true });
-    toast(t('profile_created_toast', 'Profil je připravený.').replace('{name}', profile.name), 'ok');
-  } catch (error) {
-    toast(error.message, 'error');
-  }
-}
-
-async function renameProfileFlow() {
-  const current = Store.profiles.find((p) => p.id === Store.currentId);
-  if (!current) return;
-  const name = await promptDialog(t('profile_rename', 'Přejmenovat profil'), t('profile_new_name', 'Nový název'), current.name, t('profile_rename_btn', 'Přejmenovat'));
-  if (!name || name === current.name) return;
-  try {
-    await api(`/api/profiles/${current.id}`, { method: 'PATCH', body: JSON.stringify({ name }) });
-    await Store.loadProfiles();
-    toast(t('profile_renamed_toast', 'Profil přejmenovaný.'), 'ok');
-  } catch (error) {
-    toast(error.message, 'error');
-  }
-}
-
-async function deleteProfileFlow() {
-  const current = Store.profiles.find((p) => p.id === Store.currentId);
-  if (!current) return;
-  const ok = await confirmDialog(t('profile_delete_title', 'Smazat profil'), t('profile_delete_confirm', 'Opravdu smazat profil?').replace('{name}', current.name), t('profile_delete_btn', 'Smazat'));
-  if (!ok) return;
-  try {
-    await api(`/api/profiles/${current.id}`, { method: 'DELETE' });
-    try { localStorage.removeItem(localCache.key(current.id)); } catch { /* ignore */ }
-    await Store.loadProfiles();
-    const next = Store.profiles[0];
-    if (next) await Store.selectProfile(next.id, { force: true });
-    toast(t('profile_deleted_toast', 'Profil smazaný.'), 'ok');
-  } catch (error) {
-    toast(error.message, 'error');
-  }
-}
-
-async function importProfileFlow() {
-  const input = h('input', { type: 'file', accept: 'application/json,.json' });
-  input.addEventListener('change', async () => {
-    const file = input.files && input.files[0];
-    if (!file) return;
-    try {
-      const payload = JSON.parse(await file.text());
-      const data = payload && payload.data && typeof payload.data === 'object' ? payload.data : payload;
-      const suggested = (payload && payload.name) || file.name.replace(/\.json$/i, '');
-      const name = await promptDialog(t('profile_import_title', 'Import profilu'), t('profile_import_prompt', 'Název nového profilu'), suggested, t('profile_import_btn', 'Importovat'));
-      if (!name) return;
-      const profile = await api('/api/profiles/import', { method: 'POST', body: JSON.stringify({ name, data }) });
-      await Store.loadProfiles();
-      await Store.selectProfile(profile.id, { force: true });
-      toast(t('profile_imported_toast', 'Profil naimportovaný.'), 'ok');
-    } catch (error) {
-      toast(error instanceof ApiError ? error.message : t('profile_import_error', 'Soubor se nepodařilo načíst jako JSON.'), 'error');
-    }
-  });
-  input.click();
-}
-
-async function manageProfilesFlow() {
-  const actions = h('div', { class: 'dialog-actions-list' },
-    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(createProfileFlow) }, t('profile_new', 'Nový profil')),
-    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(renameProfileFlow) }, t('profile_rename', 'Přejmenovat')),
-    h('button', {
-      class: 'ghost-btn',
-      type: 'button',
-      onclick: () => {
-        window.location.href = `${BASE}/api/profiles/${Store.currentId}/export`;
-        closeDialog();
-      },
-    }, t('profile_export', 'Exportovat JSON')),
-    h('button', { class: 'ghost-btn', type: 'button', onclick: () => finish(importProfileFlow) }, t('profile_import', 'Importovat JSON')),
-    h('button', { class: 'ghost-btn danger', type: 'button', onclick: () => finish(deleteProfileFlow) }, t('profile_delete', 'Smazat profil')),
-  );
-
-  function closeDialog() {
-    const resolve = dialogResolve;
-    dialogResolve = null;
-    dialogEl.close();
-    if (resolve) resolve({ confirmed: false });
-  }
-
-  function finish(action) {
-    closeDialog();
-    setTimeout(action, 0);
-  }
-
-  await openDialog({ title: t('profile_manage', 'Profily'), content: actions, okLabel: t('profile_close', 'Zavřít'), hideCancel: true });
-}
 
 /* -------------------------------------------------------------------- theme */
 
@@ -1363,19 +1203,24 @@ function registerTab(route, handlers) {
 }
 
 function routeFromHash() {
-  const raw = window.location.hash.replace(/^#\/?/, '').trim();
+  const raw = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
   if (raw === 'simgen') return 'simsmix';
   if (raw === 'packs') return 'randompacks';
+  if (raw === 'rng' || raw === 'cislo' || raw === 'number') return 'random';
   return tabs.has(raw) ? raw : 'simsmix';
 }
 
 async function activateRoute(route) {
-  currentRoute = route;
+  let target = route;
+  if (target === 'rng' || target === 'cislo' || target === 'number') target = 'random';
+  if (target === 'simgen') target = 'simsmix';
+  if (target === 'packs') target = 'randompacks';
+  currentRoute = target;
   for (const [name, handlers] of tabs) {
-    const panel = $(`#panel-${name}`);
-    const button = $(`#tab-${name}`);
+    const panel = $(`#panel-${name}`) || (name === 'random' ? $(`#panel-rng`) : null);
+    const button = $(`#tab-${name}`) || (name === 'random' ? $(`#tab-rng`) : null);
     if (!panel || !button) continue;
-    const active = name === route;
+    const active = name === target;
     panel.hidden = !active;
     button.setAttribute('aria-selected', active ? 'true' : 'false');
     button.tabIndex = active ? 0 : -1;
@@ -2267,7 +2112,7 @@ const RandomNumber = (() => {
     try {
       result = draw(min, max, count, unique);
     } catch (err) {
-      return setError(err.message || 'Chyba při generování.');
+      return setError(err.message || (currentLang === 'ru' ? 'Ошибка генерации.' : (currentLang === 'en' ? 'Generation error.' : 'Chyba při generování.')));
     }
     if (sort) result.sort((a, b) => a - b);
     lastResult = result;
@@ -2370,7 +2215,9 @@ const RandomNumber = (() => {
     });
 
     registerTab('random', {
-      activate: () => {},
+      activate: () => {
+        syncFromState();
+      },
       deactivate: () => {
         if (flickerTimer) clearInterval(flickerTimer);
       },
@@ -3907,33 +3754,20 @@ const Supersim = (() => {
    Boot
    ========================================================================== */
 
-function initProfileBar() {
-  $('#profile-select').addEventListener('change', (event) => {
-    Store.selectProfile(Number(event.target.value));
-  });
-  $('#profile-manage').addEventListener('click', manageProfilesFlow);
-  $('#save-retry').addEventListener('click', () => {
-    Store.dirty = true;
-    Store.flush();
-  });
-  $('#conflict-reload').addEventListener('click', async () => {
-    hideConflictBanner();
-    await Store.selectProfile(Store.currentId, { force: true });
-    toast(currentLang === 'ru' ? 'Профиль перезагружен.' : (currentLang === 'en' ? 'Profile reloaded.' : 'Profil načtený znovu.'), 'ok');
-  });
-  $('#conflict-dismiss').addEventListener('click', () => {
-    hideConflictBanner();
-    Store.dirty = false;
-  });
-}
-
 async function boot() {
   ensurePacksLoaded();
   initTheme();
   initLanguageSwitcher();
   applyLanguage(currentLang);
   initTabs();
-  initProfileBar();
+
+  const retryBtn = $('#save-retry');
+  if (retryBtn) {
+    retryBtn.addEventListener('click', () => {
+      Store.dirty = true;
+      Store.flush();
+    });
+  }
 
   Simsmix.init();
   Supersim.init();
@@ -3950,19 +3784,9 @@ async function boot() {
   });
 
   try {
-    await Store.loadProfiles();
+    await Store.loadState();
   } catch (error) {
-    toast(`${currentLang === 'ru' ? 'Не удалось загрузить профили' : 'Profily se nepodařilo načíst'}: ${error.message}`, 'error');
     Store.setStatus('offline', error.message);
-  }
-
-  let last = null;
-  try { last = Number(localStorage.getItem('simshub:lastProfile')); } catch { /* ignore */ }
-  const initial = Store.profiles.find((profile) => profile.id === last) || Store.profiles[0];
-  if (initial) {
-    await Store.selectProfile(initial.id, { force: true });
-  } else {
-    Store.emit();
   }
 
   await activateRoute(routeFromHash());
@@ -3972,11 +3796,14 @@ async function boot() {
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) Store.pollForRemoteChange();
   });
-  // Best-effort save when the tab goes away before the debounce fires.
+  window.addEventListener('focus', () => {
+    Store.pollForRemoteChange();
+  });
+  // Best-effort save when the tab or window unloads
   window.addEventListener('pagehide', () => {
-    if (!Store.dirty || Store.currentId === null) return;
+    if (!Store.dirty) return;
     try {
-      fetch(`${BASE}/api/profiles/${Store.currentId}`, {
+      fetch(`${BASE}/api/state`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: Store.state }),

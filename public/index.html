@@ -32,7 +32,7 @@
         <span class="tab-icon" aria-hidden="true">🎡</span><span class="tab-label" data-i18n="tab_wheel">Колесо</span>
       </button>
       <button class="tab" role="tab" id="tab-random" aria-controls="panel-random" data-route="random" type="button">
-        <span class="tab-icon" aria-hidden="true">🎲</span><span class="tab-label" data-i18n="tab_random">Число</span>
+        <span class="tab-icon" aria-hidden="true">🎲</span><span class="tab-label" data-i18n="tab_random">RNG</span>
       </button>
     </nav>
 
@@ -42,18 +42,10 @@
         <button class="lang-btn" data-lang="cs" type="button" title="Čeština">CS</button>
         <button class="lang-btn" data-lang="en" type="button" title="English">EN</button>
       </div>
-      <select id="profile-select" class="profile-select" aria-label="Profil"></select>
-      <button id="profile-manage" class="icon-btn" type="button" aria-label="Správa profilů" title="Správa profilů">⚙</button>
       <span id="save-status" class="save-status" role="status" aria-live="polite" data-state="saved" data-i18n="saved">Сохранено</span>
       <button id="save-retry" class="ghost-btn" type="button" data-i18n="retry" hidden>Повторить</button>
       <button id="theme-toggle" class="icon-btn" type="button" aria-label="Přepnout světlý a tmavý režim" title="Světlý / tmavý režim">◐</button>
     </div>
-  </div>
-
-  <div id="conflict-banner" class="banner" hidden style="display: none;">
-    <span id="conflict-text" data-i18n="conflict">Профиль был изменен на другом устройстве.</span>
-    <button id="conflict-reload" class="ghost-btn" type="button" data-i18n="reload">Перезагрузить</button>
-    <button id="conflict-dismiss" class="icon-btn" type="button" aria-label="Skrýt upozornění">✕</button>
   </div>
 </header>
 

@@ -64,6 +64,48 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: SERVICE });
 });
 
+function getGlobalProfile() {
+  store.ensureDefaultProfile(DEFAULT_PROFILE_NAME);
+  const row = store.getProfile(1) || store.listProfiles()[0];
+  if (row) return store.getProfile(row.id);
+  return store.createProfile(DEFAULT_PROFILE_NAME, '{}');
+}
+
+app.get('/api/state', (req, res) => {
+  const profile = getGlobalProfile();
+  return res.json(withParsedData(profile));
+});
+
+function handleUpdateState(req, res) {
+  const body = req.body || {};
+  if (body.data === undefined) {
+    return fail(res, 400, 'Nic k uložení – pošli data.');
+  }
+  const result = serializeData(body.data);
+  if (result.error) return fail(res, result.error.includes('5 MB') ? 413 : 400, result.error);
+
+  const profile = getGlobalProfile();
+  const updated = store.updateProfile(profile.id, { data: result.text });
+  return res.json(withParsedData(updated));
+}
+
+app.patch('/api/state', handleUpdateState);
+app.put('/api/state', handleUpdateState);
+app.post('/api/state', handleUpdateState);
+
+app.get('/api/state/export', (req, res) => {
+  const row = getGlobalProfile();
+  const profile = withParsedData(row);
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="simshub-data.json"');
+  return res.send(JSON.stringify({
+    app: SERVICE,
+    data: profile.data,
+    updated_at: profile.updated_at,
+    exported_at: new Date().toISOString(),
+  }, null, 2));
+});
+
 app.get('/api/profiles', (req, res) => {
   res.json(store.listProfiles());
 });
@@ -166,11 +208,15 @@ app.use((err, req, res, next) => {
   return fail(res, 500, 'Chyba serveru.');
 });
 
-const seeded = store.ensureDefaultProfile(DEFAULT_PROFILE_NAME);
-if (seeded) {
-  console.log(`[simshub] created default profile "${DEFAULT_PROFILE_NAME}"`);
+if (require.main === module) {
+  const seeded = store.ensureDefaultProfile(DEFAULT_PROFILE_NAME);
+  if (seeded) {
+    console.log(`[simshub] created default profile "${DEFAULT_PROFILE_NAME}"`);
+  }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[simshub] listening on 0.0.0.0:${PORT}, database at ${store.DB_PATH}`);
+  });
 }
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`[simshub] listening on 0.0.0.0:${PORT}, database at ${store.DB_PATH}`);
-});
+module.exports = app;
